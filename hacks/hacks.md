@@ -21,7 +21,7 @@ lxdData:
       Genre: "Coding"
       Level: "1"
       Description: "Start a very simple background with floating object.  Then think about possibilities."
-      Categories: ["JavaScript", "Game Play", "Game Coding", "Space"]
+      Categories: ["JavaScript", "Game Coding", "OOP", "Aliens"]
       Game: "/background"
       Lessons: "/background/lesson"
       Image: "/images/platformer/backgrounds/alien_planet1.jpg"
@@ -30,9 +30,9 @@ lxdData:
       Genre: "Coding"
       Level: "1"
       Description: "Agile development and changing elements of the Snake game."
-      Categories: ["JavaScript", "Game Play", "Game Coding", "Reptile Life"]
+      Categories: ["JavaScript", "Game Coding", "Procedural", "Reptile Life"]
       Game: "/snake"
-      Lessons: "/agile/pair_trio"
+      Lessons: "/snake/lesson/"
       Image: "/images/snake.png"
       Alt: "Snake eating Apples"
     - Title: "Calculator"
@@ -68,7 +68,7 @@ lxdData:
       Description: "Learn the basics of JS and object oriented programming as you dive deep into the world of game coding. "
       Categories: ["JavaScript", "OOP", "Game Coding", "Cookies"]
       Game: "/cookie-clicker-game"
-      Lessons: "/cookie-clicker-game-docs"
+      Lessons: "/cookie-lessons"
       Image: "/images/cookie.jpg"
       Alt: "Cookie"
     - Title: "Memory Game"
@@ -143,5 +143,14 @@ lxdData:
       Lessons: "/solitaire/lesson"
       Image: "/images/solitaire.png"
       Alt: "Solitaire Image"
+    - Title: "API Basics"
+      Genre: "Coding"
+      Level: "4"
+      Description: "Learn the basics of APIs, Async, Error Handling, and best practices."
+      Categories: ["JavaScript", "API"]
+      Game: "/music-api" ## Change to API example with /api-basics/game
+      Lessons: "/api-basics/lessons"
+      Image: "/images/basic-api/api-image.jpg"
+      Alt: "API Image"
 ---
 {%- include tailwind/lxd.html -%}

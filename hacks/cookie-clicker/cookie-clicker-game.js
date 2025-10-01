@@ -1,7 +1,32 @@
+//@ts-check
+
 const shopContainer = document.getElementById("shop-container");
 const cookieButton = document.getElementById("cookie");
 const cookieCountDisplay = document.getElementById("cookie-count");
 const gameArea = document.getElementById("game-area");
+
+// Create a tooltip element
+const tooltip = document.createElement('div');
+tooltip.id = 'tooltip';
+tooltip.className = 'absolute hidden bg-black text-white px-2 py-1 rounded text-sm z-10 pointer-events-none';
+document.body.appendChild(tooltip);
+
+function addButtonTooltip(button) {
+    button.addEventListener('mouseover', (e) => {
+        tooltip.innerHTML = button.innerHTML;
+        tooltip.style.left = `${e.pageX + 10}px`;
+        tooltip.style.top = `${e.pageY + 10}px`;
+        tooltip.classList.remove('hidden');
+    });
+    button.addEventListener('mouseout', () => {
+        tooltip.classList.add('hidden');
+    });
+    button.addEventListener('mousemove', (e) => {
+        tooltip.style.left = `${e.pageX + 10}px`;
+        tooltip.style.top = `${e.pageY + 10}px`;
+    });
+}
+
 
 const cookie = {
   cookieMulti: 1,
@@ -30,27 +55,27 @@ const shop = {
   updateShopDisplay() {
     shopContainer.innerHTML = "";
     const shopTitle = document.createElement("div");
-    shopTitle.className = "text-xl font-bold mb-4 text-center";
+    shopTitle.className = "text-xl font-bold mb-4 text-center text-white bg-amber-600 rounded-lg p-2";
     shopTitle.innerHTML = "SHOP";
     shopContainer.appendChild(shopTitle);
     const shopSwap = document.createElement("button");
-    shopSwap.className = `bg-slate-500 hover:bg-slate-600 text-white px-4 py-2 mb-2`;
+    shopSwap.className = `w-full bg-amber-400 hover:bg-amber-500 text-white font-bold py-2 px-4 rounded border-2 border-amber-600 whitespace-nowrap overflow-hidden text-ellipsis`;
     if (this.tab === "upgrades") shopSwap.innerHTML = "Switch to Shop";
     else shopSwap.innerHTML = "Switch to Upgrades";
     shopSwap.addEventListener("click", () => {
       if (this.tab === "upgrades") shop.switchTab("shop");
       else shop.switchTab("upgrades");
     });
+    addButtonTooltip(shopSwap);
     shopContainer.appendChild(shopSwap);
     if (this.tab === "upgrades")
       for (let i = 0; i < this.forSale.length; i++) {
         const forSaleItemInfo = this.forSale[i];
 
         const shopButton = document.createElement("button");
-        shopButton.className = `bg-slate-500 hover:bg-slate-600 text-white px-4 py-2 mb-2`;
+        shopButton.className = `w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded border-2 border-amber-700 whitespace-nowrap overflow-hidden text-ellipsis`;
         shopButton.innerHTML = `${forSaleItemInfo.emoji} ${forSaleItemInfo.name} (${forSaleItemInfo.price} 🍪)`;
-        shopContainer.appendChild(shopButton);
-
+        
         shopButton.addEventListener("click", () => {
           if (cookie.cookies < forSaleItemInfo.price) {
             alert("Insufficient Cookies");
@@ -65,16 +90,17 @@ const shop = {
 
           shopButton.remove();
         });
+        addButtonTooltip(shopButton);
+        shopContainer.appendChild(shopButton);
       }
     else if (this.tab === "shop")
       for (let i = 0; i < this.forSale.length; i++) {
         const forSaleItemInfo = this.forSale[i];
 
         const shopButton = document.createElement("button");
-        shopButton.className = `bg-slate-500 hover:bg-slate-600 text-white px-4 py-2 mb-2`;
+        shopButton.className = `w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded border-2 border-amber-700 whitespace-nowrap overflow-hidden text-ellipsis`;
         shopButton.innerHTML = `${forSaleItemInfo.emoji} ${forSaleItemInfo.name} (${forSaleItemInfo.price} 🍪)`;
-        shopContainer.appendChild(shopButton);
-
+        
         shopButton.addEventListener("click", () => {
           if (cookie.cookies < forSaleItemInfo.price) {
             alert("Insufficient Cookies");
@@ -94,6 +120,8 @@ const shop = {
             i,
           );
         });
+        addButtonTooltip(shopButton);
+        shopContainer.appendChild(shopButton);
       }
   },
   addItemForSale(item) {
@@ -114,11 +142,25 @@ const shop = {
     if (newTab === "shop") {
       console.log(shopItems);
       for (let i = 0; i < shopItems.length; i++) {
-        console.log(shopItems[i])
-        this.addItemForSale({
-          ...shopItems[i],
-          price: shopItems[i].price * (gameLoop.getAmount(shopItems[i].name) + 1),
-        });
+        console.log(shopItems[i]);
+        if (gameLoop.getAmount(shopItems[i].name)) {
+          console.log(
+            "Price is: " +
+              shopItems[i].price * (gameLoop.getAmount(shopItems[i].name) + 1),
+          );
+          this.addItemForSale({
+            ...shopItems[i],
+
+            price:
+              shopItems[i].price * (gameLoop.getAmount(shopItems[i].name) + 1),
+          });
+        } else {
+          this.addItemForSale({
+            ...shopItems[i],
+
+            price: shopItems[i].price,
+          });
+        }
       }
     } else if (newTab === "upgrades") {
       for (let i = 0; i < this.upgrades.length; i++) {
@@ -141,13 +183,14 @@ const gameLoop = {
       this.autoClickers[itemName] = 1;
     }
     this.cookiesPerSecond += cps;
-    const savedUpgrades = localStorage.getItem("savedUpgrades");
     localStorage.setItem("savedShop", JSON.stringify(this.autoClickers));
     this.runLoop();
 
-    const purchased = shopItems.find(it => it.name === itemName);
-    if (purchased) emojiBuddies.spawnEmoji(purchased.emoji);
-
+    const purchased = shopItems.find((it) => it.name === itemName);
+    if (purchased) {
+      const newEmoji = new EmojiBuddy(purchased.emoji);
+      newEmoji.spawn(Math.random() * 1000, Math.random() * 1000);
+    }
   },
   updateCookieMulti(itemName, amt) {
     this.upgrades[itemName] = amt;
@@ -202,9 +245,10 @@ const gameLoop = {
           cookiePerSecondAndIndexMap[upgradeName].index,
         );
         for (let i = 0; i < amount; i++) {
-          emojiBuddies.spawnEmoji(
+          const emojiBuddy = new EmojiBuddy(
             cookiePerSecondAndIndexMap[upgradeName].emoji,
           );
+          emojiBuddy.spawn(Math.random() * 1000, Math.random() * 1000);
         }
         this.runLoop();
       }
@@ -220,10 +264,69 @@ const gameLoop = {
   },
 };
 
-const emojiBuddies = {
-  getBounds() {
+class EmojiBuddy {
+  /**
+   * @type {{top: number, left: number, right: number, bottom: number, width: number, height: number}}
+   */
+  bounds;
+  /**
+   * @type {number}
+   */
+  x = 0;
+  /**
+   * @type {number}
+   */
+  y = 0;
+  /**
+   * @type {string}
+   */
+  emojiString = "";
+  /**
+   * @type {HTMLElement}
+   */
+  emoji;
+  /**
+   * velocity on the y axis
+   * @type {number}
+   */
+  dy = 2;
+  /**
+   * velocity on the x axis
+   * @type {number}
+   */
+  dx = 2;
+  /**
+   * Count of repeated bounces on the x axis
+   * @type {number}
+   */
+  bounceErrorsX = 0;
+  /**
+   * count of repeated bounces on the y axis
+   * @type {number}
+   */
+  bounceErrorsY = 0;
+  /**
+   *
+   * @param {string} emoji
+   */
+  constructor(emoji) {
+    this.emojiString = emoji;
+    this.animate = this.animate.bind(this);
+  }
+  setBounds() {
+    if (!gameArea) {
+      console.error("gameArea not found");
+      return {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: 0,
+        height: 0,
+      };
+    }
     const rect = gameArea.getBoundingClientRect();
-    return {
+    const bounds = {
       top: rect.top + window.scrollY,
       left: rect.left + window.scrollX,
       right: rect.right + window.scrollX,
@@ -231,47 +334,103 @@ const emojiBuddies = {
       width: rect.width,
       height: rect.height,
     };
-  },
-  spawnEmoji(emojiString) {
-    const bounds = this.getBounds();
+    this.bounds = bounds;
+    return bounds;
+  }
+  /**
+   * Get bottom style number relative to the gameArea
+   * @param {number} x
+   * @returns {string}
+   */
+  getLeftFromX(x) {
+    return (this.bounds.left + x).toString();
+  }
+  /**
+   * Get top style number relative to the gameArea
+   * @param {number} y
+   * @returns {string}
+   */
+  getTopFromY(y) {
+    return (this.bounds.top + y).toString();
+  }
+  /**
+   * Spawns emoji on the page and starts animation
+   * @param {number} x
+   * @param {number} y
+   */
+  spawn(x, y) {
+    this.setBounds();
 
-    // Create emoji element
+    this.x = x % this.bounds.width;
+    this.y = y % this.bounds.height;
+
     const emoji = document.createElement("div");
-    emoji.textContent = emojiString;
+    emoji.textContent = this.emojiString;
     emoji.style.position = "absolute";
     emoji.style.fontSize = "2rem";
+    emoji.style.zIndex = '0';
+    emoji.style.pointerEvents = 'none';
+    gameArea?.appendChild(emoji);
+    emoji.style.left = this.getLeftFromX(this.x);
+    emoji.style.top = this.getTopFromY(this.y);
 
-    // Random start inside bounding box
-    let x = bounds.left + Math.random() * (bounds.width - 32);
-    let y = bounds.top + Math.random() * (bounds.height - 32);
+    this.emoji = emoji;
+    this.animate();
+    return emoji;
+  }
+  /**
+   * Animates the Emoji (Bounces off the walls)
+   */
+  animate() {
+    console.log(this.bounceErrorsX, this.bounceErrorsY);
+    this.setBounds();
 
-    emoji.style.left = `${x}px`;
-    emoji.style.top = `${y}px`;
+    this.x += this.dx;
+    this.y += this.dy;
 
-    // Add emoji to body (not inside gameArea, since we're using page coords)
-    document.body.appendChild(emoji);
-
-    // Random velocity
-    let dx = (Math.random() < 0.5 ? -1 : 1) * 2;
-    let dy = (Math.random() < 0.5 ? -1 : 1) * 2;
-
-    function animate() {
-      x += dx;
-      y += dy;
-
-      // Bounce off actual bounds
-      if (x <= bounds.left || x + 32 >= bounds.right) dx *= -1;
-      if (y <= bounds.top || y + 32 >= bounds.bottom) dy *= -1;
-
-      emoji.style.left = `${x}px`;
-      emoji.style.top = `${y}px`;
-
-      requestAnimationFrame(animate);
+    // Bounce off actual bounds
+    if (
+      Number(this.getLeftFromX(this.x)) <= this.bounds.left ||
+      Number(this.getLeftFromX(this.x)) + this.emoji.offsetWidth >=
+        this.bounds.right
+    ) {
+      this.bounceErrorsX++;
+      this.dx *= -1;
+      console.log("X");
+    } else {
+      this.bounceErrorsX = 0;
+    }
+    if (
+      Number(this.getTopFromY(this.y)) <= this.bounds.top ||
+      Number(this.getTopFromY(this.y)) + this.emoji.offsetHeight >=
+        this.bounds.bottom
+    ) {
+      this.bounceErrorsY++;
+      this.dy *= -1;
+      console.log("Y");
+    } else {
+      this.bounceErrorsY = 0;
     }
 
-    animate();
-  },
-};
+    if (this.bounceErrorsX > 5) {
+      this.x = 0;
+    }
+    if (this.bounceErrorsY > 5) {
+      this.y = 0;
+    }
+
+    this.emoji.style.left = `${this.getLeftFromX(this.x)}px`;
+    this.emoji.style.top = `${this.getTopFromY(this.y)}px`;
+
+    requestAnimationFrame(this.animate);
+  }
+  /**
+   * Destroys the Emoji
+   */
+  destroy() {
+    this.emoji.remove();
+  }
+}
 
 const grandma = {
   name: "Grandma",
@@ -305,7 +464,7 @@ const bank = {
   cookiesPerSecond: 20,
 };
 
-const shopItems = []
+const shopItems = [];
 
 shopItems.push(grandma);
 shopItems.push(factory);
@@ -323,7 +482,7 @@ shop.upgrades.push(x2Click);
 
 shop.addItemForSale(grandma);
 shop.addItemForSale(factory);
-shop.addItemForSale(mangotemple)
+shop.addItemForSale(mangotemple);
 shop.addItemForSale(bank);
 gameLoop.fetchSavedData();
 cookie.fetchStoredCookies();
