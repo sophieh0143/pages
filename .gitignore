@@ -38,3 +38,6 @@ _posts/**/*_DOCX_.md
 # Temporary DOCX files
 _docx/~$*
 *.tmp
+
+# IJava
+IJava/
