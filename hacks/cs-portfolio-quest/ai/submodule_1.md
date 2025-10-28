@@ -268,13 +268,13 @@ Skip the generic prep. Do this instead:
 
 **Original:** ${text}
 
-### Version 1 (Conservative):
+### Version 1:
 Collaborated with cross-functional team of 4 developers to build full-stack web application using React and Node.js, improving page load time by 30%
 
-### Version 2 (Balanced):
+### Version 2:
 Led development of user authentication system for team of 4, implementing JWT tokens and reducing security vulnerabilities by 40% through code review process
 
-### Version 3 (Bold):
+### Version 3:
 Architected and deployed full-stack e-commerce platform serving 10,000+ monthly users, optimizing database queries to reduce load time by 45% and increasing conversion rate by 25%
 
 **Recommendation:** Choose the version that most accurately reflects your actual contribution.`,
