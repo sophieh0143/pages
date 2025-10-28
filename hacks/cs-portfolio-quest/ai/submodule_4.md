@@ -12,6 +12,20 @@ author: "Thinkers Team"
 date: 2025-10-21
 ---
 
+---
+layout: post
+title: "Coding with AI - The Realistic Version"
+description: "Use the SPEC framework for code generation, follow a debugging template, and always run security checks."
+permalink: /cs-portfolio-quest/ai/submodule_4/
+parent: "AI Usage"
+team: "Thinkers"
+submodule: 4
+categories: [CSP, Submodule, AIUsage]
+tags: [ai, submodule, thinkers]
+author: "Thinkers Team"
+date: 2025-10-21
+---
+
 <style>
 .code-editor {
     width: 100%;
@@ -20,16 +34,41 @@ date: 2025-10-21
     padding: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background: #f5f5f5;
+    background: #2d2d2d;
+    color: #f8f8f2;
     font-size: 14px;
 }
 
 .spec-section {
     margin: 20px 0;
     padding: 20px;
-    background: #fff;
-    border: 1px solid #ddd;
+    background: #f8f9fa;
+    border: 2px solid #007bff;
     border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.spec-section h3 {
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.spec-section p {
+    color: #495057;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.spec-section input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 14px;
+    background: white;
+    color: #212529;
 }
 
 .security-result {
@@ -41,19 +80,19 @@ date: 2025-10-21
 
 .security-result.pass {
     background: #d4edda;
-    border: 1px solid #c3e6cb;
+    border: 2px solid #28a745;
     color: #155724;
 }
 
 .security-result.fail {
     background: #f8d7da;
-    border: 1px solid #f5c6cb;
+    border: 2px solid #dc3545;
     color: #721c24;
 }
 
 .security-result.loading {
     background: #d1ecf1;
-    border: 1px solid #bee5eb;
+    border: 2px solid #17a2b8;
     color: #0c5460;
 }
 
@@ -63,7 +102,8 @@ date: 2025-10-21
 }
 
 .vulnerability-list li {
-    margin: 5px 0;
+    margin: 8px 0;
+    line-height: 1.6;
 }
 
 .button-primary {
@@ -76,6 +116,7 @@ date: 2025-10-21
     font-size: 16px;
     font-weight: bold;
     transition: background 0.3s;
+    margin-top: 10px;
 }
 
 .button-primary:hover {
@@ -88,9 +129,66 @@ date: 2025-10-21
 }
 
 .score-display {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     margin: 15px 0;
+}
+
+.security-checks-list {
+    background: #fff3cd;
+    border: 2px solid #ffc107;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.security-checks-list h2 {
+    color: #856404;
+    margin-top: 0;
+}
+
+.security-checks-list ol {
+    color: #856404;
+}
+
+.security-checks-list ol li {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.example-section {
+    background: #e7f3ff;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.example-section h2 {
+    color: #007bff;
+    margin-top: 0;
+}
+
+.trust-verify {
+    background: #d4edda;
+    border: 2px solid #28a745;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.trust-verify h2 {
+    color: #155724;
+    margin-top: 0;
+}
+
+.trust-verify ol {
+    color: #155724;
+}
+
+.trust-verify ol li {
+    margin: 8px 0;
+    line-height: 1.6;
 }
 </style>
 
@@ -116,8 +214,7 @@ Before asking AI to generate code, structure your prompt using these 4 component
   <h3>💻 P - Platform</h3>
   <p><strong>Language, version, frameworks</strong></p>
   <input type="text" id="spec-platform" 
-    placeholder="Example: Python 3.9, no external libraries" 
-    style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;">
+    placeholder="Example: Python 3.9, no external libraries">
 </div>
 
 <div class="spec-section">
@@ -170,25 +267,50 @@ Output: (False, ['Username too short', 'Invalid email'])">
 
 ---
 
-## The 5 Essential Security Checks
-
-Your code will be automatically checked for:
-
-1. **🛡️ SQL Injection Prevention** - Are you using parameterized queries?
-2. **🔐 Secrets Management** - No hardcoded passwords or API keys
-3. **✅ Input Validation** - All user input must be validated
-4. **🚫 XSS Protection** - Sanitize output to prevent cross-site scripting
-5. **🔒 Authentication** - Proper auth/authorization checks
+<div class="security-checks-list">
+  <h2>The 5 Essential Security Checks</h2>
+  <p>Your code will be automatically checked for:</p>
+  <ol>
+    <li><strong>🛡️ SQL Injection Prevention</strong> - Are you using parameterized queries?</li>
+    <li><strong>🔐 Secrets Management</strong> - No hardcoded passwords or API keys</li>
+    <li><strong>✅ Input Validation</strong> - All user input must be validated</li>
+    <li><strong>🚫 XSS Protection</strong> - Sanitize output to prevent cross-site scripting</li>
+    <li><strong>🔒 Authentication</strong> - Proper auth/authorization checks</li>
+  </ol>
+</div>
 
 ---
 
-## Trust But Verify Rule
+<div class="trust-verify">
+  <h2>Trust But Verify Rule</h2>
+  <p>For every AI-generated code:</p>
+  <ol>
+    <li><strong>Understand it</strong> - If you can't explain it, don't use it</li>
+    <li><strong>Test it</strong> - Try edge cases and error conditions</li>
+    <li><strong>Secure it</strong> - Run through the checklist above</li>
+    <li><strong>Simplify it</strong> - Remove unnecessary complexity</li>
+  </ol>
+</div>
 
-For every AI-generated code:
-1. **Understand it** - If you can't explain it, don't use it
-2. **Test it** - Try edge cases and error conditions
-3. **Secure it** - Run through the checklist above
-4. **Simplify it** - Remove unnecessary complexity
+---
+
+<div class="example-section">
+  <h2>Example: Good vs Bad Code</h2>
+  
+  <h3>❌ Bad (Insecure)</h3>
+  <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto;">
+password = "mySecret123"  # Hardcoded!
+query = "SELECT * FROM users WHERE name = '" + user_input + "'"  # SQL injection!
+html = "&lt;div&gt;" + user_comment + "&lt;/div&gt;"  # XSS vulnerability!
+  </pre>
+
+  <h3>✅ Good (Secure)</h3>
+  <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto;">
+password = os.getenv("DB_PASSWORD")  # From environment
+query = "SELECT * FROM users WHERE name = ?"  # Parameterized
+html = "&lt;div&gt;" + escape(user_comment) + "&lt;/div&gt;"  # Sanitized
+  </pre>
+</div>
 
 <script type="module">
 import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
@@ -342,23 +464,5 @@ function displayResults(analysis) {
     resultDiv.innerHTML = html;
 }
 </script>
-
----
-
-## Example: Good vs Bad Code
-
-### ❌ Bad (Insecure)
-```python
-password = "mySecret123"  # Hardcoded!
-query = "SELECT * FROM users WHERE name = '" + user_input + "'"  # SQL injection!
-html = "" + user_comment + ""  # XSS vulnerability!
-```
-
-### ✅ Good (Secure)
-```python
-password = os.getenv("DB_PASSWORD")  # From environment
-query = "SELECT * FROM users WHERE name = ?"  # Parameterized
-html = "" + escape(user_comment) + ""  # Sanitized
-```
 
 {%- include tailwind/cs-portfolio-quest-lessons_info.html -%}
