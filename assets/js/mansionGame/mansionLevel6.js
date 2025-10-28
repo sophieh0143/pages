@@ -16,24 +16,24 @@ class MansionLevel6 {
         let path = gameEnv.path;
 
         // This is the background image data
-        const image_src_chamber = path + "/images/gamify/bgBossIntroChamber.png"
+        const image_src_chamber = path + "/images/mansionGame/bgBossIntroChamber.png"
         const image_data_chamber = {
             name: 'bossintro',
             greeting: "You hear a faint echo from behind the ebony doors.",
             src: image_src_chamber,
             pixels: {height: 580, width: 1038},
-            mode: 'contain'
+            mode: 'stretch'
         };
         
         // This is the data for the player
-        const sprite_src_mc = path + "/images/gamify/spookMcWalk.png"; // be sure to include the path
+        const sprite_src_mc = path + "/images/mansionGame/spookMcWalk.png"; // be sure to include the path
         const MC_SCALE_FACTOR = 6;
         const sprite_data_mc = {
             id: 'Spook',
             greeting: "Hi, I am Spook.",
             src: sprite_src_mc,
             SCALE_FACTOR: MC_SCALE_FACTOR,
-            STEP_FACTOR: 800,
+            STEP_FACTOR: 600,
             ANIMATION_RATE: 10,
             INIT_POSITION: { x: (width / 2 - width / (5 * MC_SCALE_FACTOR)), y: height - (height / MC_SCALE_FACTOR)}, 
             pixels: {height: 2400, width: 3600},
@@ -50,22 +50,22 @@ class MansionLevel6 {
             keypress: {up: 87, left: 65, down: 83, right: 68} // W, A, S, D
         };
 
-        
-        /*
+
         // This is the data for the zombie NPC charecter
-        const sprite_src_zombie_npc = path + "/images/gamify/zombieNpc.png";
+        /*
+        const sprite_src_zombie_npc = path + "/images/mansionGame/zombieNpc.png";
         const sprite_greet_zombie_npc = "I heard the boss is waiting for you... enter if you dare.";
         const sprite_data_zombie = {
             id: 'ZombieNPC',
             greeting: sprite_greet_zombie_npc,
             src: sprite_src_zombie_npc,
-            SCALE_FACTOR: 9,
+            SCALE_FACTOR: 15,
             ANIMATION_RATE: 100,
-            pixels: {width: 3600, height: 1200},
+            pixels: {width: 1200, height: 3600},
             INIT_POSITION: {x: (width / 2), y: (height / 2)},
-            orientation: {rows: 1, columns: 3},
-            left: {row: 0, start: 0, columns: 3},
-            hitbox: {widthPercentage: 0.1, heightPercentage: 0.1},
+            orientation: {rows: 1, columns: 1},
+            // left: {row: 0, start: 0, columns: 3},
+            hitbox: {widthPercentage: 0.45, heightPercentage: 0.2},
             dialogues: [
                 // The Zombie needs to warn the player against going through the doors
                 "I heard the boss is waiting for you...",
@@ -89,13 +89,12 @@ class MansionLevel6 {
                     console.log(sprite_greet_zombie_npc);
                 }           
             }
-
         }
         */
         
 
         // invisible sprite for door collision that handles going to lv6 battle room
-        const sprite_src_bossdoor = path + "/images/gamify/invisDoorCollisionSprite.png";
+        const sprite_src_bossdoor = path + "/images/mansionGame/invisDoorCollisionSprite.png";
         const sprite_greet_bossdoor = "Battle the Reaper? Press E";
         const sprite_data_bossdoor = {
             id: 'Door',
@@ -104,13 +103,10 @@ class MansionLevel6 {
             SCALE_FACTOR: 6,
             ANIMATION_RATE: 100,
             pixels: {width: 2029, height: 2025},
-            //INIT_POSITION: { x: (width * 2 / 5), y: (height / 2)},  // This is the old init position
-            //INIT_POSITION: {x: (width / 2), y: (height / 8)},  // This init position has the correct height
-            INIT_POSITION: {x: (width * 19 / 40), y: (height / 8)},
+            INIT_POSITION: {x: (width * 37 / 80), y: (height / 8)},
             orientation: {rows: 1, columns: 1},
             down: {row: 0, start: 0, columns: 1},
             hitbox: {widthPercentage: 0.1, heightPercentage: 0.2},
-            // Add dialogues array for random messages
             dialogues: [
                 "Many have entered. Few have returned.",
                 "Dangerous things await you beyond this door..",
