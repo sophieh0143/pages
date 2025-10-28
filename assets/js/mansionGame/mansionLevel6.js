@@ -53,7 +53,8 @@ class MansionLevel6 {
 
         // This is the data for the zombie NPC charecter
         /*
-        const sprite_src_zombie_npc = path + "/images/mansionGame/zombieNpc.png";
+        //const sprite_src_zombie_npc = path + "/images/mansionGame/zombieNpc.png";
+        const sprite_src_zombie_npc = path + "/images/gamify/r2_idle.png";
         const sprite_greet_zombie_npc = "I heard the boss is waiting for you... enter if you dare.";
         const sprite_data_zombie = {
             id: 'ZombieNPC',
@@ -61,7 +62,8 @@ class MansionLevel6 {
             src: sprite_src_zombie_npc,
             SCALE_FACTOR: 15,
             ANIMATION_RATE: 100,
-            pixels: {width: 1200, height: 3600},
+            pixels: {width: 505, height: 223},  // Test for R2D2 NPC
+            //pixels: {width: 1200, height: 3600},
             INIT_POSITION: {x: (width / 2), y: (height / 2)},
             orientation: {rows: 1, columns: 1},
             // left: {row: 0, start: 0, columns: 3},
@@ -91,6 +93,57 @@ class MansionLevel6 {
             }
         }
         */
+
+        // This is the zombie npc
+        const sprite_src_zombie = path + "/images/mansionGame/zombieNpc.png";
+        const sprite_greet_zombie = "Hi I am R2D2. Leave this planet and help defend the rebel base on Hoth!";
+        const sprite_data_zombie = {
+            id: 'ZombieNPC',
+            greeting: sprite_greet_zombie,
+            src: sprite_src_zombie,
+            SCALE_FACTOR: 8,
+            ANIMATION_RATE: 100,
+            pixels: {width: 3600, height: 1200},
+            INIT_POSITION: { x: (width * 1 / 2), y: (height * 1 / 2)},
+            orientation: {rows: 1, columns: 3 },
+            down: {row: 0, start: 0, columns: 3 },
+            hitbox: {widthPercentage: 0.75, heightPercentage: 0.45},
+            // Add dialogues array for random messages
+            dialogues: [
+                "Beep boop! I have important data about the Death Star plans.",
+                "The rebels need your help on Hoth. The Empire is approaching!",
+                "I've served with Jedi Knights and rebel heroes across the galaxy.",
+                "Whrrrr... bleep! Translation: Want to fly an X-Wing fighter?",
+                "My counterpart C-3PO always worries too much.",
+                "I've calculated the odds of success at approximately 647 to 1.",
+                "The Force is strong with this one... I can sense it.",
+                "Imperial forces are on high alert. We must be cautious."
+            ],
+            reaction: function() {
+                // Use dialogue system instead of alert
+                if (this.dialogueSystem) {
+                    this.showReactionDialogue();
+                } else {
+                    console.log(sprite_greet_r2d2);
+                }
+            },
+            interact: function() {
+                // KEEP ORIGINAL GAME-IN-GAME FUNCTIONALITY
+                // Set a primary game reference from the game environment
+                let primaryGame = gameEnv.gameControl;
+                let levelArray = [GameLevelStarWars];
+                let gameInGame = new GameControl(gameEnv.game, levelArray);
+                primaryGame.pause();
+            
+                // Start the new game
+                gameInGame.start();
+
+                // Setup return to main game after mini-game ends
+                gameInGame.gameOver = function() {
+                    primaryGame.resume();
+                };
+            }
+        };
         
 
         // invisible sprite for door collision that handles going to lv6 battle room
@@ -305,7 +358,8 @@ class MansionLevel6 {
         this.classes = [
             {class: GameEnvBackground, data: image_data_chamber},
             {class: Player, data: sprite_data_mc},
-            // {class: Npc, data: sprite_data_zombie},
+            //{class: Npc, data: sprite_data_zombie},
+            {class: Npc, data: sprite_data_zombie},
             {class: Npc, data: sprite_data_bossdoor}
         ];
 
