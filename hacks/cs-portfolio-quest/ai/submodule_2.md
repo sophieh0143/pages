@@ -12,7 +12,7 @@ author: "Thinkers Team"
 date: 2025-10-21
 ---
 
-## Module 2: Prompt Engineering (45 min)
+## Module 2: Prompt Engineering
 
 ### Real Talk on Prompts
 
@@ -34,17 +34,27 @@ Most students waste time with vague prompts. Winners get specific. The differenc
   }
   
   .bad-prompt {
-    background: #f8d7da;
-    border-left: 4px solid #dc3545;
+    background: #ffe0e0;
+    border-left: 4px solid #ff4444;
     padding: 20px;
     border-radius: 8px;
+    color: #000;
+  }
+  
+  .bad-prompt h4 {
+    color: #c41e3a;
   }
   
   .good-prompt {
-    background: #d1ecf1;
-    border-left: 4px solid #0c5460;
+    background: #e0f7fa;
+    border-left: 4px solid #00bcd4;
     padding: 20px;
     border-radius: 8px;
+    color: #000;
+  }
+  
+  .good-prompt h4 {
+    color: #00838f;
   }
   
   .component-box {
@@ -91,7 +101,7 @@ Most students waste time with vague prompts. Winners get specific. The differenc
 
 <div class="prompt-container">
 
-### The Difference Between Bad and Good Prompts
+## The Difference Between Bad and Good Prompts
 
 <div class="comparison-box">
   <div class="bad-prompt">
@@ -109,7 +119,7 @@ Most students waste time with vague prompts. Winners get specific. The differenc
 
 ---
 
-### The 4 Components Every Prompt Needs
+## The 4 Components Every Prompt Needs
 
 <div class="component-box">
   <h4>1. 📋 Context</h4>
@@ -153,7 +163,7 @@ Most students waste time with vague prompts. Winners get specific. The differenc
 
 ---
 
-### Iterative Refinement In Practice
+## Iterative Refinement In Practice
 
 **Most students give up after one bad AI response. Winners iterate.**
 
