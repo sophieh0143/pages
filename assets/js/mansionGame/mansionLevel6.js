@@ -107,7 +107,7 @@ class MansionLevel6 {
             INIT_POSITION: { x: (width * 1 / 2), y: (height * 1 / 2)},
             orientation: {rows: 1, columns: 3 },
             down: {row: 0, start: 0, columns: 3 },
-            hitbox: {widthPercentage: 0.75, heightPercentage: 0.45},
+            hitbox: {widthPercentage: 0.99, heightPercentage: 0.99},
             // Add dialogues array for random messages
             dialogues: [
                 "Beep boop! I have important data about the Death Star plans.",
