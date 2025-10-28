@@ -2,7 +2,7 @@
 layout: post
 title: "Portland"
 description: "Submodule 3 of Analytics/Admin Mini-Quest"
-permalink: /west-coast/analytics/submodule_3/
+permalink: /west-coast/analytics/sandiego/
 parent: "Analytics/Admin"
 team: "Curators"
 submodule: 3

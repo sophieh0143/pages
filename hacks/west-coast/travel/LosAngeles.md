@@ -2,7 +2,7 @@
 layout: post
 title: "Los Angeles"
 description: "Submodule 1 of Analytics/Admin Mini-Quest"
-permalink: /west-coast/analytics/submodule_1/
+permalink: /west-coast/analytics/losangeles/
 parent: "Analytics/Admin"
 team: "Cool Collaborators"
 submodule: 1

@@ -16,7 +16,7 @@ lxdData:
       Description: "Team-defined analytics and mastery module"
       Categories: ["Certificate", "Integration", "Achievement"]
       Video: "/west-coast/analytics/submodule_1-video"
-      Lessons: "/west-coast/analytics/submodule_1/"
+      Lessons: "/west-coast/analytics/sandiego/"
       Image: "/images/west-coast/analytics.svg"
       Alt: "Analytics Submodule 1"
     - Title: "Los Angeles"
@@ -25,7 +25,7 @@ lxdData:
       Description: "Team-defined analytics and mastery module"
       Categories: ["Certificate", "Integration", "Achievement"]
       Video: "/west-coast/analytics/submodule_2-video"
-      Lessons: "/west-coast/analytics/submodule_2/"
+      Lessons: "/west-coast/analytics/losangeles/"
       Image: "/images/west-coast/analytics.svg"
       Alt: "Analytics Submodule 2"
     - Title: "San Francisco"
