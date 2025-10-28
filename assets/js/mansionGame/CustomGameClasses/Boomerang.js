@@ -1,5 +1,5 @@
-import Character from './Character.js';  // We do this as a Character can actually draw itself to the screen
-import GameObject from './GameObject.js';
+import Character from '../GameEngine/Character.js';  // We do this as a Character can actually draw itself to the screen
+import GameObject from '../GameEngine/GameObject.js';
 
 /*
 boomerang objects are projectiles that travel in an ellipse from

@@ -1,4 +1,4 @@
-import Boomerang from './Boomerang.js';
+import Boomerang from '../CustomGameClasses/Boomerang.js';
 
 // Template class -- VERIFY THIS
 class Projectile extends Boomerang {
