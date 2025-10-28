@@ -107,7 +107,7 @@ class MansionLevel6 {
             INIT_POSITION: { x: (width * 1 / 2), y: (height * 1 / 2)},
             orientation: {rows: 1, columns: 3 },
             down: {row: 0, start: 0, columns: 3 },
-            hitbox: {widthPercentage: 0.99, heightPercentage: 0.99},
+            hitbox: {widthPercentage: 0.2, heightPercentage: 0.2},
             // Add dialogues array for random messages
             dialogues: [
                 "Beep boop! I have important data about the Death Star plans.",
@@ -120,28 +120,26 @@ class MansionLevel6 {
                 "Imperial forces are on high alert. We must be cautious."
             ],
             reaction: function() {
-                // Use dialogue system instead of alert
-                if (this.dialogueSystem) {
-                    this.showReactionDialogue();
-                } else {
-                    console.log(sprite_greet_r2d2);
-                }
+                // Don't do anything on touch
+                // The Zombie only speaks when interacted with
             },
             interact: function() {
-                // KEEP ORIGINAL GAME-IN-GAME FUNCTIONALITY
-                // Set a primary game reference from the game environment
-                let primaryGame = gameEnv.gameControl;
-                let levelArray = [GameLevelStarWars];
-                let gameInGame = new GameControl(gameEnv.game, levelArray);
-                primaryGame.pause();
-            
-                // Start the new game
-                gameInGame.start();
-
-                // Setup return to main game after mini-game ends
-                gameInGame.gameOver = function() {
-                    primaryGame.resume();
-                };
+                // Clear any existing dialogue first to prevent duplicates
+                if (this.dialogueSystem && this.dialogueSystem.isDialogueOpen()) {
+                    this.dialogueSystem.closeDialogue();
+                }
+                
+                // Create a new dialogue system if needed
+                if (!this.dialogueSystem) {
+                    this.dialogueSystem = new DialogueSystem();
+                }
+                
+                // Show portal dialogue with buttons
+                this.dialogueSystem.showDialogue(
+                    "Are you ready to battle the Reaper?",
+                    "Door",
+                    this.spriteData.src
+                );
             }
         };
         
