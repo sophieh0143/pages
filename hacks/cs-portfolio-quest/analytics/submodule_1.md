@@ -1,4 +1,6 @@
 ---
+layout: cs-portfolio-lesson
+title: "Submodule 1"
 layout: post
 title: "Submodule 1: Overall Analytics & Grades"
 description: "Submodule 1 of Analytics/Admin Mini-Quest"
