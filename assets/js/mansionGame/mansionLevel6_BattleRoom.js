@@ -44,6 +44,7 @@ class MansionLevel6_BattleRoom {
         };
 
         // Define the Reaper boss (enabled for the battle room)
+        /*
         const sprite_src_enemy = path + "/images/mansionGame/ReaperMainBody.png";
         const BOSS_SCALE_FACTOR = 2;  // Make boss bigger
         const sprite_boss_data = {
@@ -87,9 +88,7 @@ class MansionLevel6_BattleRoom {
 
         this.classes = [
             {class: Player, data: sprite_data_mc},
-            {class: Boss, data: sprite_boss_data},
-            //{class: Arm, data: sprite_arm_data},
-            {class: GameEnvBackground, data: image_data_floor}
+            {class: Boss, data: sprite_boss_data}
         ];
 
     };
