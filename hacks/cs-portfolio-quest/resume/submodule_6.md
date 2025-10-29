@@ -9,142 +9,159 @@ submodule: 6
 categories: [CSP, Submodule, ResumeBuilding]
 tags: [resume, submodule, grinders]
 author: "Grinders Team"
-date: 2025-10-21
+date: 2025-10-29
 ---
 
-# Submodule 6
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-# Performing Well in a Tech Interview
+<div class="max-w-3xl mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-2">Interview Preparation Mini-Quest</h1>
+  <p class="text-gray-600 mb-4">Step by step, practice your pitch, demo script, body language, and technical explanations. Autosaves locally.</p>
 
-This lesson teaches how to communicate clearly and professionally during a technical interview. It focuses on vocal tone, pacing, body language, what artifacts or demos to show, and a step-by-step preparation checklist. Use the exercises to practice and build confidence.
+  <!-- Progress -->
+  <div class="border rounded p-3 mb-4">
+    <div class="flex justify-between text-sm">
+      <span>Progress</span><span id="progressLabel">Step 1 / 6</span>
+    </div>
+    <div class="w-full bg-gray-200 rounded h-2 mt-2">
+      <div id="progressBar" class="bg-blue-600 h-2 rounded" style="width:17%"></div>
+    </div>
+  </div>
 
-## Learning Goals
+  <!-- STEP 1: MINDSET -->
+  <section data-step="0" class="space-y-3">
+    <h2 class="text-xl font-semibold">Mindset Before the Interview</h2>
+    <p>Interviews are a conversation, not an interrogation. Pausing to think is better than rushing a wrong answer. Reflect:</p>
+    <textarea id="mindset" rows="3" class="w-full border rounded px-3 py-2" placeholder="My mindset..."></textarea>
+  </section>
 
-- Understand how tone and pacing affect perceived competence and fit.
-- Use body language to project confidence while staying approachable.
-- Know what to show (projects, code, demos) and how to present them.
-- Follow a repeatable preparation checklist before interviews.
-- Practice with mock prompts and review feedback using the exercises.
+  <!-- STEP 2: VOCAL TONE -->
+  <section data-step="1" class="space-y-3 hidden">
+    <h2 class="text-xl font-semibold">Vocal Tone & Pacing</h2>
+    <p>Speak calm, confident, and clear. Use short sentences, signposting, and moderate volume.</p>
+    <label class="block text-sm font-medium">Your Notes:</label>
+    <textarea id="toneNotes" rows="3" class="w-full border rounded px-3 py-2" placeholder="Notes on tone, pacing..."></textarea>
+  </section>
 
-## 1. Mindset Before the Interview
+  <!-- STEP 3: BODY LANGUAGE -->
+  <section data-step="2" class="space-y-3 hidden">
+    <h2 class="text-xl font-semibold">Body Language</h2>
+    <p>Open posture, eye contact, gestures, and smiling help communicate confidence.</p>
+    <label class="block text-sm font-medium">Two improvements I will try:</label>
+    <textarea id="bodyNotes" rows="3" class="w-full border rounded px-3 py-2" placeholder="e.g., keep hands visible, avoid fidgeting"></textarea>
+  </section>
 
-- Treat the interview as a conversation, not an interrogation. You're both evaluating fit.
-- Aim to be curious, clear, and honest. If you don't know something, show how you'd find the answer.
-- Remember: it’s okay to pause to think — silence for a few seconds is better than rushing a wrong answer.
+  <!-- STEP 4: PROJECT DEMOS -->
+  <section data-step="3" class="space-y-3 hidden">
+    <h2 class="text-xl font-semibold">Demo Script (60–90s)</h2>
+    <p>Include purpose, your role, tech stack, and impact metric.</p>
+    <label class="block text-sm font-medium">Your Demo Script:</label>
+    <textarea id="demoScript" rows="5" class="w-full border rounded px-3 py-2" placeholder="Project: ..."></textarea>
+  </section>
 
-## 2. Vocal Tone, Pacing, and Language
+  <!-- STEP 5: PRACTICE EXERCISES -->
+  <section data-step="4" class="space-y-3 hidden">
+    <h2 class="text-xl font-semibold">Practice Exercises</h2>
+    <p>Try recording a 60-second pitch, solving a mock coding problem aloud, and reviewing your video for tone, pacing, and posture.</p>
+    <label class="block text-sm font-medium">Reflection / Notes:</label>
+    <textarea id="practiceNotes" rows="5" class="w-full border rounded px-3 py-2" placeholder="Notes on pitch, coding, posture..."></textarea>
+  </section>
 
-- Tone: Use a calm, confident tone. Be enthusiastic when describing things you built, neutral and curious when exploring unknowns.
-- Pacing: Speak moderately — not too fast (nervous), not too slow (uncertain). Use short, clear sentences.
-- Volume: Project your voice slightly more than normal for video calls; ensure you’re not too loud on in-person interviews.
-- Phrase choices:
-  - Use “I” to own your work (e.g., "I designed the data model...").
-  - Use hedging sparingly: replace "I think" with "My approach would be..." when you’re confident.
-  - When asked about tradeoffs, structure answers: state option, list pros, list cons, state your preference and why.
+  <!-- STEP 6: REVIEW & EXPORT -->
+  <section data-step="5" class="space-y-3 hidden">
+    <h2 class="text-xl font-semibold">Review & Export</h2>
+    <div class="border rounded p-3">
+      <h3 class="font-semibold mb-2">All Inputs</h3>
+      <div id="reviewAll" class="text-sm space-y-1"></div>
+    </div>
+    <div class="grid md:grid-cols-3 gap-2 mt-2">
+      <button id="saveDraft" class="px-3 py-2 border rounded">Save Draft</button>
+      <button id="exportJson" class="px-3 py-2 border rounded">Export JSON</button>
+    </div>
+    <textarea id="jsonPreview" class="w-full h-40 border rounded p-2 text-xs mt-2" readonly placeholder="JSON preview..."></textarea>
+  </section>
 
-### Quick voice checklist
+  <!-- Nav -->
+  <div class="flex justify-between mt-4">
+    <button id="prevBtn" class="px-3 py-2 border rounded" disabled>Previous</button>
+    <button id="nextBtn" class="px-3 py-2 border rounded">Next</button>
+  </div>
+</div>
 
-- Breathe before answering.
-- Start with a one-sentence summary, then expand with details.
-- Use signposting: "First I'll..., then I'll..." to keep the interviewer oriented.
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  const steps = document.querySelectorAll('section[data-step]');
+  let step = 0;
 
-## 3. Body Language (In-person & Video)
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progressBar = document.getElementById('progressBar');
+  const progressLabel = document.getElementById('progressLabel');
 
-General principles:
-- Open posture: avoid crossing arms; keep a relaxed, straight back.
-- Eye contact: aim for regular eye contact; on video, look at the camera occasionally, but primarily engage with the interviewer on-screen.
-- Hands: use natural gestures to emphasize points; avoid fidgeting.
-- Smile: a small, genuine smile at natural moments improves warmth and rapport.
+  const ids = ["mindset","toneNotes","bodyNotes","demoScript","practiceNotes"];
+  const state = {};
 
-Video-specific tips:
-- Camera at eye level or slightly above.
-- Sit at a comfortable distance so your upper torso and hands are visible when gesturing.
-- Good lighting from the front; reduce backlighting.
-- Mute notifications and close distracting tabs.
+  // Restore from localStorage
+  try{
+    const saved = JSON.parse(localStorage.getItem('sub6_state'));
+    if(saved) Object.assign(state,saved);
+    ids.forEach(id=>{
+      if(state[id]) document.getElementById(id).value = state[id];
+    });
+  }catch(e){}
 
-## 4. What to Show: Projects, Code, and Demos
+  function showStep(i){
+    step = Math.max(0,Math.min(steps.length-1,i));
+    steps.forEach((s,idx)=>s.classList.toggle('hidden',idx!==step));
+    prevBtn.disabled = step===0;
+    nextBtn.textContent = step===steps.length-1 ? "Finish" : "Next";
+    const pct = ((step+1)/steps.length)*100;
+    progressBar.style.width = pct + '%';
+    progressLabel.textContent = `Step ${step+1} / ${steps.length}`;
+    updateReview();
+  }
 
-- Prioritize polished, demonstrable work: a working demo trumps raw code in many contexts.
-- For code reviews or whiteboard problems:
-  - Explain the problem and constraints first.
-  - Outline a high-level approach before writing code.
-  - Walk through edge cases and complexity (time/space).
-- If showing a project/demo:
-  - Prepare a 60–90 second "demo script" that highlights purpose, your role, tech stack, and one meaningful metric or lesson.
-  - Have a short list of 2–3 technical decisions you can explain (architecture, a tricky bug, performance tradeoff).
+  function updateReview(){
+    const reviewAll = document.getElementById('reviewAll');
+    if(!reviewAll) return;
+    const out = ids.map(id=>{
+      const el = document.getElementById(id);
+      return `<div><b>${id.replace(/([A-Z])/g,' $1')}:</b> ${el.value||'—'}</div>`;
+    }).join('');
+    reviewAll.innerHTML = out;
+    document.getElementById('jsonPreview').value = JSON.stringify(ids.reduce((acc,id)=>{acc[id]=document.getElementById(id).value; return acc;},{ }), null,2);
+  }
 
-## 5. Preparing Your Artifacts (Practical Steps)
+  nextBtn.addEventListener('click', ()=>{
+    if(step<steps.length-1) showStep(step+1);
+    else alert("Completed! JSON preview updated.");
+  });
+  prevBtn.addEventListener('click', ()=>showStep(step-1));
 
-- Local copies: Keep a minimal, well-organized repo or a prepared demo link (hosted or local) ready to share.
-- README: Ensure each showcased project has a short README with setup and a short description of your role.
-- Shortlist: Pick 3 projects you know deeply and can discuss for 10+ minutes each.
-- Code hygiene: Clean, commented, and small focused files are easier to review live.
+  ids.forEach(id=>{
+    const el=document.getElementById(id);
+    el.addEventListener('input', ()=>{
+      state[id]=el.value;
+      localStorage.setItem('sub6_state',JSON.stringify(state));
+      updateReview();
+    });
+  });
 
-## 6. Common Interview Formats & How to Approach Them
+  document.getElementById('saveDraft').addEventListener('click', ()=>{
+    localStorage.setItem('sub6_state',JSON.stringify(state));
+    alert('Saved locally.');
+  });
 
-- Whiteboard/On-Call Coding:
-  - Talk through the approach out loud.
-  - Start with a simple solution, then optimize.
-- System design:
-  - Clarify requirements and constraints.
-  - Sketch components, data flow, and failure modes.
-- Behavioral/Culturally-fit:
-  - Use STAR (Situation, Task, Action, Result) for structured answers.
-- Pair-programming:
-  - Ask clarifying questions, communicate intent, and share your screen or cursor clearly.
+  document.getElementById('exportJson').addEventListener('click', ()=>{
+    const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'submodule6.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
 
-## 7. Short Scripts & Example Phrases
-
-- Opening introduction (30–45s): "Hi — I’m [Name]. I’m a software engineer with X years building Y. Recently I led the design of [project], where I focused on [area]. I’m excited to learn about this role and share how I can contribute."
-
-- When you need time to think: "Great question — let me take 15–20 seconds to think through the approach. I’ll outline the steps I’d take."
-
-- If you don’t know something: "I haven’t used that specific tool before, but here’s how I’d approach learning/using it: ..." or "I’d reach for [resource], run a small prototype, and validate assumptions."
-
-- Closing: "Thank you for the question. I enjoyed discussing X. May I ask about the team’s current priorities for this role?"
-
-## 8. Practice Exercises
-
-1. 60-Second Pitch
-   - Task: Record a 60-second intro that covers who you are, what you build, and a recent achievement.
-   - Success: Clear, 3–4 sentence narrative, 45–60 seconds.
-
-2. Mock Coding Round
-   - Task: Pair with a peer or record yourself solving an algorithm problem out loud. Focus on clarifying questions and talking through complexity.
-   - Success: You clearly state assumptions, outline an approach, and iterate to a working solution.
-
-3. Demo Walkthrough
-   - Task: Prepare a 90-second demo script for one project. Practice showing it in under 2 minutes.
-   - Success: Demo runs or plays smoothly; you emphasize impact and technical choices.
-
-4. Video Self-review
-   - Task: Conduct a mock interview on video, then watch the recording and note 3 things to improve (tone, pacing, posture).
-
-## 9. Printable Interview Prep Checklist
-
-- Logistics
-  - [ ] Confirm date/time and timezone
-  - [ ] Test camera, mic, and internet
-  - [ ] Close unnecessary apps and mute notifications
-- Artifacts
-  - [ ] Repo links ready
-  - [ ] Demo running locally or hosted link prepared
-  - [ ] Slide or notes with 3 projects and talking points
-- Mental prep
-  - [ ] 60-second intro practiced
-  - [ ] 2-3 STAR stories ready
-  - [ ] 10–15 minutes of problem-solving warmup (easy LeetCode)
-- On the call
-  - [ ] Breathe before speaking
-  - [ ] Use signposting when answering
-  - [ ] Ask clarifying questions early
-
-## 10. Feedback & Iteration
-
-- After each interview, write a quick self-review: what went well, what stumbled, and one specific action to improve.
-- Keep a short log of feedback and track measurable improvements (e.g., reduced filler words, faster whiteboard drafts).
-
-## 11. Additional Resources
-
-- Books: Cracking the Coding Interview (for practice problems), Decode/Encode for communication skills.
-- Websites: systemdesignprimer, curated demo-hosting (e.g., Netlify/GitHub Pages), and public coding challenge sites for warmups.
+  showStep(0);
+});
+</script>
