@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: cs-portfolio-lesson
 title: "Resume & Interview Prep"
 description: "Learn to rewrite resume bullets with metrics using STAR format and prepare for the three most common interview questions by recording and analyzing your responses."
 permalink: /cs-portfolio-quest/ai/submodule_1/
@@ -387,4 +387,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-{%- include tailwind/cs-portfolio-quest-lessons_info.html -%}
+

@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: cs-portfolio-lesson
 title: "Coding with AI - The Realistic Version"
 description: "Use the SPEC framework for code generation, follow a debugging template, and always run security checks. The key principle: understand and verify before using any AI-generated code."
 permalink: /cs-portfolio-quest/ai/submodule_4/
@@ -467,4 +467,3 @@ localStorage.setItem('ai-submodule-2-completed', 'true');
 
 </script>
 
-{%- include tailwind/cs-portfolio-quest-lessons_info.html -%}
