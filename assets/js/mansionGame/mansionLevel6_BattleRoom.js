@@ -2,6 +2,7 @@ import GameEnvBackground from "./GameEngine/GameEnvBackground.js";
 import Player from "./GameEngine/Player.js";
 import Boss from './CustomGameClasses/Boss.js';
 import Arm from './CustomGameClasses/Arm.js';
+import Enemy from './GameEngine/Enemy.js';
 
 class MansionLevel6_BattleRoom {
     constructor(gameEnv) {
@@ -73,14 +74,13 @@ class MansionLevel6_BattleRoom {
             SCALE_FACTOR: REAPER_SCALE_FACTOR,
             STEP_FACTOR: 800,
             ANIMATION_RATE: 30,
-            INIT_POSITION: {x: width * 0.7, y: width * 0.8},
+            INIT_POSITION: {x: width * 0.7, y: height * 0.8},
             pixels: {width: 300, height: 300},
             orientation: {rows: 1, columns: 1},
             hitbox: {widthPercentage: 0.45, heightPercentage: 0.2},
         }
 
         // --- Reaper Arms ---
-        /*
         const ARM_SCALE_FACTOR = 2;
         const sprite_arm_left_empty = path + "/images/mansionGame/ReaperLeftHandEmpty.png";
         const sprite_arm_left_scythe = path + "/images/mansionGame/ReaperLeftHandScythe.png";
@@ -120,7 +120,6 @@ class MansionLevel6_BattleRoom {
             emptySrc: sprite_arm_right_empty,
             weaponSrc: sprite_arm_right_scythe
         };
-        */
 
         this.classes = [
             {class: GameEnvBackground, data: image_data_floor},
@@ -128,7 +127,7 @@ class MansionLevel6_BattleRoom {
             // {class: Boss, data: sprite_boss_data},
             // {class: Arm, data: leftArmData},
             // {class: Arm, data: rightArmData},
-            // {class: Enemy, data: sprite_reaper_data},
+            //{class: Enemy, data: sprite_reaper_data},
         ];
     }
 }
