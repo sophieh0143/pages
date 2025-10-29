@@ -21,7 +21,19 @@ class Player extends Character {
         // Increment static player counter and assign unique id
         Player.playerCount = (Player.playerCount || 0) + 1;
         this.id = data?.id ? data.id.toLowerCase() : `player${Player.playerCount}`;
-        this.keypress = data?.keypress || {up: 87, left: 65, down: 83, right: 68};
+        // Accept either a single key code or an array of key codes per direction
+        const rawKeypress = data?.keypress || {up: 87, left: 65, down: 83, right: 68};
+        this.keypress = {
+            up: Array.isArray(rawKeypress.up) ? rawKeypress.up : [rawKeypress.up],
+            left: Array.isArray(rawKeypress.left) ? rawKeypress.left : [rawKeypress.left],
+            down: Array.isArray(rawKeypress.down) ? rawKeypress.down : [rawKeypress.down],
+            right: Array.isArray(rawKeypress.right) ? rawKeypress.right : [rawKeypress.right]
+        };
+        // Ensure arrow keys are supported in addition to WASD by default
+        if (!this.keypress.up.includes(38)) this.keypress.up.push(38); // Up Arrow
+        if (!this.keypress.left.includes(37)) this.keypress.left.push(37); // Left Arrow
+        if (!this.keypress.down.includes(40)) this.keypress.down.push(40); // Down Arrow
+        if (!this.keypress.right.includes(39)) this.keypress.right.push(39); // Right Arrow
         this.touchOptions = data?.touchOptions || {interactLabel: "E", position: "left"};
         this.touchOptions.id = `touch-controls-${this.id}`;
         this.touchOptions.mapping = this.keypress;
@@ -33,6 +45,18 @@ class Player extends Character {
         this.moved = false;
         // Initialize touch controls for mobile devices
         this.touchControls = new TouchControls(gameEnv, this.touchOptions);
+    }
+
+    /**
+     * Returns true if any of the mapped key codes for the given direction are currently pressed.
+     * @param {string} dir - one of 'up','left','down','right'
+     */
+    isDirectionPressed(dir) {
+        const codes = this.keypress?.[dir] || [];
+        for (let i = 0; i < codes.length; i++) {
+            if (this.pressedKeys[codes[i]]) return true;
+        }
+        return false;
     }
 
     /**
@@ -78,36 +102,36 @@ class Player extends Character {
         const xVel = this.xVelocity * 0.7;
 
         // Multi-key movements (diagonals: upLeft, upRight, downLeft, downRight)
-        if (this.pressedKeys[this.keypress.up] && this.pressedKeys[this.keypress.left]) {
+        if (this.isDirectionPressed('up') && this.isDirectionPressed('left')) {
             this.velocity.y -= this.yVelocity;
             this.velocity.x -= xVel;
             this.direction = 'upLeft';
-        } else if (this.pressedKeys[this.keypress.up] && this.pressedKeys[this.keypress.right]) {
+        } else if (this.isDirectionPressed('up') && this.isDirectionPressed('right')) {
             this.velocity.y -= this.yVelocity;
             this.velocity.x += xVel;
             this.direction = 'upRight';
-        } else if (this.pressedKeys[this.keypress.down] && this.pressedKeys[this.keypress.left]) {
+        } else if (this.isDirectionPressed('down') && this.isDirectionPressed('left')) {
             this.velocity.y += this.yVelocity;
             this.velocity.x -= xVel;
             this.direction = 'downLeft';
-        } else if (this.pressedKeys[this.keypress.down] && this.pressedKeys[this.keypress.right]) {
+        } else if (this.isDirectionPressed('down') && this.isDirectionPressed('right')) {
             this.velocity.y += this.yVelocity;
             this.velocity.x += xVel;
             this.direction = 'downRight';
         // Single key movements (left, right, up, down) 
-        } else if (this.pressedKeys[this.keypress.up]) {
+        } else if (this.isDirectionPressed('up')) {
             this.velocity.y -= this.yVelocity;
             this.direction = 'up';
             this.moved = true;
-        } else if (this.pressedKeys[this.keypress.left]) {
+        } else if (this.isDirectionPressed('left')) {
             this.velocity.x -= xVel;
             this.direction = 'left';
             this.moved = true;
-        } else if (this.pressedKeys[this.keypress.down]) {
+        } else if (this.isDirectionPressed('down')) {
             this.velocity.y += this.yVelocity;
             this.direction = 'down';
             this.moved = true;
-        } else if (this.pressedKeys[this.keypress.right]) {
+        } else if (this.isDirectionPressed('right')) {
             this.velocity.x += xVel;
             this.direction = 'right';
             this.moved = true;
