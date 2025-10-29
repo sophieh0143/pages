@@ -26,7 +26,7 @@ lxdData:
       Genre: "User Interface"
       Level: 3
       Description: "Learn UI, Fun Destinations, Travel Quest"
-      Lessons: "/west-coast/analytics/submodule_3/"
+      Lessons: "/west-coast/analytics/sanfrancisco/"
       Image: "/images/west-coast/sanfranciso.png"
     - Title: "Seattle"
       Genre: "User Interface"
