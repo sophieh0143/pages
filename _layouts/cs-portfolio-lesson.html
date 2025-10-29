@@ -117,12 +117,9 @@ layout: opencs
         {{ content }}
       </div>
 
-      <div class="max-w-3xl mx-auto mt-8 flex items-center justify-between gap-4">
-        <button id="mark-complete-btn"
-                class="iridescent text-white px-4 py-2 rounded-lg font-semibold opacity-50 pointer-events-none"
-                aria-disabled="true">
-          Mark Lesson {{ page.submodule }} Complete
-        </button>
+      <!-- Completion notification toast -->
+      <div id="completion-toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-32 transition-transform duration-300 z-50" style="display: none;">
+        <span class="font-semibold">✓ Lesson {{ page.submodule }} completed!</span>
       </div>
     </div>
   </div>
@@ -136,7 +133,7 @@ layout: opencs
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
 
-<!-- ===== Mini-quest locking/progress (unchanged) ===== -->
+<!-- ===== Mini-quest locking/progress (AUTO-COMPLETE ON SCROLL) ===== -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const wrap = document.getElementById("lesson-container");
@@ -157,39 +154,54 @@ document.addEventListener("DOMContentLoaded", function () {
   const isDone = (m,n) => localStorage.getItem(k(m,n)) === "done";
   const markDone = (m,n) => localStorage.setItem(k(m,n), "done");
 
-  const btn = document.getElementById("mark-complete-btn");
+  const toast = document.getElementById("completion-toast");
+  let hasCompleted = isDone(miniQuest, lessonNumber);
+  let hasShownToast = false;
 
-  function setEnabled(enabled) {
-    if (!btn) return;
-    if (enabled) {
-      btn.classList.remove("opacity-50","pointer-events-none");
-      btn.setAttribute("aria-disabled","false");
-    } else {
-      btn.classList.add("opacity-50","pointer-events-none");
-      btn.setAttribute("aria-disabled","true");
-    }
+  function showCompletionToast() {
+    if (!toast || hasShownToast) return;
+    hasShownToast = true;
+    
+    toast.style.display = "block";
+    setTimeout(() => {
+      toast.style.transform = "translateY(0)";
+    }, 10);
+    
+    setTimeout(() => {
+      toast.style.transform = "translateY(150%)";
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 300);
+    }, 3000);
   }
-
-  if (isDone(miniQuest, lessonNumber)) {
-    btn.textContent = "Completed ✓";
-    setEnabled(true);
-  }
-
-  btn.addEventListener("click", function () {
-    markDone(miniQuest, lessonNumber);
-    btn.textContent = "Completed ✓";
-    setEnabled(true);
-    alert("Nice! This lesson is marked complete.");
-  });
 
   const activateOnScroll = () => {
-    const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 80);
-    if (scrolledToBottom || isDone(miniQuest, lessonNumber)) {
-      setEnabled(true);
+    // If already completed, don't trigger again
+    if (hasCompleted) return;
+
+    const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 100);
+    
+    if (scrolledToBottom) {
+      // Mark as complete (same variable/storage as button used)
+      markDone(miniQuest, lessonNumber);
+      hasCompleted = true;
+      
+      // Show notification
+      showCompletionToast();
+      
+      // Remove listener - no longer needed
       window.removeEventListener("scroll", activateOnScroll);
+      window.removeEventListener("resize", activateOnScroll);
     }
   };
-  window.addEventListener("scroll", activateOnScroll, { passive: true });
+
+  // Check immediately on load (in case page is short)
   activateOnScroll();
+  
+  // Listen for scroll
+  window.addEventListener("scroll", activateOnScroll, { passive: true });
+  
+  // Also check on resize
+  window.addEventListener("resize", activateOnScroll, { passive: true });
 });
 </script>
