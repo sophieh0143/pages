@@ -2,7 +2,7 @@
 layout: post
 title: "Submodule 4"
 description: "Submodule 4 of AI Usage Mini-Quest"
-permalink: /digital-famine/microblog/submodule_4/
+permalink: /digital-famine/microblog/microb/
 parent: "AI Usage"
 team: "Thinkers"
 submodule: 4

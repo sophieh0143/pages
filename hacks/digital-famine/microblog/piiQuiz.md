@@ -30,7 +30,7 @@ breadcrumb: true
             padding: 20px;
         }
         .quiz-container {
-            background-color: #f5f5f5;
+            background-color: #e270eaff;
             padding: 20px;
             border-radius: 8px;
             margin-top: 20px;
