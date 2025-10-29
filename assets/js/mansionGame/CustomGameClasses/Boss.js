@@ -2,18 +2,6 @@ import Enemy from '../GameEngine/Enemy.js';
 import Boomerang from '../CustomGameClasses/Boomerang.js';
 import Projectile from '../CustomGameClasses/Projectile.js';
 
-/*  This is a file for our level made by the Tinkerers (lvl6)
-    Do not delete this file.
-    - Tinkerers
-
-    Boomerang class: used to make the scythe
-    Projectile class: used to make the arrows/fireballs
-    Arm Class: used to make the arm for the boss
-    Boss Class: used to make the Reaper boss
-
-*/
-
-// The Reaper is a more powerful enemy that moves towards the player and performs various attacks
 class Boss extends Enemy {
     constructor(data = null, gameEnv = null) {
         super(data, gameEnv);
@@ -23,50 +11,52 @@ class Boss extends Enemy {
         this.healthPoints = this.fullHealth;
         this.arrows = [];
         this.fireballs = [];
-        this.angerModifier = 1;  // Increases when hp is low
-        this.projectileSpeed = data?.projectileSpeed || 5;
         this.scythes = [];
-        this.lastAttackTime = 0;
-        this.attackInterval = data?.attackInterval || 2000;
-        this.projectileTypes = data?.projectileTypes || ['FIREBALL', 'ARROW'];
         this.arms = [];
-        
-        // Start attack pattern
-        this.startAttackPattern();
+        this.angerModifier = 1;
+        this.attackInterval = data?.attackInterval || 2000;
+        this.lastAttackTime = Date.now();
     }
 
-    // Overwrite the update method to add movement towards the nearest player
-    startAttackPattern() {
-        // Create periodic attacks
-        setInterval(() => {
-            if (this.healthPoints <= 0) return; // Stop attacks if dead
-            
-            const now = Date.now();
-            if (now - this.lastAttackTime >= this.attackInterval) {
-                this.lastAttackTime = now;
-                
-                // Find nearest player for target
-                const target = this.findNearestPlayer();
-                if (!target) return;
+    update() {
+        this.draw();
 
-                // Choose attack based on stage and random chance
-                const rand = Math.random();
-                if (this.stage >= 3 && rand < 0.3) {
-                    this.scytheAttack(target);
-                } else if (rand < 0.6) {
-                    this.fireballAttack(target);
-                } else {
-                    this.arrowAttack(target);
-                }
-            }
-        }, 100); // Check every 100ms
+        // Update stage, attack interval, and anger modifier
+        const healthRatio = this.healthPoints / this.fullHealth;
+        this.stage = healthRatio < 0.33 ? 3 : (healthRatio < 0.66 ? 2 : 1);
+        this.attackInterval = this.stage === 3 ? 1000 : this.stage === 2 ? 1500 : 2000;
+        this.angerModifier = this.stage === 3 ? 2 : 1;
+
+        // Update projectiles
+        [...this.fireballs, ...this.arrows].forEach(p => p.update());
+        this.fireballs = this.fireballs.filter(p => !p.revComplete);
+        this.arrows = this.arrows.filter(p => !p.revComplete);
+
+        // Update scythes
+        this.scythes.forEach(s => s.update());
+        this.scythes = this.scythes.filter(s => !s.revComplete);
+        if (this.scythes.length === 0) this.isThrowingScythe = false;
+
+        // Update arms
+        this.arms.forEach(a => a.update(this.position.x, this.position.y));
+
+        // Perform attacks
+        const now = Date.now();
+        if (now - this.lastAttackTime >= this.attackInterval) {
+            const target = this.findNearestPlayer();
+            if (target) this.performAttack(target);
+            this.lastAttackTime = now;
+        }
+
+        // Move toward nearest player if not throwing scythe
+        if (!this.isThrowingScythe) {
+            const target = this.findNearestPlayer();
+            if (target) this.moveToward(target, 0.25); // Adjust speed as needed
+        }
     }
 
     findNearestPlayer() {
-        const players = this.gameEnv.gameObjects.filter(obj => 
-            obj.constructor.name === 'Player'
-        );
-        
+        const players = this.gameEnv.gameObjects.filter(obj => obj.constructor.name === 'Player');
         if (players.length === 0) return null;
 
         let nearest = players[0];
@@ -75,132 +65,52 @@ class Boss extends Enemy {
         for (const player of players) {
             const dx = player.position.x - this.position.x;
             const dy = player.position.y - this.position.y;
-            const dist = Math.sqrt(dx*dx + dy*dy);
+            const dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < minDist) {
                 minDist = dist;
                 nearest = player;
             }
         }
-        
+
         return nearest;
     }
 
-    update() {
-        // Start by drawing the enemy to the screen
-        this.draw();
-
-        // Set the stage & update angerModifer
-        const healthRatio = this.healthPoints / this.fullHealth;
-        if (healthRatio < 0.66) {
-            this.stage = 2;
-            this.attackInterval = 1500; // Attack faster
-        } 
-        if (healthRatio < 0.33) {
-            this.stage = 3;
-            this.angerModifier = 2;
-            this.attackInterval = 1000; // Even faster
-        } 
-        if (this.healthPoints <= 0) {
-            this.stage = 4;
-            this.angerModifier = 1;
-        }
-
-        // Update all projectiles
-        [...this.fireballs, ...this.arrows].forEach((projectile, index) => {
-            if (projectile.revComplete) {
-                projectile.destroy();
-                if (this.fireballs.includes(projectile)) {
-                    this.fireballs.splice(this.fireballs.indexOf(projectile), 1);
-                } else {
-                    this.arrows.splice(this.arrows.indexOf(projectile), 1);
-                }
-            } else {
-                projectile.update();
-            }
-        });
-
-        // Update the arms
-        [...this.arms].forEach((arm, index) => {
-            arm.update();
-        });
-
-        // If the Reaper is throwing the scythe, then don't move (to simplify calculations)
-        if (this.isThrowingScythe) {
-
-            let scythesToRemove = [];
-
-            this.scythes.forEach(element => {
-                element.update();
-                if (element.revComplete){
-                    scythesToRemove.push(element);
-                }
-            });
-
-            scythesToRemove.forEach(element => {
-                element.destroy();
-                this.scythes.splice(1, this.scythes.indexOf(element));
-            });
-
+    performAttack(target) {
+        const rand = Math.random();
+        if (this.stage >= 3 && rand < 0.3) {
+            this.scytheAttack(target);
+        } else if (rand < 0.6) {
+            this.fireballAttack(target);
         } else {
-
-            // Direct copy-paste from the Enderman in the adventure game -- VERIFY THIS WORKS
-            // Find all player objects
-            const players = this.gameEnv.gameObjects.filter(obj => 
-                obj.constructor.name === 'Player'
-            );
-
-            if (players.length === 0) return;
-        
-
-            // Find nearest player
-            let nearest = players[0];
-            let minDist = Infinity;
-
-            for (const player of players) {
-                const dx = player.position.x - this.position.x;
-                const dy = player.position.y - this.position.y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                if (dist < minDist) {
-                    minDist = dist;
-                    nearest = player;
-                }
-            }
-
-            // Move towards nearest player
-            const Reaperspeed = 0.25; // Adjust speed as needed -- Enderman speed from adventureGame: 1.5
-            const dx = nearest.position.x - this.position.x;
-            const dy = nearest.position.y - this.position.y;
-            const ReaperPlayerangle = Math.atan2(dy, dx);
-
-            // Update position
-            this.position.x += Math.cos(ReaperPlayerangle) * Reaperspeed;
-            this.position.y += Math.sin(ReaperPlayerangle) * Reaperspeed;
+            this.arrowAttack(target);
         }
     }
 
-    // For now, disable the Reaper from exploding (we may change this later)
-    explode(x, y) {
-        // We don't want our Reaper exploding
+    moveToward(target, speed) {
+        const dx = target.position.x - this.position.x;
+        const dy = target.position.y - this.position.y;
+        const angle = Math.atan2(dy, dx);
+        this.position.x += Math.cos(angle) * speed;
+        this.position.y += Math.sin(angle) * speed;
+    }
+
+    explode() {
         throw new Error("Reapers cannot explode! (yet :})");
     }
 
-    // Now we'll define attacks, starting with the scythe
     scytheAttack(target) {
         this.scythes.push(new Boomerang(this.gameEnv, target.position.x, target.position.y, this.position.x, this.position.y));
         this.isThrowingScythe = true;
     }
 
-    // This is the fireball attack, create a new Fireball
     fireballAttack(target) {
         this.fireballs.push(new Projectile(this.gameEnv, target.position.x, target.position.y, this.position.x, this.position.y, "FIREBALL"));
     }
 
-    // This is the arrow attack, create a new arrow
     arrowAttack(target) {
         this.arrows.push(new Projectile(this.gameEnv, target.position.x, target.position.y, this.position.x, this.position.y, "ARROW"));
     }
 
-    // This will create a new arm
     addArm(arm) {
         this.arms.push(arm);
     }

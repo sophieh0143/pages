@@ -1,66 +1,75 @@
-import Character from '../GameEngine/Character.js';  // We do this as a Character can actually draw itself to the screen
-import GameObject from '../GameEngine/GameObject.js';
+import Character from '../GameEngine/Character.js';
 
 /*
-    This is a file for our level made by the Tinkerers (lvl6)
-    Do not delete this file.
-    - Tinkerers
-
-    Boomerang class: used to make the scythe
-    Projectile class: used to make the arrows/fireballs
-    Arm Class: used to make the arm for the boss
-    Boss Class: used to make the Reaper boss
-
-boomerang objects are projectiles that travel in an ellipse from
-(sourcex, sourcey) to (targetx, targety)
-
-Used to create the scythe in Quest of Spook final boss battle (tinkerers)
+    Boomerang class for the Reaper boss scythe attack
+    - Travels along an elliptical path from boss to target
+    - revComplete becomes true once it completes one revolution
 */
 
-// Template class -- VERIFY THIS
 class Boomerang extends Character {
     constructor(gameEnv = null, targetx, targety, sourcex, sourcey) {
-        super(gameEnv);
-        // Add code here for the Scythe the Reaper weilds
+        // Create placeholder sprite data for the boomerang
+        const data = {
+            id: 'scythe',
+            pixels: { width: 32, height: 32 },
+            SCALE_FACTOR: 1,
+            ANIMATION_RATE: 1,
+            INIT_POSITION: { x: sourcex, y: sourcey },
+            fillStyle: 'gray', // simple visual
+        };
+        super(data, gameEnv);
 
-        // finalized ellipse attributes, DO NOT CHANGE this - tinkerers
-        this.target_coords = (targetx, targety); // player coords at scythe thrown
-        this.source_coords = (sourcex, sourcey); // reaper coords at scythe thrown
-        this.ellipse_center = ((targetx+sourcex)/2, (targety+sourcey)/2);
-        this.ellipse_width = Math.sqrt((targetx-sourcex)**2 + (targety-sourcey)**2);
-        this.ellipse_height = this.ellipse_height/10;
-        this.ellipse_tilt = Math.atan((sourcey-targety)/(sourcex-targetx));
+        // Store coordinates
+        this.source_coords = { x: sourcex, y: sourcey };
+        this.target_coords = { x: targetx, y: targety };
+
+        // Ellipse calculations
+        this.ellipse_center = {
+            x: (sourcex + targetx) / 2,
+            y: (sourcey + targety) / 2
+        };
+
+        this.ellipse_width = Math.sqrt((targetx - sourcex) ** 2 + (targety - sourcey) ** 2);
+        this.ellipse_height = this.ellipse_width / 4; // arbitrary height, can tweak
+        this.ellipse_tilt = Math.atan2(targety - sourcey, targetx - sourcex);
+
         this.radian_prog = 0;
-        this.radian_limit = 2*Math.PI;
-        
+        this.radian_limit = 2 * Math.PI;
         this.projectileSpeed = 0.05;
 
         this.revComplete = false;
     }
 
-    update(){
-        if (this.radian_prog > this.radian_limit){
+    update() {
+        if (this.revComplete) return;
+
+        if (this.radian_prog >= this.radian_limit) {
             this.revComplete = true;
         } else {
-            this.radian_prog += this.projectileSpeed; // experiment with diff radian increments to change speed
-            let x_coord = (
-                this.ellipse_center[0] + 
-                (this.ellipse_width/2)*Math.cos(this.radian_prog)*Math.cos(this.ellipse_tilt) -
-                (this.ellipse_height)*Math.sin(this.radian_prog)*Math.sin(this.ellipse_tilt)
-            );
+            this.radian_prog += this.projectileSpeed;
 
-            let y_coord = (
-                this.ellipse_center[1] +
-                (this.ellipse_width/2)*Math.cos(this.radian_prog)*Math.sin(this.ellipse_tilt) +
-                (this.ellipse_height)*Math.sin(this.radian_prog)*Math.cos(this.ellipse_tilt)
-            );
+            const cosProg = Math.cos(this.radian_prog);
+            const sinProg = Math.sin(this.radian_prog);
+            const cosTilt = Math.cos(this.ellipse_tilt);
+            const sinTilt = Math.sin(this.ellipse_tilt);
+
+            // Ellipse parametric equations
+            const x_coord = this.ellipse_center.x + 
+                            (this.ellipse_width / 2) * cosProg * cosTilt - 
+                            this.ellipse_height * sinProg * sinTilt;
+
+            const y_coord = this.ellipse_center.y + 
+                            (this.ellipse_width / 2) * cosProg * sinTilt + 
+                            this.ellipse_height * sinProg * cosTilt;
 
             this.position.x = x_coord;
             this.position.y = y_coord;
         }
-    }  
 
-    destroy(){
+        this.draw(); // draw the boomerang on screen
+    }
+
+    destroy() {
         super.destroy();
     }
 }
