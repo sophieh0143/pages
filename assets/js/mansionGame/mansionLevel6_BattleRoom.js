@@ -43,6 +43,7 @@ class MansionLevel6_BattleRoom {
         };
 
         // Define the Reaper boss (enabled for the battle room)
+        /*
         const sprite_src_enemy = path + "/images/mansionGame/ReaperMainBody.png";
         const BOSS_SCALE_FACTOR = 2;  // Make boss bigger
         const sprite_boss_data = {
@@ -62,11 +63,12 @@ class MansionLevel6_BattleRoom {
             projectileTypes: ['FIREBALL', 'ARROW'],  // Available projectile types
             initialHealth: 1500
         };
+        */
 
         this.classes = [
             {class: GameEnvBackground, data: image_data_floor},
             {class: Player, data: sprite_data_mc},
-            {class: Boss, data: sprite_boss_data}
+            // {class: Boss, data: sprite_boss_data}
         ];
 
     };
