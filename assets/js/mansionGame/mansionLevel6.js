@@ -211,6 +211,7 @@ class MansionLevel6 {
 
                                 console.log("Starting battle music...");
                                 const audio = new Audio(path + "/assets/sounds/mansionGame/SkeletonLord.mp3");
+                                audio.loop = true;
                                 audio.volume = 0.4;
                                 audio.play().catch(error => console.error('Failed to play audio:', error));
 
