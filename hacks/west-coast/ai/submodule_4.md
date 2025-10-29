@@ -12,6 +12,7 @@ tags: [ai, submodule, Generation]
 author: "TheSprinters"
 date: 2025-10-21
 ---
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -571,3 +572,996 @@ date: 2025-10-21
   </script>
 </body>
 </html>
+=======
+
+<style>
+  * { 
+    box-sizing: border-box;
+  }
+  
+  html, body { 
+    height: 100%;
+    margin: 0;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: #eee !important;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  
+  h1 {
+    color: #7dd3fc !important;
+    font-size: clamp(2rem, 2.5vw + 1rem, 3rem);
+    text-align: center;
+    margin: 0 0 12px;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    animation: fadeInDown 0.6s ease-out;
+  }
+  
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .subtitle {
+    text-align: center;
+    color: #d1d5db !important;
+    margin: 0 0 28px;
+    font-size: 1.1rem;
+  }
+  
+  h2 {
+    color: #4ecca3 !important;
+    font-size: clamp(1.4rem, 1.4vw + .9rem, 2rem);
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+  
+  h3 {
+    color: #93c5fd !important;
+    font-size: 1.3em;
+    margin: 0 0 15px;
+    font-weight: 500;
+  }
+  
+  h4 {
+    color: #4ecca3 !important;
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  
+  p {
+    color: #d1d5db !important;
+  }
+  
+  /* Progress Bar */
+  .progress-container {
+    background: rgba(30, 41, 59, 0.6) !important;
+    height: 12px;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 26px 0 36px;
+    backdrop-filter: blur(10px);
+    border: 1px solid #0f3460;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #4ecca3, #38f9d7) !important;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  
+  /* Step Dots */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(48px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  
+  .step-dot {
+    height: 44px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    color: #eee !important;
+    border: 2px solid transparent;
+    background: rgba(30, 41, 59, 0.6) !important;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .step-dot[aria-current="step"] {
+    background: linear-gradient(135deg, #4ecca3, #38f9d7) !important;
+    color: #1a1a2e !important;
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.08);
+    box-shadow: 0 4px 15px rgba(78, 204, 163, 0.4);
+  }
+  
+  .step-dot.completed {
+    background: rgba(78, 204, 163, 0.3) !important;
+    border-color: #4ecca3;
+  }
+  
+  /* Card/Section Styling */
+  section.step {
+    display: none;
+  }
+  
+  section.step.active {
+    display: block;
+    animation: fadeIn 0.4s ease both;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .card {
+    background: rgba(30, 41, 59, 0.6) !important;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    padding: clamp(22px, 2vw, 36px);
+    margin-bottom: 22px;
+    border-left: 4px solid #667eea;
+    backdrop-filter: blur(10px);
+  }
+  
+  .step-description {
+    color: #d1d5db !important;
+    margin-bottom: 18px;
+  }
+  
+  .step-description strong {
+    color: #4ecca3 !important;
+  }
+  
+  /* Grid Layout */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  
+  /* Selectable Buttons */
+  .selectable {
+    appearance: none;
+    border: 3px solid rgba(15, 52, 96, 0.6);
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.8) !important;
+    padding: 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  
+  .selectable .icon {
+    font-size: 2rem;
+    display: inline-block;
+    margin-right: 8px;
+  }
+  
+  .selectable .title {
+    font-weight: 700;
+    color: #4ecca3 !important;
+    font-size: 1.1em;
+  }
+  
+  .selectable .hint {
+    color: #aaa !important;
+    font-size: 0.95rem;
+    margin-top: 4px;
+  }
+  
+  .selectable:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(78, 204, 163, 0.3);
+    border-color: #4ecca3;
+  }
+  
+  .selectable:focus-visible {
+    outline: 3px solid #93c5fd;
+    outline-offset: 3px;
+  }
+  
+  .selectable[aria-pressed="true"],
+  .selectable[aria-checked="true"] {
+    border-color: #4ecca3;
+    background: rgba(78, 204, 163, 0.15) !important;
+    box-shadow: 0 4px 15px rgba(78, 204, 163, 0.25);
+  }
+  
+  .selectable[disabled] {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  
+  /* Buttons */
+  .buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    border: 0;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 16px;
+  }
+  
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .btn.primary {
+    color: #1a1a2e !important;
+    background: linear-gradient(135deg, #4ecca3, #38f9d7) !important;
+  }
+  
+  .btn.primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(78, 204, 163, 0.4);
+  }
+  
+  .btn.secondary {
+    background: #533483 !important;
+    color: #eee !important;
+  }
+  
+  .btn.secondary:hover:not(:disabled) {
+    background: #6c4ba0 !important;
+    transform: translateY(-2px);
+  }
+  
+  /* Pill Badge */
+  .pill {
+    color: #4ecca3 !important;
+    font-weight: 600;
+    margin: 8px 0 0;
+    background: rgba(78, 204, 163, 0.1) !important;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: inline-block;
+  }
+  
+  /* Itinerary Styling */
+  .itinerary {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border-radius: 14px;
+    padding: 24px;
+    border: 2px solid #0f3460;
+  }
+  
+  .itinerary h3 {
+    color: #4ecca3 !important;
+    text-align: center;
+    margin: 0 0 20px;
+  }
+  
+  .stop {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border-left: 4px solid #4ecca3;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 0 0 12px;
+  }
+  
+  .stop h4 {
+    margin: 0 0 8px;
+    color: #4ecca3 !important;
+  }
+  
+  .row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    color: #d1d5db !important;
+    font-size: 0.98rem;
+  }
+  
+  .row .item {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .row .item span {
+    color: #d1d5db !important;
+  }
+  
+  /* Textarea */
+  textarea {
+    width: 100%;
+    border: 2px solid #0f3460;
+    border-radius: 12px;
+    padding: 14px;
+    font: inherit;
+    min-height: 120px;
+    background: rgba(15, 23, 42, 0.8) !important;
+    color: #eee !important;
+    resize: vertical;
+    transition: border-color 0.3s;
+  }
+  
+  textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+  
+  textarea::placeholder {
+    color: #aaa !important;
+  }
+  
+  /* Helper/Error Text */
+  .helper {
+    color: #ef4444 !important;
+    font-weight: 600;
+    margin: 8px 0 0;
+    min-height: 1.2em;
+  }
+  
+  /* Message Box */
+  #msg {
+    padding: 12px 14px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  
+  [hidden] {
+    display: none !important;
+  }
+  
+  /* Lists */
+  ul {
+    color: #d1d5db !important;
+    margin: 4px 0 0 18px;
+    line-height: 1.9;
+  }
+  
+  ul li {
+    color: #d1d5db !important;
+  }
+  
+  /* Final Summary Styling */
+  #finalSummary p {
+    color: #d1d5db !important;
+    line-height: 1.9;
+  }
+  
+  #finalSummary strong {
+    color: #4ecca3 !important;
+  }
+  
+  /* Visually Hidden (for screen readers) */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  /* Completion Banner */
+  .completion-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    animation: slideInBanner 0.5s ease-out;
+  }
+  
+  @keyframes slideInBanner {
+    from {
+      transform: translateX(400px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Print Styles */
+  @media print {
+    body {
+      background: #fff !important;
+      color: #000 !important;
+      padding: 0;
+    }
+    .steps, .progress-container, .buttons, .subtitle {
+      display: none;
+    }
+    .card {
+      box-shadow: none;
+      border: 0;
+      padding: 0;
+    }
+    .itinerary, .stop {
+      page-break-inside: avoid;
+    }
+  }
+  
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .selectable:hover,
+    .btn.primary:hover,
+    .btn.secondary:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    .progress-bar,
+    section.step.active,
+    .step-dot {
+      transition: none;
+      animation: none;
+    }
+  }
+</style>
+
+<div class="container" role="application" aria-labelledby="title">
+  <h1 id="title">🌴 West Coast Trip Planner</h1>
+  <p class="subtitle">Plan your dream vacation step by step!</p>
+
+  <div class="progress-container" aria-hidden="true">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <div class="steps" aria-label="Progress">
+    <div class="step-dot" id="dot1" aria-current="step">1</div>
+    <div class="step-dot" id="dot2">2</div>
+    <div class="step-dot" id="dot3">3</div>
+    <div class="step-dot" id="dot4">4</div>
+    <div class="step-dot" id="dot5">5</div>
+  </div>
+
+  <div class="card" role="alert" aria-live="polite" id="msg" hidden></div>
+
+  <!-- Step 1: Choose Destinations -->
+  <section class="card step active" id="step1" aria-labelledby="s1h">
+    <h2 id="s1h">Step 1: Choose Your Destinations</h2>
+    <p class="step-description">Select <strong>exactly three</strong> cities for your West Coast adventure.</p>
+    <p class="pill" id="destCount">Selected: 0/3</p>
+
+    <div class="grid" role="group" aria-label="Destinations (choose 3)">
+      <button class="selectable" data-destination="San Francisco, CA" aria-pressed="false">
+        <div class="icon" aria-hidden="true">🌉</div>
+        <div class="title">San Francisco</div>
+        <div class="hint">Golden Gate Bridge, cable cars, tech hub</div>
+      </button>
+      <button class="selectable" data-destination="Los Angeles, CA" aria-pressed="false">
+        <div class="icon" aria-hidden="true">🎬</div>
+        <div class="title">Los Angeles</div>
+        <div class="hint">Hollywood, beaches, entertainment</div>
+      </button>
+      <button class="selectable" data-destination="San Diego, CA" aria-pressed="false">
+        <div class="icon" aria-hidden="true">🏖️</div>
+        <div class="title">San Diego</div>
+        <div class="hint">Perfect weather, beaches, zoo</div>
+      </button>
+      <button class="selectable" data-destination="Portland, OR" aria-pressed="false">
+        <div class="icon" aria-hidden="true">🌲</div>
+        <div class="title">Portland</div>
+        <div class="hint">Food scene, nature, quirky culture</div>
+      </button>
+      <button class="selectable" data-destination="Seattle, WA" aria-pressed="false">
+        <div class="icon" aria-hidden="true">☕</div>
+        <div class="title">Seattle</div>
+        <div class="hint">Space Needle, coffee, tech culture</div>
+      </button>
+      <button class="selectable" data-destination="Las Vegas, NV" aria-pressed="false">
+        <div class="icon" aria-hidden="true">🎰</div>
+        <div class="title">Las Vegas</div>
+        <div class="hint">Entertainment, shows, nightlife</div>
+      </button>
+    </div>
+
+    <div class="buttons">
+      <button class="btn primary" id="nextFromDest" disabled>Next Step</button>
+    </div>
+
+    <p class="helper" id="destError" aria-live="polite"></p>
+  </section>
+
+  <!-- Step 2: Transportation -->
+  <section class="card step" id="step2" aria-labelledby="s2h">
+    <h2 id="s2h">Step 2: Choose Your Transportation</h2>
+    <p class="step-description">How do you want to travel between destinations?</p>
+
+    <div class="grid" role="radiogroup" aria-label="Transportation">
+      <button class="selectable" data-transport="Drive" role="radio" aria-checked="false">
+        <div class="icon" aria-hidden="true">🚗</div>
+        <div class="title">Drive</div>
+        <div class="hint">Flexible, scenic routes, road trip vibes</div>
+      </button>
+      <button class="selectable" data-transport="Fly" role="radio" aria-checked="false">
+        <div class="icon" aria-hidden="true">✈️</div>
+        <div class="title">Fly</div>
+        <div class="hint">Fast, convenient, saves time</div>
+      </button>
+      <button class="selectable" data-transport="Train" role="radio" aria-checked="false">
+        <div class="icon" aria-hidden="true">🚂</div>
+        <div class="title">Take the Train</div>
+        <div class="hint">Relaxing, scenic, eco-friendly</div>
+      </button>
+      <button class="selectable" data-transport="Bus" role="radio" aria-checked="false">
+        <div class="icon" aria-hidden="true">🚌</div>
+        <div class="title">Take the Bus</div>
+        <div class="hint">Budget-friendly, meet people</div>
+      </button>
+    </div>
+
+    <div class="buttons">
+      <button class="btn secondary" id="backFromTransport">Back</button>
+      <button class="btn primary" id="nextFromTransport" disabled>Next Step</button>
+    </div>
+  </section>
+
+  <!-- Step 3: Accommodations -->
+  <section class="card step" id="step3" aria-labelledby="s3h">
+    <h2 id="s3h">Step 3: Choose Your Accommodations</h2>
+    <p class="step-description">Where will you stay during your trip?</p>
+
+    <div class="grid" role="radiogroup" aria-label="Accommodations">
+      <button class="selectable" data-accommodation="Hotel" role="radio" aria-checked="false">
+        <div class="icon" aria-hidden="true">🏨</div>
+        <div class="title">Hotel</div>
+        <div class="hint">Comfortable, amenities, room service</div>
+      </button>
+      <button class="selectable" data-accommodation="Hostel" role="radio" aria-checked="false">
+        <div class="icon" aria-hidden="true">🛏️</div>
+        <div class="title">Hostel</div>
+        <div class="hint">Budget-friendly, social, meet travelers</div>
+      </button>
+      <button class="selectable" data-accommodation="Airbnb" role="radio" aria-checked="false">
+        <div class="icon" aria-hidden="true">🏠</div>
+        <div class="title">Airbnb</div>
+        <div class="hint">Home away from home, local experience</div>
+      </button>
+      <button class="selectable" data-accommodation="Camping" role="radio" aria-checked="false">
+        <div class="icon" aria-hidden="true">⛺</div>
+        <div class="title">Camping</div>
+        <div class="hint">Adventure, nature, budget-friendly</div>
+      </button>
+    </div>
+
+    <div class="buttons">
+      <button class="btn secondary" id="backFromAccommodation">Back</button>
+      <button class="btn primary" id="nextFromAccommodation" disabled>Generate Itinerary</button>
+    </div>
+  </section>
+
+  <!-- Step 4: Generated Itinerary -->
+  <section class="card step" id="step4" aria-labelledby="s4h">
+    <h2 id="s4h">Step 4: Your Custom Itinerary</h2>
+    <p class="step-description">Here's your personalized West Coast trip plan!</p>
+
+    <div id="itineraryPreview" class="itinerary"></div>
+
+    <div class="card" style="margin-top:16px; border-left-color: #93c5fd;">
+      <h3>💡 Trip Planning Notes</h3>
+      <p style="margin: 0 0 10px;">Jot down ideas to make your trip better, save money, or be more eco-friendly:</p>
+      <label for="tripNotes" class="visually-hidden">Trip notes</label>
+      <textarea id="tripNotes" placeholder="Examples: Research free activities • Bring reusable bottles • Look for local farmers markets…"></textarea>
+      <div class="buttons">
+        <button class="btn secondary" id="printBtn" title="Print / Save as PDF">🖨️ Print</button>
+        <button class="btn secondary" id="exportBtn" title="Export to JSON">⬇️ Export</button>
+        <button class="btn secondary" id="shareBtn" title="Share summary">🔗 Share</button>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn secondary" id="backFromItinerary">Back</button>
+      <button class="btn primary" id="nextFromItinerary">Share & Discuss</button>
+    </div>
+  </section>
+
+  <!-- Step 5: Share & Reflect -->
+  <section class="card step" id="step5" aria-labelledby="s5h">
+    <h2 id="s5h">Step 5: Share Your Itinerary</h2>
+    <p class="step-description">Share your trip plan and discuss improvements with classmates!</p>
+
+    <div class="card" style="border-left-color: #93c5fd;">
+      <h3>🌟 Your Trip Summary</h3>
+      <div id="finalSummary"></div>
+    </div>
+
+    <div class="card" style="border-left-color: #f39c12;">
+      <h3>💬 Discussion Questions</h3>
+      <ul>
+        <li>What can you do to make your trip more enjoyable?</li>
+        <li>Where could you save money without losing fun?</li>
+        <li>What eco-friendly choices can you add?</li>
+        <li>How does your itinerary compare to classmates?</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-left-color: #4ecca3;">
+      <h3>✍️ Reflection</h3>
+      <label for="reflection" class="visually-hidden">Reflection</label>
+      <textarea id="reflection" placeholder="What did you learn from your classmates? What would you change about your itinerary?"></textarea>
+    </div>
+
+    <div class="buttons">
+      <button class="btn secondary" id="backFromShare">Back</button>
+      <button class="btn primary" id="restartBtn">Plan Another Trip 🎉</button>
+    </div>
+  </section>
+</div>
+
+<script>
+  // --- State ---
+  const STEPS = 5;
+  let currentStep = 1;
+  let selectedDestinations = [];
+  let selectedTransport = '';
+  let selectedAccommodation = '';
+
+  // Restore from localStorage if available
+  const saved = JSON.parse(localStorage.getItem('wc-trip') || 'null');
+  if (saved) {
+    ({ currentStep, selectedDestinations, selectedTransport, selectedAccommodation } = saved);
+    // Delay until DOM paints, then rehydrate
+    window.addEventListener('DOMContentLoaded', () => {
+      rehydrateSelections();
+      for (let i = 1; i < currentStep; i++) stepTo(i + 1, false);
+      if (currentStep >= 4) generateItinerary();
+      if (currentStep >= 5) generateFinalSummary();
+    });
+  }
+
+  // --- DOM helpers ---
+  const $ = (sel, root = document) => root.querySelector(sel);
+  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+  const progressBar = $('#progressBar');
+  const msg = $('#msg');
+
+  function persist() {
+    localStorage.setItem('wc-trip', JSON.stringify({ currentStep, selectedDestinations, selectedTransport, selectedAccommodation }));
+  }
+
+  function announce(text, type = 'info') {
+    if (!text) { msg.hidden = true; return; }
+    msg.textContent = text;
+    msg.hidden = false;
+    msg.style.color = type === 'error' ? '#ef4444' : '#4ecca3';
+    msg.style.background = type === 'error' ? 'rgba(45, 31, 31, 0.8)' : 'rgba(15, 52, 45, 0.8)';
+    msg.style.border = '2px solid ' + (type === 'error' ? '#ef4444' : '#4ecca3');
+    msg.style.borderRadius = '12px';
+    msg.style.padding = '12px 14px';
+    setTimeout(() => { msg.hidden = true; }, 3000);
+  }
+
+  function updateProgress() {
+    const progress = ((currentStep - 1) / (STEPS - 1)) * 100;
+    progressBar.style.width = progress + '%';
+    for (let i = 1; i <= STEPS; i++) {
+      const dot = $('#dot' + i);
+      dot.removeAttribute('aria-current');
+      dot.classList.toggle('completed', i < currentStep);
+    }
+    $('#dot' + currentStep).setAttribute('aria-current', 'step');
+  }
+
+  function stepTo(next, scroll = true) {
+    $('#step' + currentStep).classList.remove('active');
+    currentStep = next;
+    $('#step' + currentStep).classList.add('active');
+    updateProgress();
+    if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+    persist();
+  }
+
+  // --- Step 1: Destinations (multi-select, max 3) ---
+  const destButtons = $$('[data-destination]');
+  const destCount = $('#destCount');
+  const nextFromDest = $('#nextFromDest');
+
+  destButtons.forEach(btn => {
+    btn.type = 'button';
+    btn.addEventListener('click', () => toggleDestination(btn));
+    btn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDestination(btn); } });
+  });
+
+  function toggleDestination(btn) {
+    const dest = btn.dataset.destination;
+    const isSelected = btn.getAttribute('aria-pressed') === 'true';
+    if (isSelected) {
+      btn.setAttribute('aria-pressed', 'false');
+      selectedDestinations = selectedDestinations.filter(d => d !== dest);
+    } else {
+      if (selectedDestinations.length >= 3) { announce('You can choose up to three destinations.', 'error'); return; }
+      btn.setAttribute('aria-pressed', 'true');
+      selectedDestinations.push(dest);
+    }
+
+    // Disable remaining when 3 selected
+    const atMax = selectedDestinations.length === 3;
+    destButtons.forEach(b => {
+      const pressed = b.getAttribute('aria-pressed') === 'true';
+      b.disabled = atMax && !pressed;
+    });
+
+    destCount.textContent = `Selected: ${selectedDestinations.length}/3`;
+    nextFromDest.disabled = selectedDestinations.length !== 3;
+    persist();
+  }
+
+  nextFromDest.addEventListener('click', () => stepTo(2));
+
+  // --- Step 2: Transport (single-select as radio) ---
+  const transportButtons = $$('[data-transport]');
+  const nextFromTransport = $('#nextFromTransport');
+
+  transportButtons.forEach(btn => {
+    btn.type = 'button';
+    btn.addEventListener('click', () => {
+      transportButtons.forEach(b => b.setAttribute('aria-checked', 'false'));
+      btn.setAttribute('aria-checked', 'true');
+      selectedTransport = btn.dataset.transport;
+      nextFromTransport.disabled = false;
+      persist();
+    });
+  });
+
+  $('#backFromTransport').addEventListener('click', () => stepTo(1));
+  nextFromTransport.addEventListener('click', () => stepTo(3));
+
+  // --- Step 3: Accommodation (radio) ---
+  const accommodationButtons = $$('[data-accommodation]');
+  const nextFromAccommodation = $('#nextFromAccommodation');
+
+  accommodationButtons.forEach(btn => {
+    btn.type = 'button';
+    btn.addEventListener('click', () => {
+      accommodationButtons.forEach(b => b.setAttribute('aria-checked', 'false'));
+      btn.setAttribute('aria-checked', 'true');
+      selectedAccommodation = btn.dataset.accommodation;
+      nextFromAccommodation.disabled = false;
+      persist();
+    });
+  });
+
+  $('#backFromAccommodation').addEventListener('click', () => stepTo(2));
+  nextFromAccommodation.addEventListener('click', () => { generateItinerary(); stepTo(4); });
+
+  // --- Step 4: Itinerary + utilities ---
+  $('#backFromItinerary').addEventListener('click', () => stepTo(3));
+  $('#nextFromItinerary').addEventListener('click', () => { generateFinalSummary(); stepTo(5); });
+
+  $('#printBtn').addEventListener('click', () => window.print());
+
+  $('#exportBtn').addEventListener('click', () => {
+    const data = buildExport();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'west-coast-itinerary.json'; a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  $('#shareBtn').addEventListener('click', async () => {
+    const summary = summaryText();
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: 'West Coast Trip', text: summary });
+      } else {
+        await navigator.clipboard.writeText(summary);
+        announce('Summary copied to clipboard!');
+      }
+    } catch (e) {
+      announce('Could not share. Copied summary to clipboard instead.');
+      try { await navigator.clipboard.writeText(summary); } catch {}
+    }
+  });
+
+  // --- Step 5: Share & Reflect ---
+  $('#backFromShare').addEventListener('click', () => stepTo(4));
+  $('#restartBtn').addEventListener('click', () => restart());
+
+  // --- Core generators ---
+  function generateItinerary() {
+    const wrap = $('#itineraryPreview');
+    wrap.innerHTML = `
+      <h3>✨ Your West Coast Adventure</h3>
+      ${selectedDestinations.map((dest, i) => `
+        <div class="stop">
+          <h4>Stop ${i + 1}: ${dest}</h4>
+          <div class="row">
+            <div class="item"><span>🚗</span><span>Travel: ${selectedTransport || '—'}</span></div>
+            <div class="item"><span>🏨</span><span>Stay: ${selectedAccommodation || '—'}</span></div>
+            <div class="item"><span>📅</span><span>2–3 days recommended</span></div>
+          </div>
+        </div>
+      `).join('')}
+    `;
+  }
+
+  function generateFinalSummary() {
+    const notes = $('#tripNotes').value.trim();
+    $('#finalSummary').innerHTML = `
+      <p style="line-height:1.9">
+        <strong>🌍 Destinations:</strong> ${selectedDestinations.join(' → ')}<br />
+        <strong>🚗 Transportation:</strong> ${selectedTransport}<br />
+        <strong>🏨 Accommodations:</strong> ${selectedAccommodation}<br />
+        <strong>⏱️ Total Trip Duration:</strong> ${(selectedDestinations.length * 2.5).toFixed(1)} days (approx)${notes ? `<br /><br /><strong>📝 Your Notes:</strong><br />${escapeHtml(notes)}` : ''}
+      </p>`;
+  }
+
+  function buildExport() {
+    return {
+      version: 1,
+      generatedAt: new Date().toISOString(),
+      selections: {
+        destinations: selectedDestinations,
+        transport: selectedTransport,
+        accommodation: selectedAccommodation,
+      },
+      estimatedDays: selectedDestinations.length * 2.5,
+      notes: $('#tripNotes').value || ''
+    };
+  }
+
+  function summaryText() {
+    return `West Coast Trip\n\nDestinations: ${selectedDestinations.join(' → ')}\nTransport: ${selectedTransport}\nAccommodation: ${selectedAccommodation}\nDuration: ${(selectedDestinations.length * 2.5).toFixed(1)} days`;
+  }
+
+  function restart() {
+    currentStep = 1;
+    selectedDestinations = [];
+    selectedTransport = '';
+    selectedAccommodation = '';
+    localStorage.removeItem('wc-trip');
+
+    // Reset UI selections
+    destButtons.forEach(b => { b.setAttribute('aria-pressed', 'false'); b.disabled = false; });
+    transportButtons.forEach(b => b.setAttribute('aria-checked', 'false'));
+    accommodationButtons.forEach(b => b.setAttribute('aria-checked', 'false'));
+
+    $('#tripNotes').value = '';
+    $('#reflection').value = '';
+    $('#finalSummary').innerHTML = '';
+    $('#itineraryPreview').innerHTML = '';
+
+    $('#destCount').textContent = 'Selected: 0/3';
+    $('#nextFromDest').disabled = true;
+    $('#nextFromTransport').disabled = true;
+    $('#nextFromAccommodation').disabled = true;
+
+    // Switch step
+    $$('.step').forEach(s => s.classList.remove('active'));
+    $('#step1').classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function rehydrateSelections() {
+    // Destinations
+    destButtons.forEach(b => {
+      const sel = selectedDestinations.includes(b.dataset.destination);
+      b.setAttribute('aria-pressed', sel ? 'true' : 'false');
+    });
+    const atMax = selectedDestinations.length === 3;
+    destButtons.forEach(b => {
+      const pressed = b.getAttribute('aria-pressed') === 'true';
+      b.disabled = atMax && !pressed;
+    });
+    $('#destCount').textContent = `Selected: ${selectedDestinations.length}/3`;
+    $('#nextFromDest').disabled = selectedDestinations.length !== 3;
+
+    // Transport
+    transportButtons.forEach(b => b.setAttribute('aria-checked', (b.dataset.transport === selectedTransport).toString()))
+    $('#nextFromTransport').disabled = !selectedTransport;
+
+    // Accommodation
+    accommodationButtons.forEach(b => b.setAttribute('aria-checked', (b.dataset.accommodation === selectedAccommodation).toString()))
+    $('#nextFromAccommodation').disabled = !selectedAccommodation;
+
+    updateProgress();
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+  }
+
+  // Keyboard shortcuts for power users
+  document.addEventListener('keydown', (e) => {
+    if (e.altKey || e.metaKey || e.ctrlKey) return;
+    if (e.key === 'ArrowRight') {
+      if (currentStep === 1 && selectedDestinations.length !== 3) return announce('Pick 3 destinations first', 'error');
+      if (currentStep === 2 && !selectedTransport) return announce('Choose a transportation option', 'error');
+      if (currentStep === 3 && !selectedAccommodation) return announce('Choose an accommodation', 'error');
+      if (currentStep < STEPS) stepTo(currentStep + 1);
+    }
+    if (e.key === 'ArrowLeft' && currentStep > 1) stepTo(currentStep - 1);
+  });
+
+  // Initialize first render when no saved state
+  if (!saved) updateProgress();
+</script>
+
+<!-- Completion Tracking -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const storageKey = 'ai-module-c4-completed';
+    
+    if (localStorage.getItem(storageKey) === 'true') {
+      return;
+    }
+    
+    let hasScrolledToBottom = false;
+    
+    function checkScrollPosition() {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      if (scrollTop + windowHeight >= documentHeight - 100) {
+        if (!hasScrolledToBottom) {
+          hasScrolledToBottom = true;
+          localStorage.setItem(storageKey, 'true');
+          
+          const banner = document.createElement('div');
+          banner.className = 'completion-banner';
+          banner.innerHTML = `
+            <h3 style="margin: 0; font-size: 18px; font-weight: bold;">🎉 Module 4 Completed!</h3>
+            <p style="margin: 5px 0 0 0; font-size: 14px;">You have finished the AI Module!!</p>
+          `;
+          document.body.appendChild(banner);
+          
+          setTimeout(() => {
+            banner.style.animation = 'slideInBanner 0.5s ease-out reverse';
+            setTimeout(() => banner.remove(), 500);
+          }, 4000);
+          
+          window.removeEventListener('scroll', checkScrollPosition);
+        }
+      }
+    }
+    
+    window.addEventListener('scroll', checkScrollPosition);
+    checkScrollPosition();
+  });
+</script>
+>>>>>>> 3f1fb90d6 (CSS refresh)
