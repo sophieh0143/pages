@@ -259,59 +259,6 @@ function addToLinkedIn() {
     msg.style.display = 'block';
 }
 
-async function downloadCertificate() {
-    const name = document.getElementById('student-name').value.trim();
-    const email = prompt('Enter your email address:');
-    
-    if (!name || !email) {
-        alert('Please enter your name and email!');
-        return;
-    }
-    
-    try {
-        // Get your backend URL (change for production)
-        const API_URL = window.location.origin.includes('localhost') 
-            ? 'http://localhost:8080' 
-            : 'https://your-spring-backend.com';
-        
-        const response = await fetch(`${API_URL}/api/certificates`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                modulesCompleted: ['submodule-1', 'submodule-2', 'submodule-3', 'submodule-4']
-            })
-        });
-        
-        const data = await response.json();
-        
-        if (data.valid) {
-            localStorage.setItem('ai-quest-certificate', JSON.stringify(data));
-            
-            const msg = document.getElementById('status-message');
-            msg.style.background = '#d4edda';
-            msg.style.color = '#155724';
-            msg.textContent = `✅ Certificate issued! ID: ${data.id}`;
-            msg.style.display = 'block';
-            msg.style.padding = '15px';
-            msg.style.borderRadius = '8px';
-            
-            // Generate printable certificate
-            generatePrintableCertificate(data);
-            
-            // Enable LinkedIn button
-            document.getElementById('linkedin-btn').disabled = false;
-        } else {
-            alert('❌ ' + data.message);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Failed to issue certificate. Make sure backend is running!');
-    }
-}
 
 function generatePrintableCertificate(certData) {
     const certHTML = `
