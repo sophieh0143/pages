@@ -18,6 +18,7 @@ class Boss extends Enemy {
         this.attackInterval = data?.attackInterval || 2000;
         this.angerModifier = 1;
 
+        /* Debug/cheat key code - uncomment to enable
         // Add a debug/cheat key ('p') that instantly defeats this boss
         this._killKeyHandler = (event) => {
             try {
@@ -39,6 +40,7 @@ class Boss extends Enemy {
 
         // Attach the listener to window so it's active while the boss exists
         if (typeof window !== 'undefined') window.addEventListener('keydown', this._killKeyHandler);
+        */
 
         this.projectileTypes = data?.projectileTypes || ['FIREBALL', 'ARROW'];
 
@@ -175,6 +177,7 @@ class Boss extends Enemy {
         this.arms.push(arm);
     }
 
+    /* Debug/cheat destroy override - uncomment with key handler above
     // Ensure we clean up the key listener when the boss is destroyed
     destroy() {
         try {
@@ -186,6 +189,7 @@ class Boss extends Enemy {
         // Call parent destroy if available (Character -> GameObject)
         if (super.destroy) super.destroy();
     }
+    */
 }
 
 export default Boss;
