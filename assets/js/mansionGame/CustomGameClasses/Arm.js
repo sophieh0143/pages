@@ -1,68 +1,82 @@
 import Character from '../GameEngine/Character.js';
 
-/*  
+/*
     Arm class for the Reaper boss.
-    - Follows the boss with offsets
-    - Can rotate or animate independently
+    - Follows the boss using offsets
+    - Can switch between weapon and empty images
+    - Small animation when shooting
 */
 
 class Arm extends Character {
     constructor(data = null, gameEnv = null) {
         super(data, gameEnv);
 
-        // Offset from boss center
-        this.xOffset = data?.xOffset ?? -50;
-        this.yOffset = data?.yOffset ?? 70;
+        this.xOffset = data?.xOffset ?? 0;
+        this.yOffset = data?.yOffset ?? 0;
 
-        // Optional rotation
-        this.rotation = 0;
-        this.rotationSpeed = data?.rotationSpeed ?? 0; // radians per update
+        // Weapon handling
+        this.hasWeapon = data?.hasWeapon ?? false;
+        this.weaponSrc = data?.weaponSrc ?? '';
+        this.emptySrc = data?.emptySrc ?? '';
+        this.src = this.hasWeapon ? this.weaponSrc : this.emptySrc;
 
-        // Target tracking (optional)
-        this.target = null;
+        // Animation flags
+        this.isShooting = false;
+        this.shootingTimer = 0;
+        this.shootingDuration = 200; // ms
+
+        // Position
+        this.position = { x: 0, y: 0 };
     }
 
     /**
-     * Update the Arm's position relative to the boss
-     * @param {number} bossX - Boss's X position
-     * @param {number} bossY - Boss's Y position
+     * Update arm position relative to boss and handle animation
+     * @param {number} bossX 
+     * @param {number} bossY 
      */
     update(bossX, bossY) {
         // Follow the boss
         this.position.x = bossX + this.xOffset;
         this.position.y = bossY + this.yOffset;
 
-        // Rotate if rotationSpeed is set
-        if (this.rotationSpeed !== 0) {
-            this.rotation += this.rotationSpeed;
+        // Handle shooting animation
+        if (this.isShooting) {
+            this.shootingTimer += this.gameEnv.deltaTime || 16;
+            if (this.shootingTimer >= this.shootingDuration) {
+                this.isShooting = false;
+                this.shootingTimer = 0;
+            }
         }
 
-        // Draw the arm (pass rotation to draw function)
+        // Update sprite based on weapon status
+        this.src = this.hasWeapon ? this.weaponSrc : this.emptySrc;
+
+        // Draw to screen
         this.draw();
     }
 
     /**
-     * Optionally, set a target for the arm (like the player) 
-     * for attacks or aiming
-     * @param {Character} target 
+     * Trigger a small shooting animation
      */
-    setTarget(target) {
-        this.target = target;
+    shoot() {
+        this.isShooting = true;
+        this.shootingTimer = 0;
     }
 
     /**
-     * Optional: Move the arm toward its target
-     * @param {number} speed 
+     * Temporarily remove weapon (e.g., throwing scythe)
      */
-    moveTowardTarget(speed = 0.5) {
-        if (!this.target) return;
+    removeWeapon() {
+        this.hasWeapon = false;
+        this.src = this.emptySrc;
+    }
 
-        const dx = this.target.position.x - this.position.x;
-        const dy = this.target.position.y - this.position.y;
-        const angle = Math.atan2(dy, dx);
-
-        this.position.x += Math.cos(angle) * speed;
-        this.position.y += Math.sin(angle) * speed;
+    /**
+     * Restore weapon (e.g., scythe returned)
+     */
+    restoreWeapon() {
+        this.hasWeapon = true;
+        this.src = this.weaponSrc;
     }
 }
 

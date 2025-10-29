@@ -1,46 +1,79 @@
 import Enemy from '../GameEngine/Enemy.js';
 import Boomerang from '../CustomGameClasses/Boomerang.js';
 import Projectile from '../CustomGameClasses/Projectile.js';
+import Arm from '../CustomGameClasses/Arm.js';
 
 class Boss extends Enemy {
     constructor(data = null, gameEnv = null) {
         super(data, gameEnv);
+
         this.stage = 1;
-        this.isThrowingScythe = false;
         this.fullHealth = data?.initialHealth || 1500;
         this.healthPoints = this.fullHealth;
+
         this.arrows = [];
         this.fireballs = [];
         this.scythes = [];
-        this.arms = [];
-        this.angerModifier = 1;
-        this.attackInterval = data?.attackInterval || 2000;
         this.lastAttackTime = Date.now();
+        this.attackInterval = data?.attackInterval || 2000;
+        this.angerModifier = 1;
+
+        this.projectileTypes = data?.projectileTypes || ['FIREBALL', 'ARROW'];
+
+        // Initialize arms
+        this.leftArm = new Arm({
+            xOffset: -60,
+            yOffset: 20,
+            weaponSrc: "/images/mansionGame/ReaperLeftHandScythe.png",
+            emptySrc: "/images/mansionGame/ReaperLeftHandEmpty.png",
+            hasWeapon: true
+        }, gameEnv);
+
+        this.rightArm = new Arm({
+            xOffset: 60,
+            yOffset: 20,
+            weaponSrc: "/images/mansionGame/ReaperRightHandScythe.png",
+            emptySrc: "/images/mansionGame/ReaperRightHandEmpty.png",
+            hasWeapon: true
+        }, gameEnv);
+
+        this.arms = [this.leftArm, this.rightArm];
+
+        this.isThrowingScythe = false;
     }
 
     update() {
         this.draw();
 
-        // Update stage, attack interval, and anger modifier
+        // Update stage & attack speed
         const healthRatio = this.healthPoints / this.fullHealth;
         this.stage = healthRatio < 0.33 ? 3 : (healthRatio < 0.66 ? 2 : 1);
         this.attackInterval = this.stage === 3 ? 1000 : this.stage === 2 ? 1500 : 2000;
         this.angerModifier = this.stage === 3 ? 2 : 1;
 
         // Update projectiles
-        [...this.fireballs, ...this.arrows].forEach(p => p.update());
+        [...this.fireballs, ...this.arrows].forEach(p => {
+            if (p.revComplete) {
+                p.destroy();
+            } else {
+                p.update();
+            }
+        });
         this.fireballs = this.fireballs.filter(p => !p.revComplete);
         this.arrows = this.arrows.filter(p => !p.revComplete);
 
         // Update scythes
         this.scythes.forEach(s => s.update());
         this.scythes = this.scythes.filter(s => !s.revComplete);
-        if (this.scythes.length === 0) this.isThrowingScythe = false;
+        if (this.scythes.length === 0) {
+            this.isThrowingScythe = false;
+            this.leftArm.restoreWeapon(); // return scythe to left arm
+        }
 
-        // Update arms
-        this.arms.forEach(a => a.update(this.position.x, this.position.y));
+        // Update arms to follow the boss
+        this.arms.forEach(arm => arm.update(this.position.x, this.position.y));
 
-        // Perform attacks
+        // Attack logic
         const now = Date.now();
         if (now - this.lastAttackTime >= this.attackInterval) {
             const target = this.findNearestPlayer();
@@ -48,10 +81,10 @@ class Boss extends Enemy {
             this.lastAttackTime = now;
         }
 
-        // Move toward nearest player if not throwing scythe
+        // Movement toward nearest player if not throwing scythe
         if (!this.isThrowingScythe) {
             const target = this.findNearestPlayer();
-            if (target) this.moveToward(target, 0.25); // Adjust speed as needed
+            if (target) this.moveToward(target, 0.25);
         }
     }
 
@@ -77,6 +110,7 @@ class Boss extends Enemy {
 
     performAttack(target) {
         const rand = Math.random();
+
         if (this.stage >= 3 && rand < 0.3) {
             this.scytheAttack(target);
         } else if (rand < 0.6) {
@@ -94,20 +128,24 @@ class Boss extends Enemy {
         this.position.y += Math.sin(angle) * speed;
     }
 
-    explode() {
+    explode(x, y) {
         throw new Error("Reapers cannot explode! (yet :})");
     }
 
     scytheAttack(target) {
+        // Use left arm to throw scythe
+        this.leftArm.removeWeapon();
         this.scythes.push(new Boomerang(this.gameEnv, target.position.x, target.position.y, this.position.x, this.position.y));
         this.isThrowingScythe = true;
     }
 
     fireballAttack(target) {
+        this.rightArm.shoot();
         this.fireballs.push(new Projectile(this.gameEnv, target.position.x, target.position.y, this.position.x, this.position.y, "FIREBALL"));
     }
 
     arrowAttack(target) {
+        this.rightArm.shoot();
         this.arrows.push(new Projectile(this.gameEnv, target.position.x, target.position.y, this.position.x, this.position.y, "ARROW"));
     }
 
