@@ -64,7 +64,7 @@ class MansionLevel6 {
             id: 'ZombieNPC',
             greeting: sprite_greet_zombie,
             src: sprite_src_zombie,
-            SCALE_FACTOR: 6,
+            SCALE_FACTOR: 4,
             ANIMATION_RATE: 100,
             pixels: {width: 3600, height: 1200},
             INIT_POSITION: { x: (width * 3 / 4), y: (height * 1 / 2)},
