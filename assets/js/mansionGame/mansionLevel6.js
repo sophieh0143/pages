@@ -68,7 +68,12 @@ class MansionLevel6 {
             dialogues: [
                 "I heard the boss is waiting for you...",
                 "Enter if you dare... he's waiting for you...",
-                "I heard the Reaper himself was in there."
+                "I heard the Reaper himself was in there.",
+                "The Reaper'll get you good.",
+                "You have no chance... his power is unstopable...",
+                "No one has survived a battle against the Reaper.",
+                "Haha? You want to battle my boss? You'll die within the first minute...",
+                "Go ahead. I aint stoppin' you, the Reaper'll finish you clean."
             ],
             reaction: function() {
                 // Don't do anything on touch
