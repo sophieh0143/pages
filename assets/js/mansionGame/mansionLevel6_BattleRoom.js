@@ -15,44 +15,18 @@ class MansionLevel6_BattleRoom {
             pixels: {height: 341, width: 498}
         };
 
-        /*
-        // Defnine the player
-        const sprite_src_mc = path + "/images/mansionGame/playerMove.png";
-        const MC_SCALE_FACTOR = 1;
-        const sprite_data_mc = {
-            id: 'mc',
-            src: sprite_src_mc,
-            SCALE_FACTOR: MC_SCALE_FACTOR,
-            STEP_FACTOR: 500,
-            ANIMATION_RATE: 30,
-            INIT_POSITION: {x: (width / 3), y: (height * 0.75)},
-            pixels: {height: 3600, width: 1200},
-            orientation: {rows: 1, columns: 3},
-            // for now I'm just making the animation for all directions the same.
-            down: {row: 0, start: 0, columns: 3},
-            downRight: {row: 0, start: 0, columns: 3, rotate: Math.PI/16},
-            downLeft: {row: 0, start: 0, columns: 3, rotate: -Math.PI/16},
-            left: {row: 0, start: 0, columns: 3},
-            right: {row: 0, start: 0, columns: 3},
-            up: {row: 0, start: 0, columns: 3},
-            upLeft: {row: 0, start: 0, columns: 3, rotate: Math.PI/16},
-            upRight: {row: 0, start: 0, columns: 3, rotate: -Math.PI/16},  
-            hitbox: {widthPercentage: 0.5, heightPercentage: 0.4},
-            keypress: {up: 87, left: 65, down: 83, right: 68} // W, A, S, D
-        };
-        */
-
+      
         // Testing wether copying the player from the first room works
         //Player appears but doesm't move
         const sprite_src_mc = path + "/images/mansionGame/spookMcWalk.png"; // be sure to include the path
-        const MC_SCALE_FACTOR = 6;
+        const MC_SCALE_FACTOR = 7; // a bit smaller
         const sprite_data_mc = {
             id: 'Spook',
             greeting: "Hi, I am Spook.",
             src: sprite_src_mc,
             SCALE_FACTOR: MC_SCALE_FACTOR,
-            STEP_FACTOR: 600,
-            ANIMATION_RATE: 10,
+            STEP_FACTOR: 800,
+            ANIMATION_RATE: 100,
             INIT_POSITION: { x: (width / 2 - width / (5 * MC_SCALE_FACTOR)), y: height - (height / MC_SCALE_FACTOR)}, 
             pixels: {height: 2400, width: 3600},
             orientation: {rows: 2, columns: 3},

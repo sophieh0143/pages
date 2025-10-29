@@ -52,7 +52,7 @@ class MansionLevel6 {
 
         // This is the zombie npc
         const sprite_src_zombie = path + "/images/mansionGame/zombieNpc.png";
-        const sprite_greet_zombie = "Hi I am R2D2. Leave this planet and help defend the rebel base on Hoth!";
+        const sprite_greet_zombie = "Hi, I'm a zombie.";
         const sprite_data_zombie = {
             id: 'ZombieNPC',
             greeting: sprite_greet_zombie,
