@@ -110,14 +110,9 @@ class MansionLevel6 {
             hitbox: {widthPercentage: 0.2, heightPercentage: 0.2},
             // Add dialogues array for random messages
             dialogues: [
-                "Beep boop! I have important data about the Death Star plans.",
-                "The rebels need your help on Hoth. The Empire is approaching!",
-                "I've served with Jedi Knights and rebel heroes across the galaxy.",
-                "Whrrrr... bleep! Translation: Want to fly an X-Wing fighter?",
-                "My counterpart C-3PO always worries too much.",
-                "I've calculated the odds of success at approximately 647 to 1.",
-                "The Force is strong with this one... I can sense it.",
-                "Imperial forces are on high alert. We must be cautious."
+                "I heard the boss is waiting for you...",
+                "Enter if you dare... he's waiting for you...",
+                "I heard the Reaper himself was in there."
             ],
             reaction: function() {
                 // Don't do anything on touch
