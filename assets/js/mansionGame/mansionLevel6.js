@@ -184,9 +184,27 @@ class MansionLevel6 {
                                 });
                                 document.body.appendChild(fadeOverlay);
 
+                                function fadeOutAudio(audioElement, duration) {
+                                    const initialVolume = audioElement.volume;
+                                    const intervalTime = 50; // Milliseconds between volume adjustments
+                                    const steps = duration / intervalTime;
+                                    const volumeDecreasePerStep = initialVolume / steps;
+
+                                    const fadeInterval = setInterval(() => {
+                                        if (audioElement.volume - volumeDecreasePerStep > 0) {
+                                            audioElement.volume -= volumeDecreasePerStep;
+                                        } else {
+                                            audioElement.volume = 0;
+                                            audioElement.pause(); // Optionally pause the audio when volume reaches zero
+                                            clearInterval(fadeInterval);
+                                        }
+                                    }, intervalTime);
+                                }
+
                                 // Stop the level (overworld) music before starting battle music
                                 try {
                                     if (levelMusic && typeof levelMusic.pause === 'function') {
+                                        fadeOutAudio(levelMusic, 500);
                                         levelMusic.pause();
                                         levelMusic.currentTime = 0;
                                     }
