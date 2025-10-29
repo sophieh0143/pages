@@ -165,3 +165,374 @@ document.addEventListener('DOMContentLoaded', ()=>{
   showStep(0);
 });
 </script>
+
+
+<html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVA AI Assistant</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        /* Removed the background gradient */
+        background: transparent; 
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+      }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+        .api-setup {
+            display: none;
+        }
+        .eva-loader-container {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .eva-loader-container:hover {
+            transform: scale(1.05);
+        }
+        .eva-loader-container:active {
+            transform: scale(0.95);
+        }
+        .eva-loader-container.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .status-text {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            white-space: nowrap;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            min-width: 250px;
+        }
+        .conversation-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .conversation-box.hidden {
+            display: none;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .message.user {
+            background: #e3f2fd;
+            text-align: right;
+        }
+        .message.eva {
+            background: #f3e5f5;
+            text-align: left;
+        }
+        .message strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #667eea;
+        }
+        .modelViewPort {
+            perspective: 1000px;
+            width: 20rem;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+            overflow: hidden;
+        }
+        .eva {
+            --EVA-ROTATION-DURATION: 4s;
+            transform-style: preserve-3d;
+            animation: rotateRight var(--EVA-ROTATION-DURATION) linear infinite alternate;
+        }
+        .head {
+            position: relative;
+            width: 6rem;
+            height: 4rem;
+            border-radius: 48% 53% 45% 55% / 79% 79% 20% 22%;
+            background: linear-gradient(to right, white 45%, gray);
+        }
+        .eyeChamber {
+            width: 4.5rem;
+            height: 2.75rem;
+            position: relative;
+            left: 50%;
+            top: 55%;
+            border-radius: 45% 53% 45% 48% / 62% 59% 35% 34%;
+            background-color: #0c203c;
+            box-shadow: 0px 0px 2px 2px white, inset 0px 0px 0px 2px black;
+            transform: translate(-50%, -50%);
+            animation: moveRight var(--EVA-ROTATION-DURATION) linear infinite alternate;
+        }
+        .eye {
+            width: 1.2rem;
+            height: 1.5rem;
+            position: absolute;
+            border-radius: 50%;
+        }
+        .eye:first-child {
+            left: 12px;
+            top: 50%;
+            background: repeating-linear-gradient(65deg, #9bdaeb 0px, #9bdaeb 1px, white 2px);
+            box-shadow: inset 0px 0px 5px #04b8d5, 0px 0px 15px 1px #0bdaeb;
+            transform: translate(0, -50%) rotate(-65deg);
+        }
+        .eye:nth-child(2) {
+            right: 12px;
+            top: 50%;
+            background: repeating-linear-gradient(-65deg, #9bdaeb 0px, #9bdaeb 1px, white 2px);
+            box-shadow: inset 0px 0px 5px #04b8d5, 0px 0px 15px 1px #0bdaeb;
+            transform: translate(0, -50%) rotate(65deg);
+        }
+        .body {
+            width: 6rem;
+            height: 8rem;
+            position: relative;
+            margin-block-start: 0.25rem;
+            border-radius: 47% 53% 45% 55% / 12% 9% 90% 88%;
+            background: linear-gradient(to right, white 35%, gray);
+        }
+        .hand {
+            position: absolute;
+            left: -1.5rem;
+            top: 0.75rem;
+            width: 2rem;
+            height: 5.5rem;
+            border-radius: 40%;
+            background: linear-gradient(to left, white 15%, gray);
+            box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.25);
+            transform: rotateY(55deg) rotateZ(10deg);
+        }
+        .hand:first-child {
+            animation: compensateRotation var(--EVA-ROTATION-DURATION) linear infinite alternate;
+        }
+        .hand:nth-child(2) {
+            left: 92%;
+            background: linear-gradient(to right, white 15%, gray);
+            transform: rotateY(55deg) rotateZ(-10deg);
+            animation: compensateRotationRight var(--EVA-ROTATION-DURATION) linear infinite alternate;
+        }
+        .scannerThing {
+            width: 0;
+            height: 0;
+            position: absolute;
+            left: 60%;
+            top: 10%;
+            border-top: 180px solid #9bdaeb;
+            border-left: 250px solid transparent;
+            border-right: 250px solid transparent;
+            transform-origin: top left;
+            mask: linear-gradient(to right, white, transparent 35%);
+            display: none;
+        }
+        .scannerThing.active {
+            display: block;
+            animation: glow 2s cubic-bezier(0.86, 0, 0.07, 1) infinite;
+        }
+        .scannerOrigin {
+            position: absolute;
+            width: 8px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            left: 60%;
+            top: 10%;
+            background: #9bdaeb;
+            box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.5);
+            animation: moveRight var(--EVA-ROTATION-DURATION) linear infinite;
+            display: none;
+        }
+        .scannerOrigin.active {
+            display: block;
+        }
+        @keyframes rotateRight {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(25deg); }
+        }
+        @keyframes moveRight {
+            from { transform: translate(-50%, -50%); }
+            to { transform: translate(-40%, -50%); }
+        }
+        @keyframes compensateRotation {
+            from { transform: rotateY(55deg) rotateZ(10deg); }
+            to { transform: rotatey(30deg) rotateZ(10deg); }
+        }
+        @keyframes compensateRotationRight {
+            from { transform: rotateY(55deg) rotateZ(-10deg); }
+            to { transform: rotateY(70deg) rotateZ(-10deg); }
+        }
+        @keyframes glow {
+            from { opacity: 0; }
+            20% { opacity: 1; }
+            45% { transform: rotate(-25deg); }
+            75% { transform: rotate(5deg); }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- API Key Setup -->
+        <div class="api-setup" id="apiSetup">
+            <h2>🤖 Setup Gemini API Key</h2>
+            <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API Key">
+            <button onclick="saveApiKey()">Start EVA</button>
+            <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                Get your free API key at: <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>
+            </p>
+        </div>
+        <!-- EVA Robot -->
+        <div class="eva-loader-container" id="evaContainer">
+            <div class="loader">
+                <div class="modelViewPort">
+                    <div class="eva">
+                        <div class="head">
+                            <div class="eyeChamber">
+                                <div class="eye"></div>
+                                <div class="eye"></div>
+                            </div>
+                        </div>
+                        <div class="body">
+                            <div class="hand"></div>
+                            <div class="hand"></div>
+                            <div class="scannerThing" id="scanner"></div>
+                            <div class="scannerOrigin" id="scannerOrigin"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="status-text" id="statusText">Click to Talk to EVA</div>
+        </div>
+        <!-- Conversation History -->
+        <div class="conversation-box" id="conversationBox"></div>
+    </div>
+    <script>
+        // Replace 'YOUR_GEMINI_API_KEY_HERE' with your actual API key
+        let apiKey = 'AIzaSyDUYqdvpsJGpJPVmcUIviywtyhXqJ2L1mg';
+        let isListening = false;
+        let recognition = null;
+        // Initialize Speech Recognition
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+            recognition.onresult = async (event) => {
+                const transcript = event.results[0][0].transcript;
+                addMessage('user', transcript);
+                await sendToGemini(transcript);
+            };
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                updateStatus('Error: ' + event.error);
+                stopListening();
+            };
+            recognition.onend = () => {
+                stopListening();
+            };
+        }
+        document.getElementById('evaContainer').addEventListener('click', function() {
+            if (!recognition) {
+                alert('Speech recognition is not supported in your browser. Please use Chrome or Edge.');
+                return;
+            }
+            if (isListening) {
+                stopListening();
+            } else {
+                startListening();
+            }
+        });
+        function startListening() {
+            isListening = true;
+            document.getElementById('scanner').classList.add('active');
+            document.getElementById('scannerOrigin').classList.add('active');
+            updateStatus('Listening... Speak now!');
+            try {
+                recognition.start();
+            } catch (e) {
+                console.error('Recognition start error:', e);
+            }
+        }
+        function stopListening() {
+            isListening = false;
+            document.getElementById('scanner').classList.remove('active');
+            document.getElementById('scannerOrigin').classList.remove('active');
+            updateStatus('Click to Talk to EVA');
+        }
+        function updateStatus(text) {
+            document.getElementById('statusText').textContent = text;
+        }
+        function addMessage(sender, text) {
+            const conversationBox = document.getElementById('conversationBox');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            const label = sender === 'user' ? 'You' : 'EVA';
+            messageDiv.innerHTML = `<strong>${label}:</strong>${text}`;
+            conversationBox.appendChild(messageDiv);
+            conversationBox.scrollTop = conversationBox.scrollHeight;
+        }
+        async function sendToGemini(text) {
+            updateStatus('EVA is thinking...');
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: text
+                            }]
+                        }]
+                    })
+                });
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status}`);
+                }
+                const data = await response.json();
+                const reply = data.candidates[0].content.parts[0].text;
+                addMessage('eva', reply);
+                speak(reply);
+            } catch (error) {
+                console.error('Gemini API Error:', error);
+                const errorMsg = 'Sorry, I encountered an error. Please check your API key.';
+                addMessage('eva', errorMsg);
+                speak(errorMsg);
+            }
+        }
+        function speak(text) {
+            updateStatus('EVA is speaking...');
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.rate = 1.0;
+            utterance.pitch = 1.2;
+            utterance.volume = 1.0;
+            utterance.onend = () => {
+                updateStatus('Click to Talk to EVA');
+            };
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>
