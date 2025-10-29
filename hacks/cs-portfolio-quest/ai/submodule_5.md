@@ -210,7 +210,7 @@ function downloadCertificate() {
                 <p><strong>Issued by Open Coding Society</strong><br>${new Date().toLocaleDateString()}</p>
                 <p style="font-size: 12px; color: #666; margin-top: 40px;">Certificate ID: ${certId}</p>
             </div>
-            <script>window.onload = () => setTimeout(() => window.print(), 500);</script>
+            <script>window.onload = () => setTimeout(() => window.print(), 500);<\/script>
         </body>
         </html>
     `;
