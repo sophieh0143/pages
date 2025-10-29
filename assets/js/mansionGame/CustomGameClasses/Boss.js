@@ -18,6 +18,28 @@ class Boss extends Enemy {
         this.attackInterval = data?.attackInterval || 2000;
         this.angerModifier = 1;
 
+        // Add a debug/cheat key ('p') that instantly defeats this boss
+        this._killKeyHandler = (event) => {
+            try {
+                if (!event || !event.key) return;
+                if (event.key === 'p' || event.key === 'P') {
+                    console.log("[Boss] Kill key pressed: forcing boss death.");
+                    this.healthPoints = 0;
+                    // Remove the boss graphic and objects from the game
+                    try { this.destroy(); } catch (e) { console.warn('Error destroying boss:', e); }
+                    // End the current level so game control can transition
+                    try {
+                        if (this.gameEnv && this.gameEnv.gameControl && this.gameEnv.gameControl.currentLevel) {
+                            this.gameEnv.gameControl.currentLevel.continue = false;
+                        }
+                    } catch (e) { console.warn('Error ending level after boss kill:', e); }
+                }
+            } catch (e) { console.error('Kill key handler error:', e); }
+        };
+
+        // Attach the listener to window so it's active while the boss exists
+        if (typeof window !== 'undefined') window.addEventListener('keydown', this._killKeyHandler);
+
         this.projectileTypes = data?.projectileTypes || ['FIREBALL', 'ARROW'];
 
         // Initialize arms
@@ -151,6 +173,18 @@ class Boss extends Enemy {
 
     addArm(arm) {
         this.arms.push(arm);
+    }
+
+    // Ensure we clean up the key listener when the boss is destroyed
+    destroy() {
+        try {
+            if (typeof window !== 'undefined' && this._killKeyHandler) {
+                window.removeEventListener('keydown', this._killKeyHandler);
+            }
+        } catch (e) { console.warn('Failed to remove boss key listener:', e); }
+
+        // Call parent destroy if available (Character -> GameObject)
+        if (super.destroy) super.destroy();
     }
 }
 
