@@ -26,7 +26,7 @@ class MansionLevel6_BattleRoom {
             greeting: "Hi, I am Spook.",
             src: sprite_src_mc,
             SCALE_FACTOR: MC_SCALE_FACTOR,
-            STEP_FACTOR: 400,
+            STEP_FACTOR: 850,
             ANIMATION_RATE: 100,
             INIT_POSITION: { x: (width / 2 - width / (5 * MC_SCALE_FACTOR)), y: height - (height / MC_SCALE_FACTOR)}, 
             pixels: {height: 2400, width: 3600},
