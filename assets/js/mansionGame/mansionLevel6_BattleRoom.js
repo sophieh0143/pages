@@ -45,6 +45,8 @@ class MansionLevel6_BattleRoom {
             keypress: {up: 87, left: 65, down: 83, right: 68} // W, A, S, D
         };
 
+        // temporarily commenting out boss
+        /*
         // --- Reaper Boss ---
         const BOSS_SCALE_FACTOR = 2;
         const sprite_src_body = path + "/images/mansionGame/ReaperMainBody.png";
@@ -104,14 +106,14 @@ class MansionLevel6_BattleRoom {
             emptySrc: sprite_arm_right_empty,
             weaponSrc: sprite_arm_right_scythe
         };
+        */
 
-        // --- Add all classes to the room ---
         this.classes = [
             {class: GameEnvBackground, data: image_data_floor},
             {class: Player, data: sprite_data_mc},
-            {class: Boss, data: sprite_boss_data},
-            {class: Arm, data: leftArmData},
-            {class: Arm, data: rightArmData},
+            // {class: Boss, data: sprite_boss_data},
+            // {class: Arm, data: leftArmData},
+            // {class: Arm, data: rightArmData},
         ];
     }
 }
