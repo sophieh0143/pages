@@ -1,6 +1,7 @@
 import GameEnvBackground  from "./GameEngine/GameEnvBackground.js";
 import Player from "./GameEngine/Player.js";
 import Boss from './CustomGameClasses/Boss.js';
+import Arm from './CustomGameClasses/Arm.js';
 
 class MansionLevel6_BattleRoom {
     constructor(gameEnv) {
@@ -63,10 +64,32 @@ class MansionLevel6_BattleRoom {
             initialHealth: 1500
         };
 
+        // This is the arm of the Reaper boss
+        /*
+        const sprite_src_enemy_arm = path + "/images/mansionGame/ReaperLeftHandEmpty.png";
+        const ARM_SCALE_FACTOR = BOSS_SCALE_FACTOR * 4;  // Edit the "4" as needed: It is the value of size decrease
+        const sprite_arm_data = {
+            id: 'reapersArm',
+            src: sprite_src_enemy_arm,
+            SCALE_FACTOR: ARM_SCALE_FACTOR,
+            STEP_FACTOR: 800,  // Same as boss, this isn't really needed since we are updating positionX and positionY directly
+            ANIMATION_RATE: 30,
+            // spawn where the boss is spawning (this will quickly get overwriden by update() function calling)
+            INIT_POSITION: {x: width * 0.7, y: height * 0.6},
+            pixels: {height: 300, width: 300},
+            orientation: {rows: 1, columns: 1},
+            hitbox: {widthPercentage: 0.45, heightPercentage: 0.2},
+            // These settings are specific to the arm
+            xOffset: -50,  // Adjust this later as needed
+            yOffset: -70,  // Adjust this later as needed
+        }
+        */
+
         this.classes = [
-            {class: GameEnvBackground, data: image_data_floor},
             {class: Player, data: sprite_data_mc},
-            {class: Boss, data: sprite_boss_data}
+            {class: Boss, data: sprite_boss_data},
+            //{class: Arm, data: sprite_arm_data},
+            {class: GameEnvBackground, data: image_data_floor}
         ];
 
     };
