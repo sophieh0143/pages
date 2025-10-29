@@ -18,7 +18,6 @@ date: 2025-10-21
 This submodule will be developed by the Curators team.
 
 
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8"> 
@@ -39,7 +38,7 @@ This submodule will be developed by the Curators team.
   .reveal-button {
     background: linear-gradient(90deg, #4facfe, #00f2fe); /* Blue gradient */
     border: none;
-    color: white;
+    color: black; /* Changed to black text */
     padding: 25px 40px;
     font-size: 22px;
     font-weight: 500;
@@ -120,7 +119,7 @@ This submodule will be developed by the Curators team.
     document.getElementById('codeModal').style.display = 'none';
   }
 
-  // Close modal if user clicks outside the content box. 
+  // Close modal if user clicks outside the content box
   window.onclick = function(event) {
     const modal = document.getElementById('codeModal');
     if (event.target === modal) {
@@ -131,3 +130,4 @@ This submodule will be developed by the Curators team.
 
 </body>
 </html>
+
