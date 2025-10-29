@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: opencs
 title: "Seattle"
 description: "Submodule 4 of Backend Development Mini-Quest"
 permalink: /west-coast/backend/submodule_4/
@@ -10,6 +10,7 @@ categories: [CSP, Submodule, Backend]
 tags: [backend, submodule, zombies]
 author: "Zombies Team"
 date: 2025-10-21
+microblog: True
 ---
 
 

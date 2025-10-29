@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: opencs
 title: "San Francisco"
 description: "Submodule 3 of Backend Development Mini-Quest"
 permalink: /west-coast/backend/submodule_3/
