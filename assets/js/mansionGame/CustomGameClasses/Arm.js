@@ -10,3 +10,18 @@ import Character from '../GameEngine/Character.js';
     Boss Class: used to make the Reaper boss
 
 */
+
+// User arm
+class Arm extends Character {
+    // Have a simple constructor
+    constructor(data = null, gameEnv = null) {
+        super(data, gameEnv);
+    }
+
+    // Define the update property
+    update(bossX, bossY) {
+        // Leave this empty for now
+    }
+}
+
+export default Arm;
