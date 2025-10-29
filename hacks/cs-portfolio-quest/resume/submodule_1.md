@@ -96,6 +96,7 @@ date: 2025-10-21
       max-height: 0;
       transition: all 0.5s ease;
       box-shadow: 0 0 0 rgba(0,0,0,0);
+      color: #121112ff;
     }
     .career-content.open {
       padding: 20px;
