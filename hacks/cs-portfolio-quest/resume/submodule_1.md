@@ -47,13 +47,17 @@ date: 2025-10-21
       border-radius: 16px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: #4338ca;
+    }
+    .stat-card p {
+      color: #4338ca !important;
     }
     .stat-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 6px 15px rgba(0,0,0,0.15);
     }
     .stat-card h3 {
-      color: #4f46e5;
+      color: #4f46e5 !important;
       margin-bottom: 10px;
     }
     .stat-card .percent {
