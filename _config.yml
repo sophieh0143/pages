@@ -20,7 +20,7 @@ description: "Class of 2029"
 owner_name: Tinkerers
 github_username: CompSciTeam
 github_repo: "testpages" 
-baseurl: "" 
+baseurl: "/testpages" 
 future: true
 
 
