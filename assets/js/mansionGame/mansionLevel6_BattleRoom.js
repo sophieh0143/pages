@@ -9,7 +9,7 @@ class MansionLevel6_BattleRoom {
         let height = gameEnv.innerHeight;
         let path = gameEnv.path;
 
-        const image_src_floor = path + "/images/mansionGame/tiledFloor.png";
+        const image_src_floor = path + "/images/mansionGame/bossFloorPattern.png";
         const image_data_floor = {
             name: 'floor',
             src: image_src_floor,
