@@ -2,7 +2,7 @@
 layout: post
 title: "San Francisco"
 description: "Roadtrip through SF and learn UI while you're there!"
-permalink: /west-coast/analytics/submodule_2/
+permalink: /west-coast/analytics/sanfrancisco/
 parent: "Analytics/Admin"
 team: "Cool Collaborators"
 submodule: 2
