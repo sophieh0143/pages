@@ -64,6 +64,21 @@ class MansionLevel6_BattleRoom {
             initialHealth: 1500
         };
 
+        // Reaper Enemy
+        const REAPER_SCALE_FACTOR = 2;
+        const sprite_reaper_src = path + "/images/mansionGame/ReaperMainBody.png";
+        const sprite_reaper_data = {
+            id: 'reaperboss',
+            src: sprite_reaper_src,
+            SCALE_FACTOR: REAPER_SCALE_FACTOR,
+            STEP_FACTOR: 800,
+            ANIMATION_RATE: 30,
+            INIT_POSITION: {x: width * 0.7, y: width * 0.8},
+            pixels: {width: 300, height: 300},
+            orientation: {rows: 1, columns: 1},
+            hitbox: {widthPercentage: 0.45, heightPercentage: 0.2},
+        }
+
         // --- Reaper Arms ---
         /*
         const ARM_SCALE_FACTOR = 2;
@@ -113,6 +128,7 @@ class MansionLevel6_BattleRoom {
             // {class: Boss, data: sprite_boss_data},
             // {class: Arm, data: leftArmData},
             // {class: Arm, data: rightArmData},
+            // {class: Enemy, data: sprite_reaper_data},
         ];
     }
 }
