@@ -17,16 +17,11 @@ date: 2025-10-21
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(to bottom right, #eef2ff, #e0e7ff);
       color: #080808ff;
       margin: 0;
       padding: 0;
     }
-    .container {
-      max-width: 2000px;
-      margin: 0 auto;
-      padding: 40px 20px;
-    }
+    
     h1, h2 {
       text-align: center;
       color: #4338ca;
