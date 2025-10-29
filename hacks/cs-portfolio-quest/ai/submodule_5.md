@@ -259,6 +259,93 @@ function addToLinkedIn() {
     msg.style.display = 'block';
 }
 
+async function downloadCertificate() {
+    const name = document.getElementById('student-name').value.trim();
+    const email = prompt('Enter your email address:');
+    
+    if (!name || !email) {
+        alert('Please enter your name and email!');
+        return;
+    }
+    
+    try {
+        // Get your backend URL (change for production)
+        const API_URL = window.location.origin.includes('localhost') 
+            ? 'http://localhost:8080' 
+            : 'https://your-spring-backend.com';
+        
+        const response = await fetch(`${API_URL}/api/certificates`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                modulesCompleted: ['submodule-1', 'submodule-2', 'submodule-3', 'submodule-4']
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.valid) {
+            localStorage.setItem('ai-quest-certificate', JSON.stringify(data));
+            
+            const msg = document.getElementById('status-message');
+            msg.style.background = '#d4edda';
+            msg.style.color = '#155724';
+            msg.textContent = `✅ Certificate issued! ID: ${data.id}`;
+            msg.style.display = 'block';
+            msg.style.padding = '15px';
+            msg.style.borderRadius = '8px';
+            
+            // Generate printable certificate
+            generatePrintableCertificate(data);
+            
+            // Enable LinkedIn button
+            document.getElementById('linkedin-btn').disabled = false;
+        } else {
+            alert('❌ ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to issue certificate. Make sure backend is running!');
+    }
+}
+
+function generatePrintableCertificate(certData) {
+    const certHTML = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>AI Quest Certificate</title>
+            <style>
+                body { font-family: Georgia, serif; text-align: center; padding: 50px; }
+                .cert { background: white; padding: 60px; max-width: 800px; margin: 0 auto; border: 3px solid #667eea; }
+                h1 { font-size: 48px; color: #667eea; }
+                .name { font-size: 36px; font-weight: bold; color: #764ba2; margin: 20px 0; }
+            </style>
+        </head>
+        <body>
+            <div class="cert">
+                <h1>🏆 Certificate of Completion</h1>
+                <h2>AI Usage Quest</h2>
+                <p>This certifies that</p>
+                <div class="name">${certData.name}</div>
+                <p>has successfully completed the AI Usage Quest</p>
+                <p><strong>Issued by Open Coding Society</strong><br>${new Date(certData.issueDate).toLocaleDateString()}</p>
+                <p style="font-size: 12px; color: #666; margin-top: 40px;">Certificate ID: ${certData.id}</p>
+            </div>
+            <script>window.onload = () => setTimeout(() => window.print(), 500);<\/script>
+        </body>
+        </html>
+    `;
+    
+    const win = window.open('', '_blank');
+    win.document.write(certHTML);
+    win.document.close();
+}
+
 document.getElementById('cert-date').textContent = new Date().toLocaleDateString('en-US', {
     month: 'long',
     year: 'numeric'
