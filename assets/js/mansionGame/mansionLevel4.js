@@ -1,5 +1,6 @@
 // To build GameLevels, each contains GameObjects from below imports
 import GameEnvBackground from './GameEngine/GameEnvBackground.js';
+import Player from './GameEngine/Player.js';
 
 class MansionLevel4 {
   constructor(gameEnv) {
@@ -38,13 +39,14 @@ class MansionLevel4 {
 		upLeft: {row: 0, start: 0, columns: 3, rotate: Math.PI/16},
 		upRight: {row: 1, start: 0, columns: 3, rotate: -Math.PI/16},
 		hitbox: { widthPercentage: 0.45, heightPercentage: 0.2 },
-	// Allow both WASD and Arrow keys: W/UpArrow, A/LeftArrow, S/DownArrow, D/RightArrow
-	keypress: { up: [87, 38], left: [65, 37], down: [83, 40], right: [68, 39] } // W,A,S,D and Arrows
+	// Use WASD keys (matches other levels). If you want arrow-keys too, update Player to accept arrays.
+	keypress: { up: 87, left: 65, down: 83, right: 68 } // W,A,S,D
 	};
 
 	// List of objects defnitions for this level
 	this.classes = [
 		{ class: GameEnvBackground, data: image_data_background },
+		{ class: Player, data: sprite_data_chillguy },
 	];
   }
 
