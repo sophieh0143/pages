@@ -18,9 +18,9 @@ date: 2025-10-21
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>West Coast Trip Planner</title>
-  <meta name="description" content="Plan a beautiful, accessible, and shareable West Coast itinerary in five guided steps." />
+  <meta name="description" content="Plan a beautiful, accessible, and shareable West Coast itinerary in four guided steps." />
   <meta property="og:title" content="West Coast Trip Planner" />
-  <meta property="og:description" content="Plan a beautiful, accessible, and shareable West Coast itinerary in five guided steps." />
+  <meta property="og:description" content="Plan a beautiful, accessible, and shareable West Coast itinerary in four guided steps." />
   <meta name="theme-color" content="#667eea" />
   <style>
     :root {
@@ -63,7 +63,7 @@ date: 2025-10-21
     .progress-container { background: rgba(255,255,255,.18); height: 10px; border-radius: 999px; overflow: hidden; margin: 26px 0 36px; backdrop-filter: blur(10px) }
     .progress-bar { height: 100%; background: linear-gradient(90deg, var(--ok), var(--ok-2)); width: 0%; transition: width .4s ease }
 
-    .steps { display: grid; grid-template-columns: repeat(5, minmax(48px,1fr)); gap: 12px; margin-bottom: 28px }
+    .steps { display: grid; grid-template-columns: repeat(4, minmax(48px,1fr)); gap: 12px; margin-bottom: 28px }
     .step-dot { height: 44px; border-radius: 999px; display: grid; place-items: center; font-weight: 700; color: #fff; border: 2px solid transparent; background: rgba(255,255,255,.22); transition: transform .2s }
     .step-dot[aria-current="step"] { background: var(--ok); border-color: #fff; transform: scale(1.06) }
     .step-dot.completed { background: var(--ok-2) }
@@ -116,7 +116,6 @@ date: 2025-10-21
     .helper { color: #ef4444; font-weight: 600; margin: 8px 0 0; min-height: 1.2em }
     [hidden] { display: none !important }
 
-    /* Print itinerary nicely */
     @media print {
       body { background: #fff; color: #000; padding: 0 }
       .container { max-width: none }
@@ -125,10 +124,33 @@ date: 2025-10-21
       .itinerary, .stop { page-break-inside: avoid }
     }
 
-    /* Motion accessibility */
     @media (prefers-reduced-motion: reduce) {
       .selectable:hover, .btn.primary:hover { transform: none; box-shadow: none }
       .progress-bar, section.step.active { transition: none; animation: none }
+    }
+
+    .completion-banner {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 1000;
+      animation: slideInBanner 0.5s ease-out;
+    }
+
+    @keyframes slideInBanner {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -146,61 +168,13 @@ date: 2025-10-21
       <div class="step-dot" id="dot2">2</div>
       <div class="step-dot" id="dot3">3</div>
       <div class="step-dot" id="dot4">4</div>
-      <div class="step-dot" id="dot5">5</div>
     </div>
 
     <div class="card" role="alert" aria-live="polite" id="msg" hidden></div>
 
-    <!-- Step 1: Choose Destinations -->
+    <!-- Step 1: Transportation -->
     <section class="card step active" id="step1" aria-labelledby="s1h">
-      <h2 id="s1h">Step 1: Choose Your Destinations</h2>
-      <p class="step-description">Select <strong>exactly three</strong> cities for your West Coast adventure.</p>
-      <p class="pill" id="destCount">Selected: 0/3</p>
-
-      <div class="grid" role="group" aria-label="Destinations (choose 3)">
-        <!-- Use buttons with aria-pressed for multi-select -->
-        <button class="selectable" data-destination="San Francisco, CA" aria-pressed="false">
-          <div class="icon" aria-hidden="true">🌉</div>
-          <div class="title">San Francisco</div>
-          <div class="hint">Golden Gate Bridge, cable cars, tech hub</div>
-        </button>
-        <button class="selectable" data-destination="Los Angeles, CA" aria-pressed="false">
-          <div class="icon" aria-hidden="true">🎬</div>
-          <div class="title">Los Angeles</div>
-          <div class="hint">Hollywood, beaches, entertainment</div>
-        </button>
-        <button class="selectable" data-destination="San Diego, CA" aria-pressed="false">
-          <div class="icon" aria-hidden="true">🏖️</div>
-          <div class="title">San Diego</div>
-          <div class="hint">Perfect weather, beaches, zoo</div>
-        </button>
-        <button class="selectable" data-destination="Portland, OR" aria-pressed="false">
-          <div class="icon" aria-hidden="true">🌲</div>
-          <div class="title">Portland</div>
-          <div class="hint">Food scene, nature, quirky culture</div>
-        </button>
-        <button class="selectable" data-destination="Seattle, WA" aria-pressed="false">
-          <div class="icon" aria-hidden="true">☕</div>
-          <div class="title">Seattle</div>
-          <div class="hint">Space Needle, coffee, tech culture</div>
-        </button>
-        <button class="selectable" data-destination="Las Vegas, NV" aria-pressed="false">
-          <div class="icon" aria-hidden="true">🎰</div>
-          <div class="title">Las Vegas</div>
-          <div class="hint">Entertainment, shows, nightlife</div>
-        </button>
-      </div>
-
-      <div class="buttons">
-        <button class="btn primary" id="nextFromDest" disabled>Next Step</button>
-      </div>
-
-      <p class="helper" id="destError" aria-live="polite"></p>
-    </section>
-
-    <!-- Step 2: Transportation -->
-    <section class="card step" id="step2" aria-labelledby="s2h">
-      <h2 id="s2h">Step 2: Choose Your Transportation</h2>
+      <h2 id="s1h">Step 1: Choose Your Transportation</h2>
       <p class="step-description">How do you want to travel between destinations?</p>
 
       <div class="grid" role="radiogroup" aria-label="Transportation">
@@ -227,14 +201,13 @@ date: 2025-10-21
       </div>
 
       <div class="buttons">
-        <button class="btn secondary" id="backFromTransport">Back</button>
         <button class="btn primary" id="nextFromTransport" disabled>Next Step</button>
       </div>
     </section>
 
-    <!-- Step 3: Accommodations -->
-    <section class="card step" id="step3" aria-labelledby="s3h">
-      <h2 id="s3h">Step 3: Choose Your Accommodations</h2>
+    <!-- Step 2: Accommodations -->
+    <section class="card step" id="step2" aria-labelledby="s2h">
+      <h2 id="s2h">Step 2: Choose Your Accommodations</h2>
       <p class="step-description">Where will you stay during your trip?</p>
 
       <div class="grid" role="radiogroup" aria-label="Accommodations">
@@ -266,9 +239,9 @@ date: 2025-10-21
       </div>
     </section>
 
-    <!-- Step 4: Generated Itinerary -->
-    <section class="card step" id="step4" aria-labelledby="s4h">
-      <h2 id="s4h">Step 4: Your Custom Itinerary</h2>
+    <!-- Step 3: Generated Itinerary -->
+    <section class="card step" id="step3" aria-labelledby="s3h">
+      <h2 id="s3h">Step 3: Your Custom Itinerary</h2>
       <p class="step-description">Here's your personalized West Coast trip plan!</p>
 
       <div id="itineraryPreview" class="itinerary"></div>
@@ -291,9 +264,9 @@ date: 2025-10-21
       </div>
     </section>
 
-    <!-- Step 5: Share & Reflect -->
-    <section class="card step" id="step5" aria-labelledby="s5h">
-      <h2 id="s5h">Step 5: Share Your Itinerary</h2>
+    <!-- Step 4: Share & Reflect -->
+    <section class="card step" id="step4" aria-labelledby="s4h">
+      <h2 id="s4h">Step 4: Share Your Itinerary</h2>
       <p class="step-description">Share your trip plan and discuss improvements with classmates!</p>
 
       <div class="card">
@@ -326,22 +299,21 @@ date: 2025-10-21
 
   <script>
     // --- State ---
-    const STEPS = 5;
+    const STEPS = 4;
     let currentStep = 1;
-    let selectedDestinations = [];
+    const selectedDestinations = ['San Francisco, CA', 'Los Angeles, CA', 'San Diego, CA'];
     let selectedTransport = '';
     let selectedAccommodation = '';
 
     // Restore from localStorage if available
     const saved = JSON.parse(localStorage.getItem('wc-trip') || 'null');
     if (saved) {
-      ({ currentStep, selectedDestinations, selectedTransport, selectedAccommodation } = saved);
-      // Delay until DOM paints, then rehydrate
+      ({ currentStep, selectedTransport, selectedAccommodation } = saved);
       window.addEventListener('DOMContentLoaded', () => {
         rehydrateSelections();
         for (let i = 1; i < currentStep; i++) stepTo(i + 1, false);
-        if (currentStep >= 4) generateItinerary();
-        if (currentStep >= 5) generateFinalSummary();
+        if (currentStep >= 3) generateItinerary();
+        if (currentStep >= 4) generateFinalSummary();
       });
     }
 
@@ -353,7 +325,7 @@ date: 2025-10-21
     const msg = $('#msg');
 
     function persist() {
-      localStorage.setItem('wc-trip', JSON.stringify({ currentStep, selectedDestinations, selectedTransport, selectedAccommodation }));
+      localStorage.setItem('wc-trip', JSON.stringify({ currentStep, selectedTransport, selectedAccommodation }));
     }
 
     function announce(text, type = 'info') {
@@ -388,44 +360,7 @@ date: 2025-10-21
       persist();
     }
 
-    // --- Step 1: Destinations (multi-select, max 3) ---
-    const destButtons = $$('[data-destination]');
-    const destCount = $('#destCount');
-    const nextFromDest = $('#nextFromDest');
-
-    destButtons.forEach(btn => {
-      btn.type = 'button';
-      btn.addEventListener('click', () => toggleDestination(btn));
-      btn.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleDestination(btn); } });
-    });
-
-    function toggleDestination(btn) {
-      const dest = btn.dataset.destination;
-      const isSelected = btn.getAttribute('aria-pressed') === 'true';
-      if (isSelected) {
-        btn.setAttribute('aria-pressed', 'false');
-        selectedDestinations = selectedDestinations.filter(d => d !== dest);
-      } else {
-        if (selectedDestinations.length >= 3) { announce('You can choose up to three destinations.', 'error'); return; }
-        btn.setAttribute('aria-pressed', 'true');
-        selectedDestinations.push(dest);
-      }
-
-      // Disable remaining when 3 selected
-      const atMax = selectedDestinations.length === 3;
-      destButtons.forEach(b => {
-        const pressed = b.getAttribute('aria-pressed') === 'true';
-        b.disabled = atMax && !pressed;
-      });
-
-      destCount.textContent = `Selected: ${selectedDestinations.length}/3`;
-      nextFromDest.disabled = selectedDestinations.length !== 3;
-      persist();
-    }
-
-    nextFromDest.addEventListener('click', () => stepTo(2));
-
-    // --- Step 2: Transport (single-select as radio) ---
+    // --- Step 1: Transport (single-select as radio) ---
     const transportButtons = $$('[data-transport]');
     const nextFromTransport = $('#nextFromTransport');
 
@@ -440,10 +375,9 @@ date: 2025-10-21
       });
     });
 
-    $('#backFromTransport').addEventListener('click', () => stepTo(1));
-    nextFromTransport.addEventListener('click', () => stepTo(3));
+    nextFromTransport.addEventListener('click', () => stepTo(2));
 
-    // --- Step 3: Accommodation (radio) ---
+    // --- Step 2: Accommodation (radio) ---
     const accommodationButtons = $$('[data-accommodation]');
     const nextFromAccommodation = $('#nextFromAccommodation');
 
@@ -458,12 +392,12 @@ date: 2025-10-21
       });
     });
 
-    $('#backFromAccommodation').addEventListener('click', () => stepTo(2));
-    nextFromAccommodation.addEventListener('click', () => { generateItinerary(); stepTo(4); });
+    $('#backFromAccommodation').addEventListener('click', () => stepTo(1));
+    nextFromAccommodation.addEventListener('click', () => { generateItinerary(); stepTo(3); });
 
-    // --- Step 4: Itinerary + utilities ---
-    $('#backFromItinerary').addEventListener('click', () => stepTo(3));
-    $('#nextFromItinerary').addEventListener('click', () => { generateFinalSummary(); stepTo(5); });
+    // --- Step 3: Itinerary + utilities ---
+    $('#backFromItinerary').addEventListener('click', () => stepTo(2));
+    $('#nextFromItinerary').addEventListener('click', () => { generateFinalSummary(); stepTo(4); });
 
     $('#printBtn').addEventListener('click', () => window.print());
 
@@ -491,8 +425,8 @@ date: 2025-10-21
       }
     });
 
-    // --- Step 5: Share & Reflect ---
-    $('#backFromShare').addEventListener('click', () => stepTo(4));
+    // --- Step 4: Share & Reflect ---
+    $('#backFromShare').addEventListener('click', () => stepTo(3));
     $('#restartBtn').addEventListener('click', () => restart());
 
     // --- Core generators ---
@@ -544,13 +478,10 @@ date: 2025-10-21
 
     function restart() {
       currentStep = 1;
-      selectedDestinations = [];
       selectedTransport = '';
       selectedAccommodation = '';
       localStorage.removeItem('wc-trip');
 
-      // Reset UI selections
-      destButtons.forEach(b => { b.setAttribute('aria-pressed', 'false'); b.disabled = false; });
       transportButtons.forEach(b => b.setAttribute('aria-checked', 'false'));
       accommodationButtons.forEach(b => b.setAttribute('aria-checked', 'false'));
 
@@ -559,12 +490,9 @@ date: 2025-10-21
       $('#finalSummary').innerHTML = '';
       $('#itineraryPreview').innerHTML = '';
 
-      $('#destCount').textContent = 'Selected: 0/3';
-      $('#nextFromDest').disabled = true;
       $('#nextFromTransport').disabled = true;
       $('#nextFromAccommodation').disabled = true;
 
-      // Switch step
       $$('.step').forEach(s => s.classList.remove('active'));
       $('#step1').classList.add('active');
       updateProgress();
@@ -572,24 +500,9 @@ date: 2025-10-21
     }
 
     function rehydrateSelections() {
-      // Destinations
-      destButtons.forEach(b => {
-        const sel = selectedDestinations.includes(b.dataset.destination);
-        b.setAttribute('aria-pressed', sel ? 'true' : 'false');
-      });
-      const atMax = selectedDestinations.length === 3;
-      destButtons.forEach(b => {
-        const pressed = b.getAttribute('aria-pressed') === 'true';
-        b.disabled = atMax && !pressed;
-      });
-      $('#destCount').textContent = `Selected: ${selectedDestinations.length}/3`;
-      $('#nextFromDest').disabled = selectedDestinations.length !== 3;
-
-      // Transport
       transportButtons.forEach(b => b.setAttribute('aria-checked', (b.dataset.transport === selectedTransport).toString()))
       $('#nextFromTransport').disabled = !selectedTransport;
 
-      // Accommodation
       accommodationButtons.forEach(b => b.setAttribute('aria-checked', (b.dataset.accommodation === selectedAccommodation).toString()))
       $('#nextFromAccommodation').disabled = !selectedAccommodation;
 
@@ -600,102 +513,61 @@ date: 2025-10-21
       return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
     }
 
-    // Keyboard shortcuts for power users
     document.addEventListener('keydown', (e) => {
       if (e.altKey || e.metaKey || e.ctrlKey) return;
       if (e.key === 'ArrowRight') {
-        if (currentStep === 1 && selectedDestinations.length !== 3) return announce('Pick 3 destinations first', 'error');
-        if (currentStep === 2 && !selectedTransport) return announce('Choose a transportation option', 'error');
-        if (currentStep === 3 && !selectedAccommodation) return announce('Choose an accommodation', 'error');
+        if (currentStep === 1 && !selectedTransport) return announce('Choose a transportation option', 'error');
+        if (currentStep === 2 && !selectedAccommodation) return announce('Choose an accommodation', 'error');
         if (currentStep < STEPS) stepTo(currentStep + 1);
       }
       if (e.key === 'ArrowLeft' && currentStep > 1) stepTo(currentStep - 1);
     });
 
-    // Initialize first render when no saved state
     if (!saved) updateProgress();
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const storageKey = 'ai-module-c4-completed';
+        
+        if (localStorage.getItem(storageKey) === 'true') {
+            return;
+        }
+        
+        let hasScrolledToBottom = false;
+        
+        function checkScrollPosition() {
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            
+            if (scrollTop + windowHeight >= documentHeight - 100) {
+                if (!hasScrolledToBottom) {
+                    hasScrolledToBottom = true;
+                    
+                    localStorage.setItem(storageKey, 'true');
+                    
+                    const banner = document.createElement('div');
+                    banner.className = 'completion-banner';
+                    banner.innerHTML = `
+                        <h3 style="margin: 0; font-size: 18px; font-weight: bold;">🎉 Module 4 Completed!</h3>
+                        <p style="margin: 5px 0 0 0; font-size: 14px;">You have finished the AI Module!!</p>
+                    `;
+                    document.body.appendChild(banner);
+                    
+                    setTimeout(() => {
+                        banner.style.animation = 'slideInBanner 0.5s ease-out reverse';
+                        setTimeout(() => banner.remove(), 500);
+                    }, 4000);
+                    
+                    window.removeEventListener('scroll', checkScrollPosition);
+                }
+            }
+        }
+        
+        window.addEventListener('scroll', checkScrollPosition);
+        checkScrollPosition();
+    });
   </script>
 </body>
 </html>
-<style>
-.completion-banner {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 15px 25px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  z-index: 1000;
-  animation: slideInBanner 0.5s ease-out;
-}
-
-@keyframes slideInBanner {
-  from {
-    transform: translateX(400px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-</style>
-
-
-
-<!-- Lock/Unlock Logic -->
-<script>
-// Scroll-to-bottom completion tracking
-document.addEventListener("DOMContentLoaded", function() {
-    const storageKey = 'ai-module-c4-completed';
-    
-    // Check if already completed
-    if (localStorage.getItem(storageKey) === 'true') {
-        return;
-    }
-    
-    let hasScrolledToBottom = false;
-    
-    function checkScrollPosition() {
-        const scrollTop = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
-        
-        // Check if user scrolled to within 100px of bottom
-        if (scrollTop + windowHeight >= documentHeight - 100) {
-            if (!hasScrolledToBottom) {
-                hasScrolledToBottom = true;
-                
-                // Mark module as completed
-                localStorage.setItem(storageKey, 'true');
-                
-                // Show completion banner
-                const banner = document.createElement('div');
-                banner.className = 'completion-banner';
-                banner.innerHTML = `
-                    <h3 style="margin: 0; font-size: 18px; font-weight: bold;">🎉 Module 4 Completed!</h3>
-                    <p style="margin: 5px 0 0 0; font-size: 14px;">You have finished the AI Module!!</p>
-                `;
-                document.body.appendChild(banner);
-                
-                // Remove banner after 4 seconds
-                setTimeout(() => {
-                    banner.style.animation = 'slideInBanner 0.5s ease-out reverse';
-                    setTimeout(() => banner.remove(), 500);
-                }, 4000);
-                
-                // Remove scroll listener
-                window.removeEventListener('scroll', checkScrollPosition);
-            }
-        }
-    }
-    
-    // Add scroll listener
-    window.addEventListener('scroll', checkScrollPosition);
-    
-    // Check immediately in case page is short
-    checkScrollPosition();
-});
-</script>
