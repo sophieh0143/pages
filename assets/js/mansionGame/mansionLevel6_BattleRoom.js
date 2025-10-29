@@ -65,6 +65,7 @@ class MansionLevel6_BattleRoom {
         };
 
         // --- Reaper Arms ---
+        /*
         const ARM_SCALE_FACTOR = 2;
         const sprite_arm_left_empty = path + "/images/mansionGame/ReaperLeftHandEmpty.png";
         const sprite_arm_left_scythe = path + "/images/mansionGame/ReaperLeftHandScythe.png";
@@ -104,11 +105,12 @@ class MansionLevel6_BattleRoom {
             emptySrc: sprite_arm_right_empty,
             weaponSrc: sprite_arm_right_scythe
         };
+        */
 
         this.classes = [
             {class: GameEnvBackground, data: image_data_floor},
             {class: Player, data: sprite_data_mc},
-            {class: Boss, data: sprite_boss_data},
+            // {class: Boss, data: sprite_boss_data},
             // {class: Arm, data: leftArmData},
             // {class: Arm, data: rightArmData},
         ];
