@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: opencs
 title: "San Francisco"
 description: "Submodule 3 of Backend Development Mini-Quest"
 permalink: /west-coast/backend/submodule_3/
@@ -10,6 +10,7 @@ categories: [CSP, Submodule, Backend]
 tags: [backend, submodule, zombies]
 author: "Zombies Team"
 date: 2025-10-21
+microblog: True
 ---
 
 # Submodule 3
