@@ -1,4 +1,6 @@
 ---
+layout: cs-portfolio-lesson
+title: "Submodule 1"
 layout: post
 title: "Submodule 1: Overall Analytics & Grades"
 description: "Submodule 1 of Analytics/Admin Mini-Quest"
@@ -232,7 +234,6 @@ date: 2025-10-21
       <div class="metric-value">127.5h</div>
       <div class="metric-subtitle">+8h this week</div>
     </div>
-
     <div class="metric-card">
       <div class="metric-header">
         <span class="metric-title">Modules Completed</span>
@@ -241,7 +242,6 @@ date: 2025-10-21
       <div class="metric-value">24</div>
       <div class="metric-subtitle">3 in progress</div>
     </div>
-
     <div class="metric-card">
       <div class="metric-header">
         <span class="metric-title">Accuracy Rate</span>
@@ -250,7 +250,6 @@ date: 2025-10-21
       <div class="metric-value">87.3%</div>
       <div class="metric-subtitle">+12% from last month</div>
     </div>
-
     <div class="metric-card">
       <div class="metric-header">
         <span class="metric-title">Day Streak</span>
@@ -304,7 +303,6 @@ date: 2025-10-21
         <canvas id="accuracyChart"></canvas>
       </div>
     </div>
-
     <div class="chart-card">
       <div class="chart-title">Question Categories Mastered</div>
       <div class="chart-container">
@@ -371,7 +369,6 @@ date: 2025-10-21
       }
     }
   });
-
   // Accuracy Per Module Chart
   const accuracyCtx = document.getElementById('accuracyChart').getContext('2d');
   new Chart(accuracyCtx, {
@@ -409,7 +406,6 @@ date: 2025-10-21
       }
     }
   });
-
   // Question Categories Chart
   const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
   new Chart(categoriesCtx, {
@@ -440,46 +436,36 @@ date: 2025-10-21
       }
     }
   });
-
   // PDF Download functionality
   const downloadBtn = document.getElementById('downloadBtn');
-  
   downloadBtn.addEventListener('click', async function() {
     const button = this;
     const originalText = button.innerHTML;
     button.innerHTML = '<span style="font-size: 1.2rem;">⏳</span> Generating PDF...';
     button.disabled = true;
-
     try {
       const { jsPDF } = window.jspdf;
       const container = document.querySelector('.analytics-container');
-      
       // Hide the download button temporarily
       const downloadSection = document.querySelector('.download-section');
       downloadSection.style.display = 'none';
-      
       const canvas = await html2canvas(container, {
         scale: 2,
         backgroundColor: '#121212',
         logging: false
       });
-      
       // Show the button again
       downloadSection.style.display = 'flex';
-      
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
         format: 'a4'
       });
-      
       const imgWidth = 210; // A4 width in mm
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.save('edulearn-analytics-report.pdf');
-      
     } catch (error) {
       console.error('Error generating PDF:', error);
       alert('There was an error generating the PDF. Please try again.');
