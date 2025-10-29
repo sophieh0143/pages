@@ -6,8 +6,6 @@ permalink: /west-coast/analytics/submodule_2/
 parent: "Analytics/Admin"
 team: "Cool Collaborators"
 submodule: 2
-categories: [Learn UI, Fun Destinations, Travel Questn]
-tags: [analytics, submodule, curators]
 author: "Cool Collaborators"
 date: 2025-10-21
 ---

@@ -6,8 +6,6 @@ permalink: /west-coast/analytics/sandiego/
 parent: "Analytics/Admin"
 team: "Cool Collaborators"
 submodule: 3
-categories: [Learn UI, Fun Destinations, Travel Quest]
-tags: [analytics, submodule, curators]
 author: "Cool Collaborators"
 date: 2025-10-21
 ---

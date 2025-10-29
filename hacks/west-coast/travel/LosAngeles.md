@@ -6,8 +6,6 @@ permalink: /west-coast/analytics/losangeles/
 parent: "Analytics/Admin"
 team: "Cool Collaborators"
 submodule: 1
-categories: [Learn UI, Fun Destinations, Travel Quest]
-tags: [analytics, submodule, curators]
 author: "Cool Collaborators"
 date: 2025-10-21
 ---
