@@ -65,7 +65,7 @@ class MansionLevel6 {
             greeting: sprite_greet_zombie,
             src: sprite_src_zombie,
             SCALE_FACTOR: 4,
-            ANIMATION_RATE: 100,
+            ANIMATION_RATE: 30,
             pixels: {width: 3600, height: 1200},
             INIT_POSITION: { x: (width * 3 / 4), y: (height * 1 / 2)},
             orientation: {rows: 1, columns: 3 },
