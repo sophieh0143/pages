@@ -20,7 +20,7 @@ class MansionLevel6 {
     const levelMusic = new Audio(path + "/assets/sounds/mansionGame/legendZelda.mp3");
     levelMusic.loop = true;
     levelMusic.volume = 0.3;
-    levelMusic.playbackRate = 0.8; // slightly slow it down
+    levelMusic.playbackRate = 0.85; // slightly slow it down
     levelMusic.play().catch(err => console.warn('Level music failed to play:', err));
 
         // This is the background image data
