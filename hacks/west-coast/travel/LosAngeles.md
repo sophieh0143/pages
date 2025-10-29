@@ -1,18 +1,18 @@
 ---
 layout: post
 title: "Los Angeles"
-description: "Submodule 1 of Analytics/Admin Mini-Quest"
+description: "Roadtrip through LA and learn UI while you're there!"
 permalink: /west-coast/analytics/losangeles/
 parent: "Analytics/Admin"
 team: "Cool Collaborators"
 submodule: 1
-categories: [CSP, Submodule, Analytics/Admin]
+categories: [Learn UI, Fun Destinations, Travel Quest]
 tags: [analytics, submodule, curators]
 author: "Cool Collaborators"
 date: 2025-10-21
 ---
 
-# Los AngEles 
+# Los Angeles 
 
 ## Content Coming Soon
 This submodule will be developed by the Cool Collaborators team. 

@@ -1,14 +1,14 @@
 ---
 layout: post
 title: "San Francisco"
-description: "Submodule 2 of Analytics/Admin Mini-Quest"
+description: "Roadtrip through SF and learn UI while you're there!"
 permalink: /west-coast/analytics/submodule_2/
 parent: "Analytics/Admin"
-team: "Curators"
+team: "Cool Collaborators"
 submodule: 2
-categories: [CSP, Submodule, Analytics/Admin]
+categories: [Learn UI, Fun Destinations, Travel Questn]
 tags: [analytics, submodule, curators]
-author: "Curators Team"
+author: "Cool Collaborators"
 date: 2025-10-21
 ---
 
