@@ -90,7 +90,6 @@ date: 2025-10-21
     .career-content {
       max-width: 700px;
       margin: 10px auto 0;
-      background: #fff;
       border-radius: 16px;
       overflow: hidden;
       max-height: 0;
