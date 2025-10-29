@@ -73,7 +73,10 @@ class MansionLevel6 {
                 "You have no chance... his power is unstopable...",
                 "No one has survived a battle against the Reaper.",
                 "Haha? You want to battle my boss? You'll die within the first minute...",
-                "Go ahead. I aint stoppin' you, the Reaper'll finish you clean."
+                "Go ahead. I aint stoppin' you, the Reaper'll finish you clean.",
+                "You are a fool to challenge the Reaper.",
+                "You will end up like me once you face the Reaper.",
+                "Are you the next opponent for my master? That's unfortunate for you."
             ],
             reaction: function() {
                 // Don't do anything on touch
