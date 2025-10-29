@@ -15,6 +15,13 @@ class MansionLevel6 {
         let height = gameEnv.innerHeight;
         let path = gameEnv.path;
 
+    // Level music: play Legend of Zelda theme when entering this level
+    // Will be stopped when transitioning to the battle room below
+    const levelMusic = new Audio(path + "/assets/sounds/mansionGame/legendZelda.mp3");
+    levelMusic.loop = true;
+    levelMusic.volume = 0.5;
+    levelMusic.play().catch(err => console.warn('Level music failed to play:', err));
+
         // This is the background image data
         const image_src_chamber = path + "/images/mansionGame/bgBossIntroChamber.png"
         const image_data_chamber = {
@@ -176,7 +183,15 @@ class MansionLevel6 {
                                 });
                                 document.body.appendChild(fadeOverlay);
 
-                                console.log("Starting music...");
+                                // Stop the level (overworld) music before starting battle music
+                                try {
+                                    if (levelMusic && typeof levelMusic.pause === 'function') {
+                                        levelMusic.pause();
+                                        levelMusic.currentTime = 0;
+                                    }
+                                } catch (e) { console.warn('Failed to stop level music:', e); }
+
+                                console.log("Starting battle music...");
                                 const audio = new Audio(path + "/assets/sounds/mansionGame/SkeletonLord.mp3");
                                 audio.volume = 0.5;
                                 audio.play().catch(error => console.error('Failed to play audio:', error));
