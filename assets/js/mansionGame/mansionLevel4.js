@@ -1,6 +1,5 @@
 // To build GameLevels, each contains GameObjects from below imports
 import GameEnvBackground from './GameEngine/GameEnvBackground.js';
-import Player from './GameEngine/Player.js';
 
 class MansionLevel4 {
   constructor(gameEnv) {
@@ -43,20 +42,12 @@ class MansionLevel4 {
 	keypress: { up: [87, 38], left: [65, 37], down: [83, 40], right: [68, 39] } // W,A,S,D and Arrows
 	};
 
-		// List of objects defnitions for this level
-		this.classes = [
-			{ class: GameEnvBackground, data: image_data_background },
-			// Use the MobilePlayer subclass so mobile users get an on-screen D-pad
-			{ class: MobilePlayer, data: sprite_data_chillguy },
-		];
+	// List of objects defnitions for this level
+	this.classes = [
+		{ class: GameEnvBackground, data: image_data_background },
+	];
   }
 
-  		// collision check function
-		const barrierData = [
-			{ x: 100, y: 200, width: 50, height: 300 }, // starting objects
-			{ x: 400, y: 100, width: 200, height: 50 }, // starting objects
-		];
-	}
 }
 
 export default MansionLevel4
