@@ -135,9 +135,10 @@ class MansionLevel6 {
                 }
                 
                 // Show portal dialogue with buttons
+                const whattosay = this.data.dialogues[Math.floor(Math.random() * this.data.dialogues.length)];
                 this.dialogueSystem.showDialogue(
-                    "Are you ready to battle the Reaper?",
-                    "Door",
+                    whattosay,
+                    "Zombie",
                     this.spriteData.src
                 );
             }
