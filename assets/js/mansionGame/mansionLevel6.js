@@ -50,50 +50,6 @@ class MansionLevel6 {
             keypress: {up: 87, left: 65, down: 83, right: 68} // W, A, S, D
         };
 
-
-        // This is the data for the zombie NPC charecter
-        /*
-        //const sprite_src_zombie_npc = path + "/images/mansionGame/zombieNpc.png";
-        const sprite_src_zombie_npc = path + "/images/gamify/r2_idle.png";
-        const sprite_greet_zombie_npc = "I heard the boss is waiting for you... enter if you dare.";
-        const sprite_data_zombie = {
-            id: 'ZombieNPC',
-            greeting: sprite_greet_zombie_npc,
-            src: sprite_src_zombie_npc,
-            SCALE_FACTOR: 15,
-            ANIMATION_RATE: 100,
-            pixels: {width: 505, height: 223},  // Test for R2D2 NPC
-            //pixels: {width: 1200, height: 3600},
-            INIT_POSITION: {x: (width / 2), y: (height / 2)},
-            orientation: {rows: 1, columns: 1},
-            // left: {row: 0, start: 0, columns: 3},
-            hitbox: {widthPercentage: 0.45, heightPercentage: 0.2},
-            dialogues: [
-                // The Zombie needs to warn the player against going through the doors
-                "I heard the boss is waiting for you...",
-                "Enter if you dare... he's waiting for you...",
-                "I heard the Reaper himself was in there.",
-            ],
-
-            reaction: function() {
-                if (this.dialogueSystem) {
-                    this.showReactionDialogue();
-                } else {
-                    console.log(sprite_greet_zombie_npc);
-                }           
-            },
-
-            // Make the zombie tell the player what it needs to say
-            interact: function() {
-                if (this.dialogueSystem) {
-                    this.showReactionDialogue();
-                } else {
-                    console.log(sprite_greet_zombie_npc);
-                }           
-            }
-        }
-        */
-
         // This is the zombie npc
         const sprite_src_zombie = path + "/images/mansionGame/zombieNpc.png";
         const sprite_greet_zombie = "Hi I am R2D2. Leave this planet and help defend the rebel base on Hoth!";
@@ -352,7 +308,6 @@ class MansionLevel6 {
         this.classes = [
             {class: GameEnvBackground, data: image_data_chamber},
             {class: Player, data: sprite_data_mc},
-            //{class: Npc, data: sprite_data_zombie},
             {class: Npc, data: sprite_data_zombie},
             {class: Npc, data: sprite_data_bossdoor}
         ];
