@@ -29,6 +29,7 @@ class Boss extends Enemy {
         this.lastAttackTime = 0;
         this.attackInterval = data?.attackInterval || 2000;
         this.projectileTypes = data?.projectileTypes || ['FIREBALL', 'ARROW'];
+        this.arms = [];
         
         // Start attack pattern
         this.startAttackPattern();
@@ -118,6 +119,11 @@ class Boss extends Enemy {
             }
         });
 
+        // Update the arms
+        [...this.arms].forEach((arm, index) => {
+            arm.update();
+        });
+
         // If the Reaper is throwing the scythe, then don't move (to simplify calculations)
         if (this.isThrowingScythe) {
 
@@ -192,6 +198,11 @@ class Boss extends Enemy {
     // This is the arrow attack, create a new arrow
     arrowAttack(target) {
         this.arrows.push(new Projectile(this.gameEnv, target.position.x, target.position.y, this.position.x, this.position.y, "ARROW"));
+    }
+
+    // This will create a new arm
+    addArm(arm) {
+        this.arms.push(arm);
     }
 }
 
