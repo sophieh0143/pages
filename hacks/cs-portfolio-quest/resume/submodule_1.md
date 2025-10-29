@@ -50,7 +50,7 @@ date: 2025-10-21
       color: #4338ca;
     }
     .stat-card p {
-      color: #4338ca !important;
+      color: #101011ff !important;
     }
     .stat-card:hover {
       transform: translateY(-5px);
