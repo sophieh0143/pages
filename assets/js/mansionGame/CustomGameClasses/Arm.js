@@ -11,16 +11,23 @@ import Character from '../GameEngine/Character.js';
 
 */
 
-// User arm
+// This is the Arm of the Reaper boss
 class Arm extends Character {
-    // Have a simple constructor
+    // Define the offset of the charecter and arm
     constructor(data = null, gameEnv = null) {
         super(data, gameEnv);
+        this.xOffset = data?.xOffset ?? -50;
+        this.yOffset = data?.yOffset ?? 70;
     }
 
     // Define the update property
     update(bossX, bossY) {
-        // Leave this empty for now
+        // Update position
+        this.position.x = bossX + this.xOffset;
+        this.position.y = bossY + this.yOffset;
+
+        // Draw to the screen
+        this.draw();
     }
 }
 
