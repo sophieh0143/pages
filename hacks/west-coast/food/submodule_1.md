@@ -1,5 +1,6 @@
 ---
-layout: post
+layout: opencs
+microblog: True 
 title: "San Diego"
 description: "City One of Food - San Diego"
 permalink: /west-coast/food/SD/
@@ -33,9 +34,63 @@ Welcome! This interactive page lets learners *actually* create dishes, ingredien
 .sq-field { padding:0.5rem; border-radius:0.375rem; border:1px solid #e6e6e6; width:100%; }
 .code-editor { width:100%; min-height:120px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; padding:0.5rem; border-radius:0.5rem; border:1px dashed #cbd5e1; background:#0f1724; color:#e6eef6; }
 .small { font-size:0.85rem; color:#6b7280; }
+
+/* Progress tracking styles */
+.progress-tracker { 
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1)); 
+  border: 2px solid rgba(139, 92, 246, 0.3); 
+  padding: 1rem; 
+  border-radius: 0.75rem; 
+  margin: 1rem 0; 
+  color: #e2e8f0; 
+}
+.task-complete { 
+  color: #10b981 !important; 
+  font-weight: bold; 
+}
+.unlock-notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 24px 48px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 18px;
+  z-index: 10000;
+  box-shadow: 0 20px 60px rgba(16, 185, 129, 0.4);
+  display: none;
+  text-align: center;
+}
 </style>
 
+<!-- Progress Tracker -->
+<div class="progress-tracker">
+  <h3 style="margin: 0 0 1rem 0; color: #c084fc;">🎯 San Diego Progress Tracker</h3>
+  <div id="progress-display">
+    <div id="task-fishtaco" class="task-item">📝 Task 1: Fish Taco Class - <span class="status">Incomplete</span></div>
+    <div id="task-burritocart" class="task-item">🛒 Task 2: Burrito Cart - <span class="status">Incomplete</span></div>
+    <div id="task-bajabowl" class="task-item">🥗 Task 3: Build Baja Bowl - <span class="status">Incomplete</span></div>
+    <div id="task-seed" class="task-item">🌱 Task 4: Seed Pantry - <span class="status">Incomplete</span></div>
+    <div id="task-view" class="task-item">👀 Task 5: View Pantry - <span class="status">Incomplete</span></div>
+  </div>
+  <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(59, 130, 246, 0.1); border-radius: 0.5rem;">
+    <strong>Completion: <span id="completion-percentage">0%</span></strong>
+    <div style="background: rgba(55, 65, 81, 0.5); height: 8px; border-radius: 4px; margin-top: 0.5rem;">
+      <div id="progress-bar" style="background: linear-gradient(90deg, #10b981, #059669); height: 100%; border-radius: 4px; width: 0%; transition: width 0.3s ease;"></div>
+    </div>
+  </div>
+</div>
+
 <div class="sq-toast" id="sqToast">Baja Bowl added — +50 XP</div>
+
+<!-- Unlock Notification -->
+<div id="unlockNotification" class="unlock-notification">
+  🎉 Los Angeles Unlocked!<br>
+  <small style="font-size: 14px; opacity: 0.9;">You can now continue to the next city!</small>
+</div>
 
 ---
 
@@ -73,6 +128,164 @@ Analogy: your database is a kitchen pantry. Adding a dish is like adding a recip
 <script>
 /* Mock API + utilities for this page. Outputs go to terminal elements using `logTo(id,...)` */
 (function () {
+  // Task completion tracking
+  window.taskProgress = {
+    fishtaco: false,
+    burritocart: false,
+    bajabowl: false,
+    seed: false,
+    view: false
+  };
+
+  // Load progress from localStorage
+  function loadTaskProgress() {
+    const saved = localStorage.getItem('sd_task_progress');
+    if (saved) {
+      try {
+        window.taskProgress = { ...window.taskProgress, ...JSON.parse(saved) };
+      } catch (e) {
+        console.error('Error loading task progress:', e);
+      }
+    }
+    updateProgressDisplay();
+  }
+
+  // Save progress to localStorage
+  function saveTaskProgress() {
+    try {
+      localStorage.setItem('sd_task_progress', JSON.stringify(window.taskProgress));
+    } catch (e) {
+      console.error('Error saving task progress:', e);
+    }
+  }
+
+  // Mark task as complete
+  window.completeTask = function(taskName) {
+    if (!window.taskProgress[taskName]) {
+      window.taskProgress[taskName] = true;
+      saveTaskProgress();
+      updateProgressDisplay();
+      checkModuleCompletion();
+    }
+  };
+
+  // Update progress display
+  function updateProgressDisplay() {
+    const tasks = ['fishtaco', 'burritocart', 'bajabowl', 'seed', 'view'];
+    let completedCount = 0;
+
+    tasks.forEach(task => {
+      const element = document.getElementById(`task-${task}`);
+      if (element) {
+        const statusSpan = element.querySelector('.status');
+        if (window.taskProgress[task]) {
+          statusSpan.textContent = 'Complete ✅';
+          statusSpan.className = 'status task-complete';
+          completedCount++;
+        } else {
+          statusSpan.textContent = 'Incomplete';
+          statusSpan.className = 'status';
+        }
+      }
+    });
+
+    // Update progress bar
+    const percentage = Math.round((completedCount / tasks.length) * 100);
+    const percentageElement = document.getElementById('completion-percentage');
+    const progressBar = document.getElementById('progress-bar');
+    
+    if (percentageElement) percentageElement.textContent = `${percentage}%`;
+    if (progressBar) progressBar.style.width = `${percentage}%`;
+  }
+
+  // Check if module is complete and unlock next city
+  function checkModuleCompletion() {
+    const allTasks = Object.values(window.taskProgress);
+    const isComplete = allTasks.every(task => task === true);
+    
+    if (isComplete) {
+      // Show unlock notification
+      const notification = document.getElementById('unlockNotification');
+      if (notification) {
+        notification.style.display = 'block';
+        setTimeout(() => {
+          notification.style.display = 'none';
+        }, 4000);
+      }
+
+      // ENHANCED: Multiple approaches to unlock the next city
+      unlockNextCity();
+      
+      console.log('🎉 San Diego module completed! Los Angeles should now be unlocked.');
+    }
+  }
+
+  // NEW: Dedicated function to handle unlocking with multiple fallback methods
+  function unlockNextCity() {
+    const cityIndex = 0; // San Diego is index 0
+    
+    // Method 1: Direct access to main navigation system
+    if (typeof window.markCityCompleted === 'function') {
+      window.markCityCompleted(cityIndex);
+      console.log('✅ Method 1: Called window.markCityCompleted directly');
+      return;
+    }
+    
+    // Method 2: Try parent window (if in iframe or similar)
+    try {
+      if (window.parent && window.parent.markCityCompleted) {
+        window.parent.markCityCompleted(cityIndex);
+        console.log('✅ Method 2: Called parent.markCityCompleted');
+        return;
+      }
+    } catch (e) {
+      console.log('Method 2 failed:', e.message);
+    }
+    
+    // Method 3: Try top window
+    try {
+      if (window.top && window.top.markCityCompleted) {
+        window.top.markCityCompleted(cityIndex);
+        console.log('✅ Method 3: Called top.markCityCompleted');
+        return;
+      }
+    } catch (e) {
+      console.log('Method 3 failed:', e.message);
+    }
+    
+    // Method 4: Direct localStorage manipulation as fallback
+    try {
+      const saved = localStorage.getItem('mchopiee_city_progress');
+      let gameProgress = {
+        unlockedCities: [0],
+        completedCities: [],
+        totalCitiesCompleted: 0
+      };
+      
+      if (saved) {
+        gameProgress = JSON.parse(saved);
+      }
+      
+      // Mark San Diego as completed and unlock Los Angeles
+      if (!gameProgress.completedCities.includes(0)) {
+        gameProgress.completedCities.push(0);
+        gameProgress.totalCitiesCompleted++;
+      }
+      
+      if (!gameProgress.unlockedCities.includes(1)) {
+        gameProgress.unlockedCities.push(1); // Unlock Los Angeles (index 1)
+      }
+      
+      // Save back to localStorage
+      localStorage.setItem('mchopiee_city_progress', JSON.stringify(gameProgress));
+      console.log('✅ Method 4: Direct localStorage update completed');
+      console.log('Updated progress:', gameProgress);
+      
+    } catch (e) {
+      console.error('Method 4 failed:', e);
+    }
+  }
+
   // helpers
   function t() { return Date.now().toString(36).slice(-6); }
   window.logTo = function (id, ...parts) {
@@ -223,6 +436,9 @@ Analogy: your database is a kitchen pantry. Adding a dish is like adding a recip
   } else {
     window.logTo('terminal-init', '[MockAPI] DB loaded from localStorage.');
   }
+
+  // Load task progress on page load
+  loadTaskProgress();
 })();
 </script>
 
@@ -255,6 +471,9 @@ class FishTaco {
 const taco = new FishTaco("t1", "Mahi-Mahi", ["cabbage","lime","pico"], "chipotle", 5.99, "Medium");
 console.log("Created:", taco);
 console.log("Total price:", taco.calculateTotalPrice().toFixed(2));
+
+// Mark task as complete when run successfully
+completeTask('fishtaco');
   </textarea>
 
   <div style="margin-top:0.5rem">
@@ -289,6 +508,9 @@ cart.addBurrito({ name: "Veggie Burrito", filling: "Beans", price: 7.0 });
 console.log("Cart:", cart.burritos);
 console.log("Total:", cart.getTotalPrice());
 console.log("Carne Asada burritos:", cart.getBurritosByFilling("Carne Asada"));
+
+// Mark task as complete when run successfully
+completeTask('burritocart');
   </textarea>
 
   <div style="margin-top:0.5rem">
@@ -394,6 +616,7 @@ console.log("Carne Asada burritos:", cart.getBurritosByFilling("Carne Asada"));
     if (res.status === 201) {
       logTo('terminal-create', '[Server] 201 Created', res.body);
       showToast(res.body.name + ' added — +50 XP');
+      completeTask('bajabowl'); // Mark task as complete
     } else {
       logTo('terminal-create', '[Server] Error', res);
     }
@@ -486,6 +709,7 @@ window.seedPantry = async function() {
   const res = await MockAPIInstance.postBulk(seed);
   if (res.status === 201) {
     logTo('terminal-seed', '✅ Seed success:', res.body);
+    completeTask('seed'); // Mark task as complete
   } else {
     logTo('terminal-seed', '❌ Seed failed', res);
   }
@@ -515,6 +739,7 @@ window.viewPantry = async function() {
   }
   logTo('terminal-pantry','[Server] 200 OK — Dishes for city=sd:');
   dishes.forEach(d => logTo('terminal-pantry', JSON.stringify(d, null, 2)));
+  completeTask('view'); // Mark task as complete
 };
 </script>
 
@@ -523,13 +748,19 @@ window.viewPantry = async function() {
 
 ## 🎉 Module Complete — San Diego
 
-Congratulations! You’ve successfully completed **CRUD: CREATE** in San Diego. All tasks — Fish Tacos, California Burrito, Baja Bowl, and the interactive pantry — are done. ✅  
+Congratulations! You've successfully completed **CRUD: CREATE** in San Diego. All tasks — Fish Tacos, California Burrito, Baja Bowl, and the interactive pantry — are done. ✅  
 
-Your **Baja Bowl** creation earned you **+50 XP** and the **“First Insert”** badge! 🏆  
+Your **Baja Bowl** creation earned you **+50 XP** and the **"First Insert"** badge! 🏆  
 
 The next city awaits: **Los Angeles — READ module unlocked!** 🌆  
 Click through to begin exploring **searching, filtering, and viewing dishes** in LA.
 
+<!-- Back to Home Button moved to bottom -->
+<div style="margin-top: 3rem; text-align: center; padding: 2rem 0; border-top: 2px solid rgba(139, 92, 246, 0.3);">
+  <a href="{{ site.baseurl }}/west-coast/food/" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6); border: 2px solid rgba(139, 92, 246, 0.4); padding: 16px 32px; border-radius: 25px; color: white; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); text-decoration: none; display: inline-block; font-family: 'Nunito', sans-serif;">
+    ← Back to Food Route Hub
+  </a>
+</div>
 
 <script>
 /* utilities used by editors */
