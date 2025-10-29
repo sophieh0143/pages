@@ -463,6 +463,8 @@ function displayResults(analysis) {
     
     resultDiv.innerHTML = html;
 }
+localStorage.setItem('ai-submodule-2-completed', 'true');
+
 </script>
 
 {%- include tailwind/cs-portfolio-quest-lessons_info.html -%}

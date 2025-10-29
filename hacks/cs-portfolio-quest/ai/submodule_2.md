@@ -454,6 +454,9 @@ What am I missing about database connections in Flask routes?`;
 document.addEventListener('DOMContentLoaded', function() {
     loadPromptExercise();
 });
+
+localStorage.setItem('ai-submodule-2-completed', 'true');
+
 </script>
 
 {%- include tailwind/cs-portfolio-quest-lessons_info.html -%}
