@@ -14,7 +14,7 @@ author: "Debuggers Team - Lilian Wu, Rebecca Yan"
 date: 2025-10-21
 ---
 
-# Submodule 3
+# Submodule 3 AI API
 
 
 ## ❗️What is AI API
@@ -22,41 +22,279 @@ An AI API (Application Programming Interface) is a set of rules that allows deve
 
 
 ## 🔈 Example of using AI API 
-An typical example of using an AI API is to build a **customer service chatbot** that uses a natural language processing API to understand customer queries and generate responses.
+An typical example of using an AI API is to build a **customer service chatbot** that uses a natural language processing API to understand customer queries and generate responses. Ex:microblog.
 
-## 💡 How do you use AI API as a creater 
-- As a creater to use AI API, first, you need to go to the AI provider's platform to borrow AI such as **Open AI**
-- Sign up and get an API key, then use the provided documentation to make a request from your code, passing in a prompt and your API key for authorization. 
-
-
-## Microblog System Architecture: Layered AI Approach
-This article is the main technical reference for the microblog system, which uses a layered approach to enable interactive, AI-powered microblogging on any lesson or article page.
 
 #
 #
-#
-#
-# Layers Overview
+# 
+# Structure of Microblog: Layers Overview
 
-1. Layout Layer 
+## 1. Layout Layer 
 
 Handles the inclusion of all required dependencies (Tailwind CSS, jQuery, and microblog scripts).
 Injects the microblog overlay panel and floating button into the page.
 Reads frontmatter (e.g., microblog: True) to determine whether to activate the microblog UI.
 Ensures the microblog panel is available and styled consistently across all enabled pages.
 
-2. JavaScript Layer (assets/js/api/microblog.js):
+## 2. JavaScript Layer (assets/js/api/microblog.js):
 
 Handles all UI interactivity: opening/closing the panel, posting, replying, and updating the display.
 Manages API calls to the backend (fetching, posting, reacting, etc.).
 Implements error handling, loading states, and user feedback.
 Uses modern JavaScript patterns (Promises, async/await) for robust, maintainable code.
 
-3. Backend/API Layer:
+## 3. Backend/API Layer:
 
 Provides RESTful endpoints for microblog operations (GET, POST, reply, react).
 Can be extended or replaced as needed for different deployments.
-## Code
+#
+#
+# Lesson
+<!-- Lesson Content -->
+
+  <section>
+    <h2>1. Conditional Microblog Loading</h2>
+    <p>The system only activates when <code>page.microblog</code> is set to true in the page's front matter.</p>
+    
+    <div class="code-example">
+      <pre><code>{%- if page.microblog %}
+  <!-- Microblog code loads here -->
+{%- endif %}</code></pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. External Dependencies</h2>
+    <p>The system loads several external libraries:</p>
+    <ul>
+      <li><strong>Tailwind CSS</strong> - For styling utilities</li>
+      <li><strong>DataTables</strong> - For enhanced table functionality</li>
+      <li><strong>jQuery</strong> - For DOM manipulation and DataTables integration</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. Microblog Panel Structure</h2>
+    <p>The panel uses a fixed position overlay that slides in from the right:</p>
+    
+    <div class="code-example">
+      <pre><code>&lt;aside id="microblog-panel" class="fixed top-20 right-0 h-[calc(100vh-5rem)] sm:w-[400px] max-w-full shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col bg-gray-600"&gt;
+  &lt;!-- Panel content --&gt;
+&lt;/aside&gt;</code></pre>
+    </div>
+    
+    <p>Key CSS classes explained:</p>
+    <ul>
+      <li><code>fixed</code> - Positions the panel relative to the viewport</li>
+      <li><code>translate-x-full</code> - Initially hides the panel off-screen to the right</li>
+      <li><code>transition-transform</code> - Creates smooth sliding animation</li>
+      <li><code>z-50</code> - Ensures the panel appears above other content</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>4. Toggle Button</h2>
+    <p>A floating button that triggers the panel open/close:</p>
+    
+    <div class="code-example">
+      <pre><code>&lt;button id="microblog-toggle-btn" aria-label="Open Microblog"&gt;
+  💬 Microblog
+&lt;/button&gt;</code></pre>
+    </div>
+    
+    <p>This button is:</p>
+    <ul>
+      <li>Positioned fixed in the top-right corner</li>
+      <li>Styled with a dark background for contrast</li>
+      <li>Responsive - changes size and position on mobile</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>5. JavaScript Interaction</h2>
+    <p>Simple JavaScript handles the open/close functionality:</p>
+    
+    <div class="code-example">
+      <pre><code>function openMicroblog() {
+  overlay.classList.add('open');
+  overlay.style.transform = 'translateX(0)';
+  overlay.focus();
+  toggleBtn.style.display = 'none';
+}
+
+function closeMicroblog() {
+  overlay.classList.remove('open');
+  overlay.style.transform = 'translateX(100%)';
+  toggleBtn.style.display = '';
+}</code></pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. Content Flexibility</h2>
+    <p>The system supports different content sources:</p>
+    
+    <div class="code-example">
+      <pre><code>{% if page.microblog_heading %}
+  &lt;h2&gt;{{ page.microblog_heading }}&lt;/h2&gt;
+{% endif %}
+
+{% if page.microblog_content %}
+  {{ page.microblog_content }}
+{% else %}
+  {% include microblog_foundation.html %}
+{% endif %}</code></pre>
+    </div>
+  </section>
+
+  <section>
+    <h2>7. Responsive Design</h2>
+    <p>The system adapts to different screen sizes:</p>
+    
+    <div class="code-example">
+      <pre><code>@media (max-width: 600px) {
+  #microblog-overlay {
+    width: 100vw;
+    max-width: 100vw;
+  }
+  
+  #microblog-toggle-btn {
+    right: 0.5rem;
+    top: 3.5rem;
+    padding: 1.2rem 2.2rem;
+    border-radius: 50%;
+  }
+}</code></pre>
+    </div>
+    
+    <p>On mobile devices:</p>
+    <ul>
+      <li>The panel takes the full screen width</li>
+      <li>The toggle button becomes circular and repositioned</li>
+      <li>Touch-friendly sizing is applied</li>
+    </ul>
+  </section>
+</div>
+
+<!-- Microblog Implementation -->
+<button id="microblog-toggle-btn" aria-label="Open Microblog" style="position: fixed; top: 4.5rem; right: 2.5rem; z-index: 1100; background: #191d26; color: white; border-radius: 999px; padding: 1rem 1.5rem; font-size: 1.3rem; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.08); border: none; cursor: pointer; transition: background 0.2s; opacity: 0.97;">💬 Microblog</button>
+
+<aside id="microblog-panel" style="position: fixed; top: 5rem; right: 0; width: 400px; max-width: 90vw; height: calc(100vh - 5rem); box-shadow: -2px 0 12px rgba(0,0,0,0.12); z-index: 1000; transform: translateX(100%); transition: transform 0.3s cubic-bezier(.4,0,.2,1); display: flex; flex-direction: column; background: white;" tabindex="-1" aria-label="Microblog panel">
+  <div style="flex: 0 0 auto; display: flex; justify-content: flex-end; padding: 0.5rem; border-bottom: 1px solid #e5e7eb;">
+    <button id="microblog-close-btn" style="padding: 0.5rem; font-size: 1.5rem; font-weight: bold; color: #374151; border: 1px solid #d1d5db; border-radius: 9999px; width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center; cursor: pointer; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1);" aria-label="Close Microblog">&times;</button>
+  </div>
+  <div style="flex: 1; overflow-y: auto; padding: 1rem;">
+    <h2 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem;">Microblog Demo</h2>
+    <div class="microblog-content">
+      <p>This is a demonstration of the microblog panel in action!</p>
+      <p>You can put any content here:</p>
+      <ul>
+        <li>Discussion threads</li>
+        <li>Code examples</li>
+        <li>Interactive elements</li>
+        <li>Notes and annotations</li>
+      </ul>
+      
+      <h3>Try It Out</h3>
+      <p>Add your own note:</p>
+      <textarea style="width: 100%; height: 100px; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 1rem;"></textarea>
+      <button style="background: #4f46e5; color: white; padding: 0.5rem 1rem; border: none; border-radius: 4px; cursor: pointer;">Add Note</button>
+    </div>
+  </div>
+</div>
+</aside>
+
+<script>
+// Microblog functionality
+const overlay = document.getElementById('microblog-panel');
+const toggleBtn = document.getElementById('microblog-toggle-btn');
+const closeBtn = document.getElementById('microblog-close-btn');
+
+function openMicroblog() {
+  overlay.style.transform = 'translateX(0)';
+  overlay.focus();
+  toggleBtn.style.display = 'none';
+}
+
+function closeMicroblog() {
+  overlay.style.transform = 'translateX(100%)';
+  toggleBtn.style.display = '';
+}
+
+toggleBtn.addEventListener('click', openMicroblog);
+closeBtn.addEventListener('click', closeMicroblog);
+
+// Close on escape key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape' && overlay.style.transform === 'translateX(0px)') {
+    closeMicroblog();
+  }
+});
+</script>
+
+<style>
+.lesson-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+.lesson-container h1 {
+  color: #1e293b;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.lesson-container h2 {
+  color: #334155;
+  margin-top: 2rem;
+}
+
+.code-example {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.code-example pre {
+  margin: 0;
+}
+
+.code-example code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .lesson-container {
+    padding: 1rem;
+  }
+  
+  #microblog-toggle-btn {
+    right: 0.5rem;
+    top: 3.5rem;
+    padding: 1.2rem 2.2rem;
+    font-size: 1.5rem;
+    min-width: 56px;
+    min-height: 56px;
+    border-radius: 50%;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  
+  #microblog-panel {
+    width: 100vw;
+    max-width: 100vw;
+  }
+}
+</style>
+
+# Code
 
  ``` html
  {%- include themes/minima/base.html -%}
@@ -175,6 +413,9 @@ closeBtn.onclick = closeMicroblog;
 
 
  ```
+
+
+ 
 ```html
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
@@ -431,7 +672,7 @@ async function renderMicroblogTable() {
 renderMicroblogTable();
 </script>
 ```
-## AI API Quiz
+# AI API Quiz
 
 <div id="quiz-container">
   <div class="question-block" id="question1">
