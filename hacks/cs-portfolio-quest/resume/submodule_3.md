@@ -537,6 +537,47 @@ date: 2025-10-21
 
     linkedinPreview.innerHTML = html;
     showStep(4);
+
+    // ==== SUBMIT RESUME DATA ==== //
+    try {
+      // Prepare resume object in required format
+      const resume = {
+        professionalSummary: summary,
+        experiences: experiences.map(e => ({
+          jobTitle: e.title,
+          company: e.company,
+          dates: e.dates,
+          description: e.desc
+        }))
+      };
+      // Determine endpoint based on host
+      let endpoint = '';
+      if (window.location.hostname === 'localhost') {
+        endpoint = 'http://localhost:8585/api/resume/me';
+      } else if (window.location.hostname === 'pages.opencodingsociety.com') {
+        endpoint = 'https://spring.opencodingsocity.com/api/resume/me';
+      }
+      if (endpoint) {
+        fetch(endpoint, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(resume)
+        }).then(res => {
+          // Optionally, show a confirmation or handle the response
+          if (res.ok) {
+            // console.log('Resume submitted successfully');
+          }
+        }).catch(err => {
+          // console.error('Resume submission error', err);
+        });
+      }
+    } catch (e) {
+      // console.error('Resume submit logic error', e);
+    }
+    // ==== END SUBMIT ==== //
   }
 
   /* ------------------------------
