@@ -503,6 +503,26 @@ date: 2025-10-21
   </div>
 </div>
 
+<script type="module">
+    import { javaURI } from '{{ site.baseurl }}/assets/js/api/config.js';
+    try {
+      const res = await fetch(`${pythonURI}/api/people/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        },
+      });
+      console.log(res)
+      if (res.ok) {
+        console.log(res)
+      } else {
+        throw new Error();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+</script>
+
 <script>
   const students = [
     {
