@@ -41,6 +41,12 @@ class MansionLevel1_Pantry {
             upRight: {row: 1, start: 0, columns: 3, rotate: -Math.PI/16},
             hitbox: {widthPercentage: 0.45, heightPercentage: 0.2},
             keypress: {up: 87, left: 65, down: 83, right: 68} // W, A, S, D
+            boundaries: {
+            top: height * 0.15,      // Top wall (15% from top)
+            bottom: height * 0.95,   // Bottom wall (95% from top)
+            left: width * 0.05,      // Left wall (5% from left)
+            right: width * 0.95      // Right wall (95% from left)
+
         };
 
 const sprite_src_pantrydoor = path + "/images/gamify/invisDoorCollisionSprite.png"; // replace with your door sprite if needed
