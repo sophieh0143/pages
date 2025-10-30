@@ -30,6 +30,10 @@ date: 2025-10-21
 
 Considering you're on this section, you likely have learned that HTML is what structures website and CSS is what styles and adds design to websites. JavaScript add to this list: **It makes the website interactive.**
 
+<br>
+
+This guide will go over some of the most fundamental concepts relating to JavaScript.
+
 ## Variables
 
 Variables are essentially how data is stored in usable containers in code.
@@ -134,6 +138,9 @@ console.log(z);
     <textarea rows="10" cols="70" placeholder="code goes here"></textarea>
 </div>
 
+<button onclick="showAnswer()">Show Example Answer</button>
+<p id="example-answer" style="background-color: white; color: blue;"></p>
+
 <a href="{{site.baseurl}}/cs-portfolio-quest/frontend/submodule_4" 
    style="display:inline-block; background-color:#1e3a8a; color:white; text-decoration:none; 
           padding:10px 20px; border-radius:8px; border:none; cursor:pointer; 
@@ -150,4 +157,10 @@ console.log(z);
    onmouseout="this.style.backgroundColor='#1e3a8a'">
   Next
 </a>
-
+    
+<script>
+    function showAnswer() {
+        const exampleAnswer = document.getElementById("example-answer");
+        exampleAnswer.innerHTML = "x=5<br>y=2<br>z=x*2<br>console.log(z)";
+    }
+</script>
