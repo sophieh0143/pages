@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Prompt Engineering"
+background: images/digital-famine/underwateraienv.png
 description: "Using different Prompts"
 permalink: /digital-famine/ai/submodule_2/
 breadcrumb: true

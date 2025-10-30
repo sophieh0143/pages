@@ -16,18 +16,11 @@ date: 2025-10-21
 
 # Submodule 4
 
-Locked Until Vault Code is Provided
-
- 3 number code given to access minigame
+Enter your 3-number code to access the minigame and escape from the planet!
 
 **Roadblocks**
 - 1 from each submodule
 - To move past roadblock you have to correctly answer a question
-
-**Questions**
-- 1: Which is a real-life example of Narrow AI?
-- 2: Which is a type of prompt engineering? (use from table)
-- 3: What is NOT a real life example of an AI API?
 
 Notes: 
 
