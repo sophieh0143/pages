@@ -164,9 +164,9 @@ function openInfoMenu() {
     infoSection.innerHTML = `
         <strong>Game Title:</strong> Mansion Adventure<br>
         <strong>Version:</strong> 1.0.0<br>
-        <strong>Developer:</strong> Your Name Here<br>
-        <strong>Description:</strong> Placeholder description for your game.<br>
-        <strong>Controls:</strong> Arrow keys to move, Space to jump.<br>
+        <strong>Developer:</strong> DNHS CSSE Per. 1<br>
+        <strong>Description:</strong> Find all the keys to escape the haunted mansion!<br>
+        <strong>Controls:</strong> WASD keys to move.<br>
         <strong>More info coming soon...</strong>
     `;
 
