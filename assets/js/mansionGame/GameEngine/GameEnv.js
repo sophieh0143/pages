@@ -34,12 +34,6 @@ class GameEnv {
         this.path = ''; // Reference to the resource path
         this.gameControl = null; // Reference to the GameControl instance
         this.gameObjects = []; // Reference list of game objects instancces    
-        // Camera state: inactive means no transform applied
-        this.camera = {
-            active: false,
-            scale: 1,
-            center: { x: 0, y: 0 }, // center in world coordinates
-        };
     }
 
     /**
@@ -56,8 +50,6 @@ class GameEnv {
         this.innerWidth = window.innerWidth;
         this.innerHeight = window.innerHeight - this.top - this.bottom;
         this.size();
-        // Initialize camera center based on current size
-        this.resetCamera();
     }
 
     /**
@@ -104,64 +96,7 @@ class GameEnv {
 
  
     clear() {
-        // Clear using identity transform to avoid clearing scaled area
-        this.ctx.save();
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0);
         this.ctx.clearRect(0, 0, this.innerWidth, this.innerHeight);
-        this.ctx.restore();
-    }
-
-    /**
-     * Apply camera transform to the rendering context.
-     * Call before drawing world objects.
-     */
-    pushCamera() {
-        const ctx = this.ctx;
-        if (!this.camera || !this.camera.active || this.camera.scale === 1) {
-            // nothing to do
-            return;
-        }
-
-        ctx.save();
-        const s = this.camera.scale;
-        const cx = this.camera.center.x;
-        const cy = this.camera.center.y;
-        // Compute translation so camera center maps to canvas center
-        const tx = this.innerWidth / 2 - cx * s;
-        const ty = this.innerHeight / 2 - cy * s;
-        ctx.setTransform(s, 0, 0, s, tx, ty);
-    }
-
-    /**
-     * Restore context after drawing world objects.
-     */
-    popCamera() {
-        if (!this.camera || !this.camera.active || this.camera.scale === 1) return;
-        this.ctx.restore();
-    }
-
-    /**
-     * Zoom the camera so the given rectangle (in world coordinates) fills the canvas.
-     * rect: { x, y, width, height }
-     */
-    zoomToRect(rect) {
-        if (!rect || rect.width <= 0 || rect.height <= 0) return;
-        const scaleX = this.innerWidth / rect.width;
-        const scaleY = this.innerHeight / rect.height;
-        // Use the smaller scale to fully contain the rect
-        const scale = Math.min(scaleX, scaleY);
-        this.camera.scale = scale;
-        this.camera.center = { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
-        this.camera.active = true;
-    }
-
-    /**
-     * Reset camera back to default (no transform)
-     */
-    resetCamera() {
-        this.camera.active = false;
-        this.camera.scale = 1;
-        this.camera.center = { x: this.innerWidth / 2, y: this.innerHeight / 2 };
     }
 }
 
