@@ -188,29 +188,34 @@ layout: opencs
       <!-- ✅ End of Modular Upload -->
 
       <!-- Navigation buttons -->
-      <div class="max-w-3xl mx-auto mt-12 flex items-center justify-between gap-4">
-        {% assign currentLesson = page.submodule | plus: 0 %}
-        {% assign prevLesson = currentLesson | minus: 1 %}
-        {% assign nextLesson = currentLesson | plus: 1 %}
-        {% assign basePath = page.url | split: '/submodule_' | first %}
-        
-        {% if currentLesson > 1 %}
-        <a href="{{ basePath }}/submodule_{{ prevLesson }}/" class="iridescent text-white px-6 py-3 rounded-lg font-semibold transition">
-          ← Previous Lesson
-        </a>
-        {% else %}
-        <div></div>
-        {% endif %}
+      <div class="max-w-5xl mx-auto mt-16 mb-8">
+        <div class="flex items-center justify-between gap-6">
+          {% assign currentLesson = page.submodule | plus: 0 %}
+          {% assign prevLesson = currentLesson | minus: 1 %}
+          {% assign nextLesson = currentLesson | plus: 1 %}
+          {% assign basePath = page.url | split: '/submodule_' | first %}
+          
+          {% if currentLesson > 1 %}
+          <a href="{{ basePath }}/submodule_{{ prevLesson }}/" class="nav-button nav-button-prev">
+            <span class="nav-arrow">←</span>
+            <span class="nav-text">Previous Lesson</span>
+          </a>
+          {% else %}
+          <div style="width: 200px;"></div>
+          {% endif %}
 
-        {% if currentLesson < 6 %}
-        <a href="{{ basePath }}/submodule_{{ nextLesson }}/" id="next-lesson-btn" class="iridescent text-white px-6 py-3 rounded-lg font-semibold transition opacity-50 pointer-events-none" aria-disabled="true">
-          Next Lesson →
-        </a>
-        {% else %}
-        <a href="{{ basePath }}/" id="back-to-module-btn" class="iridescent text-white px-6 py-3 rounded-lg font-semibold transition">
-          Back to Module →
-        </a>
-        {% endif %}
+          {% if currentLesson < 6 %}
+          <a href="{{ basePath }}/submodule_{{ nextLesson }}/" id="next-lesson-btn" class="nav-button nav-button-next nav-button-disabled" aria-disabled="true">
+            <span class="nav-text">Next Lesson</span>
+            <span class="nav-arrow">→</span>
+          </a>
+          {% else %}
+          <a href="{{ basePath }}/" id="back-to-module-btn" class="nav-button nav-button-next">
+            <span class="nav-text">Back to Module</span>
+            <span class="nav-arrow">→</span>
+          </a>
+          {% endif %}
+        </div>
       </div>
 
       <!-- Completion notification toast -->
