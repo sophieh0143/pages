@@ -51,7 +51,7 @@ class MansionLevelMain {
             keypress: {up: 87, left: 65, down: 83, right: 68} // W, A, S, D
         };
 
-    const sprite_src_level1door = path + "/images/gamify/testDoorCollisionSprite.png"; // replace with your door sprite if needed
+    const sprite_src_level1door = path + "/images/gamify/lineDoorCollisionSprite.png"; // replace with your door sprite if needed
       const sprite_greet_level1door = "Would you like to enter the first level? Press E";
       const sprite_data_level1door = {
         id: 'Level1Door',
@@ -60,10 +60,10 @@ class MansionLevelMain {
         SCALE_FACTOR: 6,
         ANIMATION_RATE: 100,
         pixels: {width: 256, height: 256},
-        INIT_POSITION: { x: (width * 0.18), y: (height * 0.62) },
+        INIT_POSITION: { x: (width * 0.58), y: (height * 0.8) },
         orientation: {rows: 1, columns: 1},
-        down: {row: 0, start: 0, columns: 1},
-        hitbox: {widthPercentage: 0.2, heightPercentage: 0.3},
+        down: {row: 0, start: 0, columns: 1, rotate: Math.PI / 3},
+        hitbox: {widthPercentage: 0.1, heightPercentage: 0.1},
         dialogues: [
           "Level 1 awaits. Do you wish to enter?"
         ],
@@ -121,7 +121,7 @@ class MansionLevelMain {
       };
       
       // Level 3 door - duplicate of earlier doors
-      const sprite_src_level3door = path + "/images/gamify/testDoorCollisionSprite.png";
+      const sprite_src_level3door = path + "/images/gamify/lineDoorCollisionSprite.png";
       const sprite_greet_level3door = "Would you like to enter the third level? Press E";
       const sprite_data_level3door = {
         id: 'Level3Door',
@@ -130,9 +130,9 @@ class MansionLevelMain {
         SCALE_FACTOR: 6,
         ANIMATION_RATE: 100,
         pixels: {width: 256, height: 256},
-        INIT_POSITION: { x: (width * 0.48), y: (height * 0.62) },
+        INIT_POSITION: { x: (width * 0.61), y: (height * 0.41) },
         orientation: {rows: 1, columns: 1},
-        down: {row: 0, start: 0, columns: 1},
+        down: {row: 0, start: 0, columns: 1, rotate: -Math.PI / 3},
         hitbox: {widthPercentage: 0.2, heightPercentage: 0.3},
         dialogues: [
           "Level 3 awaits. Do you wish to enter?"
@@ -160,7 +160,7 @@ class MansionLevelMain {
       };
 
       // Level 4 door
-      const sprite_src_level4door = path + "/images/gamify/testDoorCollisionSprite.png";
+      const sprite_src_level4door = path + "/images/gamify/lineDoorCollisionSprite.png";
       const sprite_greet_level4door = "Would you like to enter the fourth level? Press E";
       const sprite_data_level4door = {
         id: 'Level4Door',
@@ -169,7 +169,7 @@ class MansionLevelMain {
         SCALE_FACTOR: 6,
         ANIMATION_RATE: 100,
         pixels: {width: 256, height: 256},
-        INIT_POSITION: { x: (width * 0.63), y: (height * 0.62) },
+        INIT_POSITION: { x: (width * 0.35), y: (height * 0.62) },
         orientation: {rows: 1, columns: 1},
         down: {row: 0, start: 0, columns: 1},
         hitbox: {widthPercentage: 0.2, heightPercentage: 0.3},
@@ -197,18 +197,18 @@ class MansionLevelMain {
       };
 
       // Level 5 door
-      const sprite_src_level5door = path + "/images/gamify/testDoorCollisionSprite.png";
+      const sprite_src_level5door = path + "/images/gamify/lineDoorCollisionSprite.png";
       const sprite_greet_level5door = "Would you like to enter the fifth level? Press E";
       const sprite_data_level5door = {
         id: 'Level5Door',
         greeting: sprite_greet_level5door,
         src: sprite_src_level5door,
         SCALE_FACTOR: 6,
-        ANIMATION_RATE: 100,
+        ANIMATION_RATE: 100,  
         pixels: {width: 256, height: 256},
-        INIT_POSITION: { x: (width * 0.78), y: (height * 0.62) },
+        INIT_POSITION: { x: (width * 0.35), y: (height * 0.53) },
         orientation: {rows: 1, columns: 1},
-        down: {row: 0, start: 0, columns: 1},
+        down: {row: 0, start: 0, columns: 1, rotate: Math.PI / 3},
         hitbox: {widthPercentage: 0.2, heightPercentage: 0.3},
         dialogues: ["Level 5 awaits. Do you wish to enter?"],
         reaction: function() {},
@@ -234,7 +234,7 @@ class MansionLevelMain {
       };
 
       // Level 6 door
-      const sprite_src_level6door = path + "/images/gamify/testDoorCollisionSprite.png";
+      const sprite_src_level6door = path + "/images/gamify/lineDoorCollisionSprite.png";
       const sprite_greet_level6door = "Would you like to enter the sixth level? Press E";
       const sprite_data_level6door = {
         id: 'Level6Door',
@@ -243,9 +243,9 @@ class MansionLevelMain {
         SCALE_FACTOR: 6,
         ANIMATION_RATE: 100,
         pixels: {width: 256, height: 256},
-        INIT_POSITION: { x: (width * 0.90), y: (height * 0.62) },
+        INIT_POSITION: { x: (width * 0.46), y: (height * 0.42) },
         orientation: {rows: 1, columns: 1},
-        down: {row: 0, start: 0, columns: 1},
+        down: {row: 0, start: 0, columns: 1, rotate: Math.PI / 2},
         hitbox: {widthPercentage: 0.2, heightPercentage: 0.3},
         dialogues: ["Level 6 awaits. Do you wish to enter?"],
         reaction: function() {},
@@ -270,7 +270,7 @@ class MansionLevelMain {
         }
       };
 
-      const sprite_src_level2door = path + "/images/gamify/testDoorCollisionSprite.png"; // replace with your door sprite if needed
+      const sprite_src_level2door = path + "/images/gamify/lineDoorCollisionSprite.png"; // replace with your door sprite if needed
       const sprite_greet_level2door = "Would you like to enter the second level? Press E";
       const sprite_data_level2door = {
         id: 'Level2Door',
@@ -279,7 +279,7 @@ class MansionLevelMain {
         SCALE_FACTOR: 6,
         ANIMATION_RATE: 100,
         pixels: {width: 256, height: 256},
-        INIT_POSITION: { x: (width * 0.33), y: (height * 0.62) },
+        INIT_POSITION: { x: (width * 0.635), y: (height * 0.62) },
         orientation: {rows: 1, columns: 1},
         down: {row: 0, start: 0, columns: 1},
         hitbox: {widthPercentage: 0.2, heightPercentage: 0.3},
