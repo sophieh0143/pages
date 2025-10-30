@@ -23,6 +23,37 @@ layout: opencs
 
   /* === Comments Section Separator === */
   .post-content + div, .post-content + section { margin-top:2rem; padding-top:1rem; border-top:1px solid #ddd; }
+
+  /* === Upload Box Styles (only visible if enabled_upload) === */
+  .upload-box {
+    border: 2px dashed #888;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 20px auto;
+    cursor: pointer;
+  }
+  #fileName {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  input[type="file"] {
+    display: none;
+  }
+  .upload-btn {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .upload-btn:hover {
+    background-color: #45a049;
+  }
 </style>
 
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
@@ -102,7 +133,7 @@ layout: opencs
     {%- endif -%}
   </header>
 
-  <!-- ===== LESSON CONTENT (keeps your post aesthetics) ===== -->
+  <!-- ===== LESSON CONTENT ===== -->
   <div class="post-content e-content" itemprop="articleBody">
     {%- if page.toc -%}
       {% include toc.html html=content %}
@@ -111,18 +142,85 @@ layout: opencs
       {% include submenu.html %}
     {%- endif -%}
 
-    <!-- The specific hooks your JS depends on -->
     <div id="lesson-container" class="container mx-auto px-4 py-8" data-lesson="{{ page.submodule }}">
       <div class="prose prose-invert max-w-3xl mx-auto">
         {{ content }}
       </div>
 
-      <div class="max-w-3xl mx-auto mt-8 flex items-center justify-between gap-4">
-        <button id="mark-complete-btn"
-                class="iridescent text-white px-4 py-2 rounded-lg font-semibold opacity-50 pointer-events-none"
-                aria-disabled="true">
-          Mark Lesson {{ page.submodule }} Complete
-        </button>
+      <!-- ✅ Modular File Upload Box -->
+      {% if page.enable_upload %}
+      <hr>
+      <div class="file-upload-section">
+        <h3>📁 File Upload</h3>
+        <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+          <p>Click or drag a file to upload</p>
+          <input type="file" id="fileInput" />
+          <div id="fileName"></div>
+        </div>
+        <button class="upload-btn" id="uploadBtn">Upload</button>
+      </div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const fileInput = document.getElementById('fileInput');
+          const fileNameDisplay = document.getElementById('fileName');
+          const uploadBtn = document.getElementById('uploadBtn');
+
+          fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+            fileNameDisplay.textContent = file ? `Selected file: ${file.name}` : '';
+          });
+
+          uploadBtn.addEventListener('click', () => {
+            const file = fileInput.files[0];
+            if (!file) {
+              alert('Please select a file first.');
+              return;
+            }
+            const formData = new FormData();
+            formData.append('file', file);
+            console.log('File ready to be sent to backend:', file);
+            alert(`File "${file.name}" is ready to be uploaded.`);
+          });
+        });
+      </script>
+      {% endif %}
+      <!-- ✅ End of Modular Upload -->
+
+      <!-- Navigation buttons -->
+      <div class="max-w-5xl mx-auto mt-16 mb-8">
+        <div class="flex items-center justify-between gap-6">
+          {% assign currentLesson = page.submodule | plus: 0 %}
+          {% assign prevLesson = currentLesson | minus: 1 %}
+          {% assign nextLesson = currentLesson | plus: 1 %}
+          {% assign basePath = page.url | split: '/submodule_' | first %}
+          
+          {% if currentLesson > 1 %}
+          <a href="{{ basePath }}/submodule_{{ prevLesson }}/" class="nav-button nav-button-prev">
+            <span class="nav-arrow">←</span>
+            <span class="nav-text">Previous Lesson</span>
+          </a>
+          {% else %}
+          <div style="width: 200px;"></div>
+          {% endif %}
+
+          {% if currentLesson < 6 %}
+          <a href="{{ basePath }}/submodule_{{ nextLesson }}/" id="next-lesson-btn" class="nav-button nav-button-next nav-button-disabled" aria-disabled="true">
+            <span class="nav-text">Next Lesson</span>
+            <span class="nav-arrow">→</span>
+          </a>
+          {% else %}
+          <a href="{{ basePath }}/" id="back-to-module-btn" class="nav-button nav-button-next">
+            <span class="nav-text">Back to Module</span>
+            <span class="nav-arrow">→</span>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Completion notification toast -->
+      <div id="completion-toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-32 transition-transform duration-300 z-50" style="display: none;">
+        <span class="font-semibold">✓ Lesson {{ page.submodule }} completed!</span>
       </div>
     </div>
   </div>
@@ -136,7 +234,7 @@ layout: opencs
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
 
-<!-- ===== Mini-quest locking/progress (unchanged) ===== -->
+<!-- ===== Mini-quest locking/progress (AUTO-COMPLETE ON SCROLL) ===== -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const wrap = document.getElementById("lesson-container");
@@ -157,39 +255,71 @@ document.addEventListener("DOMContentLoaded", function () {
   const isDone = (m,n) => localStorage.getItem(k(m,n)) === "done";
   const markDone = (m,n) => localStorage.setItem(k(m,n), "done");
 
-  const btn = document.getElementById("mark-complete-btn");
+  const toast = document.getElementById("completion-toast");
+  const nextBtn = document.getElementById("next-lesson-btn");
+  const backBtn = document.getElementById("back-to-module-btn");
+  let hasCompleted = isDone(miniQuest, lessonNumber);
+  let hasShownToast = false;
 
-  function setEnabled(enabled) {
+  function showCompletionToast() {
+    if (!toast || hasShownToast) return;
+    hasShownToast = true;
+    
+    toast.style.display = "block";
+    setTimeout(() => {
+      toast.style.transform = "translateY(0)";
+    }, 10);
+    
+    setTimeout(() => {
+      toast.style.transform = "translateY(150%)";
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 300);
+    }, 3000);
+  }
+
+  function enableNextButton() {
+    const btn = nextBtn || backBtn;
     if (!btn) return;
-    if (enabled) {
-      btn.classList.remove("opacity-50","pointer-events-none");
-      btn.setAttribute("aria-disabled","false");
-    } else {
-      btn.classList.add("opacity-50","pointer-events-none");
-      btn.setAttribute("aria-disabled","true");
-    }
+    btn.classList.remove("opacity-50", "pointer-events-none");
+    btn.setAttribute("aria-disabled", "false");
   }
-
-  if (isDone(miniQuest, lessonNumber)) {
-    btn.textContent = "Completed ✓";
-    setEnabled(true);
-  }
-
-  btn.addEventListener("click", function () {
-    markDone(miniQuest, lessonNumber);
-    btn.textContent = "Completed ✓";
-    setEnabled(true);
-    alert("Nice! This lesson is marked complete.");
-  });
 
   const activateOnScroll = () => {
-    const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 80);
-    if (scrolledToBottom || isDone(miniQuest, lessonNumber)) {
-      setEnabled(true);
+    // If already completed, don't trigger again
+    if (hasCompleted) return;
+
+    const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 100);
+    
+    if (scrolledToBottom) {
+      // Mark as complete (same variable/storage as button used)
+      markDone(miniQuest, lessonNumber);
+      hasCompleted = true;
+      
+      // Show notification
+      showCompletionToast();
+      
+      // Enable next button if it exists
+      enableNextButton();
+      
+      // Remove listener - no longer needed
       window.removeEventListener("scroll", activateOnScroll);
+      window.removeEventListener("resize", activateOnScroll);
     }
   };
-  window.addEventListener("scroll", activateOnScroll, { passive: true });
+
+  // If already completed, enable next button
+  if (hasCompleted) {
+    enableNextButton();
+  }
+
+  // Check immediately on load (in case page is short)
   activateOnScroll();
+  
+  // Listen for scroll
+  window.addEventListener("scroll", activateOnScroll, { passive: true });
+  
+  // Also check on resize
+  window.addEventListener("resize", activateOnScroll, { passive: true });
 });
 </script>
