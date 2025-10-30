@@ -1252,7 +1252,7 @@ Each conversation is isolated. The LLM cannot remember previous conversations!
   <div class="session-container" id="session-container"></div>
   
   <div class="warning-box">
-    <strong>⚠️ Key Point:</strong> Unlike humans, LLMs don't have long-term memory across conversations. 
+    <strong>⚠️ Key Point:</strong> Unlike humans, LLMs do not have long-term memory across conversations. 
     When you start a new chat, the AI has absolutely no memory of previous chats - it's like meeting 
     someone with complete amnesia every time.
   </div>
