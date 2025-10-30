@@ -69,6 +69,118 @@ class MansionLevel4 {
 	];
   }
 
+  // collision function
+  class Barrier
+  {
+	constructor(data)
+	{
+		this.x = data.x;
+		this.y = data.y;
+		this.width = data.width;
+		this.height = data.height;
+		this.color = data.color || 'rgba(255, 0, 0, 0.3)'; 
+		this.visible = data.visible !== undefined? data.visible : false;
+	}
+
+	draw() {
+		if (!this.visible) return;
+
+		const ctx = GameEnvBackground.ctx;
+		ctx.fillStyle = this.color;
+		ctx.strokeRect(this.x, this.y, this.width, this.height);
+
+		ctx.strokeStyle = 'rgba(225, 0, 0, 0.8)';
+		ctx.lineWidth = 2;
+		ctx.strokeRect(this.x, this.y, this.width, this.height);
+	}
+	checkCollision(player) {
+		const playerHitbox = player.getHitbox();
+		return !(
+			playerHitbox.x > this.x + this.width ||
+			playerHitbox.x + playerHitbox.width < this.x ||
+			playerHitbox.y > this.y + this.height ||
+			playerHitbox.y + playerHitbox.height < this.y
+		);
+	}
+	// Barrier Locations
+
+	const barrierData = [
+		// Outer walls
+		{ x: 0, y: 0, width: width, height: 40 }, // Top wall
+		{ x: 0, y: height - 40, width: width, height: 40 }, // Bottom wall
+		{ x: 0, y: 0, width: 40, height: height }, // Left wall
+		{ x: width - 40, y: 0, width: 40, height: height }, // Right wall
+	
+		// Blackjack Tables
+		{ x: width * 0.05, y: height * 0.12, width: width * 0.18, height: height * 0.15 },
+		{ x: width * 0.77, y: height * 0.12, width: width * 0.18, height: height * 0.15 },
+	
+		// Slot Machines
+		{ x: width * 0.02, y: height * 0.35, width: width * 0.08, height: height * 0.12 },
+		{ x: width * 0.05, y: height * 0.65, width: width * 0.18, height: height * 0.18 },
+		{ x: width * 0.02, y: height * 0.88, width: width * 0.06, height: height * 0.08 },
+		{ x: width * 0.28, y: height * 0.52, width: width * 0.14, height: height * 0.15 },
+		{ x: width * 0.58, y: height * 0.52, width: width * 0.14, height: height * 0.15 },
+		{ x: width * 0.90, y: height * 0.35, width: width * 0.08, height: height * 0.12 },
+		{ x: width * 0.77, y: height * 0.65, width: width * 0.18, height: height * 0.18 },
+		{ x: width * 0.92, y: height * 0.88, width: width * 0.06, height: height * 0.08 },
+		{ x: width * 0.12, y: height * 0.38, width: width * 0.06, height: height * 0.08 },
+      	{ x: width * 0.82, y: height * 0.38, width: width * 0.06, height: height * 0.08 },
+      	{ x: width * 0.46, y: height * 0.02, width: width * 0.08, height: height * 0.05 },
+      	{ x: width * 0.45, y: height * 0.45, width: width * 0.10, height: height * 0.08 },
+      	{ x: width * 0.05, y: height * 0.28, width: width * 0.18, height: height * 0.05 },
+      	{ x: width * 0.77, y: height * 0.28, width: width * 0.18, height: height * 0.05 },
+      	{ x: width * 0.02, y: height * 0.02, width: width * 0.06, height: height * 0.08 },
+      	{ x: width * 0.92, y: height * 0.02, width: width * 0.06, height: height * 0.08 },
+    ];
+	this.classes = [
+      { class: GameEnvBackground, data: image_data_background },
+      { class: Player, data: sprite_data_chillguy },
+      ...barrier_data.map(data => ({ class: Barrier, data }))
+    ];
+  }
+  	checkCollisions(player, barriers) {
+		for (let barrier of barriers) {
+			if (barrier.checkCollision(player)) {
+				const overlapLeft = (player.x + player.width) - barrier.x;
+				const overlapRight = (barrier.x + barrier.width) - player.x;
+				const overlapTop = (player.y + player.height) - barrier.y;
+				const overlapBottom = (barrier.y + barrier.height) - player.y;
+
+				const minOverlapX = Math.min(overlapLeft, overlapRight);
+				const minOverlapY = Math.min(overlapTop, overlapBottom);
+
+				if (minOverlapX < minOverlapY) {
+					// Horizontal collision
+					if (overlapLeft < overlapRight) {
+						// Collision from left
+						player.x -= overlapLeft;
+					} else {
+						// Collision from right
+						player.x += overlapRight;
+					}
+				} else {
+					// Vertical collision
+					if (overlapTop < overlapBottom) {
+						// Collision from top
+						player.y -= overlapTop;
+					} else {
+						// Collision from bottom
+						player.y += overlapBottom;
+
+					player.velocity = { x: 0, y: 0 }; // Disables Movement
+					return true;
+					}
+				}
+			}
+		}
+		return false;
+	]
+	]
+	}
+	}
+  }
+
 }
 
 export default MansionLevel4
