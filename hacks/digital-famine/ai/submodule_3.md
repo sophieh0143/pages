@@ -1,5 +1,5 @@
 ---
-layout: base
+layout: post
 title: "AI APIs"
 description: "Going over how to use AI APIs"
 background: images/platformer/backgrounds/images.png.jpeg
