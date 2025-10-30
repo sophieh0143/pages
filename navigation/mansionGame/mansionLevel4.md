@@ -20,7 +20,7 @@ permalink: /gamify/mansion4
         fetchOptions: fetchOptions,
         gameContainer: document.getElementById("gameContainer"),
         gameCanvas: document.getElementById("gameCanvas"),
-        gameLevelClasses: [MansionLevel6]
+        gameLevelClasses: [MansionLevel4]
     }
     // Launch Adventure Game
     Game.main(environment);
