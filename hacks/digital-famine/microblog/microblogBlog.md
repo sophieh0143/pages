@@ -8,7 +8,7 @@ team: "Thinkers"
 submodule: 4
 categories: [CSP, Submodule, Microblogging]
 tags: [microblogging, submodule, unzippers]
-author: "Thinkers Team"
+author: "Shay Mortensen"
 date: 2025-10-21
 breadcrumb: true
 ---

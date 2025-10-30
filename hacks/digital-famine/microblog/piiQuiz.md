@@ -8,7 +8,7 @@ team: "Unzippers"
 submodule: 1
 categories: [CSP, Submodule, Microblogging]
 tags: [microblogging, submodule, unzippers]
-author: "The Unzippers"
+author: "Krishna Visvanath, Sloane Sommers"
 date: 2025-10-21
 breadcrumb: true
 ---
