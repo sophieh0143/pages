@@ -1,5 +1,5 @@
 ---
-layout: cs-portfolio-lesson
+layout: post
 title: "AI Usage Certification"
 description: "Complete your AI Usage Quest and earn your official certification from Open Coding Society. Add it to your LinkedIn profile to showcase your skills."
 permalink: /cs-portfolio-quest/ai/submodule_5/
@@ -12,7 +12,7 @@ author: "Thinkers Team"
 date: 2025-10-21
 ---
 
-# 🎓 AI Usage Quest Certification
+# AI Usage Quest Certification
 
 Congratulations on completing the AI Usage Quest! Earn your official certification from **Open Coding Society**.
 
@@ -59,7 +59,7 @@ Congratulations on completing the AI Usage Quest! Earn your official certificati
 ## Your Certificate Preview
 
 <div id="cert-preview">
-    <h2>🏆 AI Usage Quest Certificate</h2>
+    <h2>AI Usage Quest Certificate</h2>
     <p>This certifies that</p>
     
     <input type="text" id="student-name" placeholder="Enter your full name" maxlength="50" />
@@ -80,13 +80,13 @@ Congratulations on completing the AI Usage Quest! Earn your official certificati
 
 ## Claim Your Certificate
 
-<button id="download-btn" onclick="downloadCertificate()" disabled>📥 Download Certificate (PDF)</button>
-<button id="linkedin-btn" onclick="addToLinkedIn()" disabled>💼 Add to LinkedIn Profile</button>
-<button id="verify-btn" onclick="checkCompletion()">🔄 Check Status</button>
+<button id="download-btn" onclick="downloadCertificate()" disabled>Download Certificate (PDF)</button>
+<button id="linkedin-btn" onclick="addToLinkedIn()" disabled>Add to LinkedIn Profile</button>
+<button id="verify-btn" onclick="checkCompletion()">Check Status</button>
 
 ---
 
-## 📱 How to Add This Certificate to LinkedIn
+## How to Add This Certificate to LinkedIn
 
 **When you click "Add to LinkedIn Profile":**
 
@@ -96,15 +96,15 @@ Congratulations on completing the AI Usage Quest! Earn your official certificati
 4. **Issue Date:** Current month/year
 5. **Skills:** AI Prompting, ChatGPT, Code Review, Resume Writing
 
-**💡 Pro Tip:** Add this to your "Licenses & Certifications" section!
+**Pro Tip:** Add this to your "Licenses & Certifications" section!
 
 ---
 
 ## Why This Certificate Matters
 
-**🎯 Career Boost** - Show employers you can effectively use AI tools  
-**✅ Verified Skills** - Official recognition from Open Coding Society  
-**🌟 Stand Out** - Differentiate yourself from other candidates  
+**Career Boost** - Show employers you can effectively use AI tools  
+**Verified Skills** - Official recognition from Open Coding Society  
+**Stand Out** - Differentiate yourself from other candidates  
 
 ---
 
@@ -159,12 +159,12 @@ function checkCompletion() {
     if (allDone) {
         msg.style.background = '#d4edda';
         msg.style.color = '#155724';
-        msg.textContent = '🎉 All submodules complete! Your certificate is ready!';
+        msg.textContent = 'All submodules complete! Your certificate is ready!';
     } else {
         const remaining = SUBMODULES.filter(m => !completion[m]).length;
         msg.style.background = '#fff3cd';
         msg.style.color = '#856404';
-        msg.textContent = `⏳ ${remaining} submodule${remaining > 1 ? 's' : ''} remaining to unlock certificate.`;
+        msg.textContent = `${remaining} submodule${remaining > 1 ? 's' : ''} remaining to unlock certificate.`;
     }
     msg.style.display = 'block';
     msg.style.padding = '15px';
@@ -202,7 +202,7 @@ function downloadCertificate() {
         </head>
         <body>
             <div class="cert">
-                <h1>🏆 Certificate of Completion</h1>
+                <h1>Certificate of Completion</h1>
                 <h2>AI Usage Quest</h2>
                 <p>This certifies that</p>
                 <div class="name">${name}</div>
@@ -222,7 +222,7 @@ function downloadCertificate() {
     const msg = document.getElementById('status-message');
     msg.style.background = '#d4edda';
     msg.style.color = '#155724';
-    msg.textContent = `✅ Certificate ready! ID: ${certId}`;
+    msg.textContent = `Certificate ready! ID: ${certId}`;
     msg.style.display = 'block';
 }
 
@@ -255,7 +255,7 @@ function addToLinkedIn() {
     const msg = document.getElementById('status-message');
     msg.style.background = '#d4edda';
     msg.style.color = '#155724';
-    msg.textContent = '✅ Opening LinkedIn... Follow prompts to add certification!';
+    msg.textContent = 'Opening LinkedIn... Follow prompts to add certification!';
     msg.style.display = 'block';
 }
 
@@ -275,7 +275,7 @@ function generatePrintableCertificate(certData) {
         </head>
         <body>
             <div class="cert">
-                <h1>🏆 Certificate of Completion</h1>
+                <h1>Certificate of Completion</h1>
                 <h2>AI Usage Quest</h2>
                 <p>This certifies that</p>
                 <div class="name">${certData.name}</div>
@@ -301,3 +301,4 @@ document.getElementById('cert-date').textContent = new Date().toLocaleDateString
 document.addEventListener('DOMContentLoaded', checkCompletion);
 </script>
 
+{%- include tailwind/cs-portfolio-quest-lessons_info.html -%}
