@@ -369,22 +369,8 @@ Initial State Button
 </ol>
 <p></p>
 
-<a href="{{site.baseurl}}/cs-portfolio-quest/frontend/" 
-   style="display:inline-block; background-color:#1e3a8a; color:white; text-decoration:none; 
-          padding:10px 20px; border-radius:8px; border:none; cursor:pointer; 
-          text-align:center; transition:background-color 0.2s;"
-   onmouseover="this.style.backgroundColor='#1d4ed8'" 
-   onmouseout="this.style.backgroundColor='#1e3a8a'">
-  Home Page
-</a>
-<a href="{{site.baseurl}}/cs-portfolio-quest/frontend/submodule_2"
-   style="display:inline-block; background-color:#1e3a8a; color:white; text-decoration:none;
-          padding:10px 20px; border-radius:8px; border:none; cursor:pointer;
-          text-align:center; transition:background-color 0.2s;"
-   onmouseover="this.style.backgroundColor='#1d4ed8'"
-   onmouseout="this.style.backgroundColor='#1e3a8a'">
-  Next
-</a>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const btn = document.getElementById('synergy-btn');
@@ -428,15 +414,15 @@ Initial State Button
     function applyProgressToUI(state) {
         if (state[1] === 'completed') {
             const f = document.getElementById('checkpoint1-feedback');
-            if (f) { f.textContent = '✅ Completed earlier.'; f.className = 'feedback correct'; }
+            if (f) { f.textContent = 'Completed earlier.'; f.className = 'feedback correct'; }
         }
         if (state[2] === 'completed') {
             const f2 = document.getElementById('checkpoint2-feedback');
-            if (f2) { f2.textContent = '✅ Completed earlier.'; f2.className = 'feedback correct'; }
+            if (f2) { f2.textContent = 'Completed earlier.'; f2.className = 'feedback correct'; }
         }
         if (state[3] === 'completed') {
             const f3 = document.getElementById('checkpoint3-feedback');
-            if (f3) { f3.textContent = '✅ Completed earlier.'; f3.className = 'feedback correct'; }
+            if (f3) { f3.textContent = 'Completed earlier.'; f3.className = 'feedback correct'; }
         }
         // Show next link if unlocked
         const next = document.getElementById('next-link');
@@ -455,17 +441,17 @@ Initial State Button
         const feedback = document.getElementById('checkpoint1-feedback');
         const correctStructure = input.includes('structure:') && input.includes('behavior:');
         if (!correctStructure) {
-            feedback.textContent = '❌ Try again — format your answer like the example (Structure: [Tech A], Behavior: [Tech B]).';
+            feedback.textContent = 'Try again — format your answer like the example (Structure: [Tech A], Behavior: [Tech B]).';
             feedback.className = 'feedback incorrect';
             updateTracker(1, 'failed');
             return;
         }
         if (input.includes('html') && (input.includes('javascript') || input.includes('js'))) {
-            feedback.textContent = '✅ Correct! Structure is HTML, and dynamic behavior is JavaScript.';
+            feedback.textContent = 'Correct! Structure is HTML, and dynamic behavior is JavaScript.';
             feedback.className = 'feedback correct';
             updateTracker(1, 'completed');
         } else {
-            feedback.textContent = '❌ Try again — make sure you correctly identify HTML for structure and JavaScript for behavior.';
+            feedback.textContent = 'Try again — make sure you correctly identify HTML for structure and JavaScript for behavior.';
             feedback.className = 'feedback incorrect';
             updateTracker(1, 'failed');
         }
@@ -474,17 +460,17 @@ Initial State Button
         const selected = document.querySelector('input[name="q2"]:checked');
         const feedback = document.getElementById('checkpoint2-feedback');
         if (!selected) {
-            feedback.textContent = '⚠️ Please select an answer.';
+            feedback.textContent = 'Please select an answer.';
             feedback.className = 'feedback incorrect';
             updateTracker(2, 'failed');
             return;
         }
         if (selected.value === 'c') {
-            feedback.textContent = '✅ Correct! The frontend UI code executes in the user&#39;s web browser (Client-Side).';
+            feedback.textContent = 'Correct! The frontend UI code executes in the user&#39;s web browser (Client-Side).';
             feedback.className = 'feedback correct';
             updateTracker(2, 'completed');
         } else {
-            feedback.textContent = '❌ Incorrect. Remember, the UI is what the user directly sees, so it must run locally.';
+            feedback.textContent = 'Incorrect. Remember, the UI is what the user directly sees, so it must run locally.';
             feedback.className = 'feedback incorrect';
             updateTracker(2, 'failed');
         }
@@ -493,11 +479,11 @@ Initial State Button
         const input = document.getElementById('checkpoint3-input').value.trim().toLowerCase();
         const feedback = document.getElementById('checkpoint3-feedback');
         if (input.includes('javascript') || input.includes('js')) {
-            feedback.textContent = '✅ Excellent! JavaScript is responsible for the logic that detects the click and executes the change.';
+            feedback.textContent = 'Excellent! JavaScript is responsible for the logic that detects the click and executes the change.';
             feedback.className = 'feedback correct';
             updateTracker(3, 'completed');
         } else {
-            feedback.textContent = '❌ Think about which technology handles actions and logic. (Hint: It starts with "J").';
+            feedback.textContent = 'Think about which technology handles actions and logic. (Hint: It starts with "J").';
             feedback.className = 'feedback incorrect';
             updateTracker(3, 'failed');
         }
