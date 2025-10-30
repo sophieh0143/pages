@@ -79,21 +79,17 @@ class Player extends Character {
 
         // Multi-key movements (diagonals: upLeft, upRight, downLeft, downRight)
         if (this.pressedKeys[this.keypress.up] && this.pressedKeys[this.keypress.left]) {
-        if (this.pressedKeys[this.keypress.up] && this.pressedKeys[this.keypress.left]) {
             this.velocity.y -= this.yVelocity;
             this.velocity.x -= xVel;
             this.direction = 'upLeft';
-        } else if (this.pressedKeys[this.keypress.up] && this.pressedKeys[this.keypress.right]) {
         } else if (this.pressedKeys[this.keypress.up] && this.pressedKeys[this.keypress.right]) {
             this.velocity.y -= this.yVelocity;
             this.velocity.x += xVel;
             this.direction = 'upRight';
         } else if (this.pressedKeys[this.keypress.down] && this.pressedKeys[this.keypress.left]) {
-        } else if (this.pressedKeys[this.keypress.down] && this.pressedKeys[this.keypress.left]) {
             this.velocity.y += this.yVelocity;
             this.velocity.x -= xVel;
             this.direction = 'downLeft';
-        } else if (this.pressedKeys[this.keypress.down] && this.pressedKeys[this.keypress.right]) {
         } else if (this.pressedKeys[this.keypress.down] && this.pressedKeys[this.keypress.right]) {
             this.velocity.y += this.yVelocity;
             this.velocity.x += xVel;
@@ -104,37 +100,34 @@ class Player extends Character {
             this.direction = 'up';
             this.moved = true;
         } else if (this.pressedKeys[this.keypress.left]) {
-        } else if (this.pressedKeys[this.keypress.left]) {
             this.velocity.x -= xVel;
             this.direction = 'left';
             this.moved = true;
-        } else if (this.pressedKeys[this.keypress.down]) {
         } else if (this.pressedKeys[this.keypress.down]) {
             this.velocity.y += this.yVelocity;
             this.direction = 'down';
             this.moved = true;
         } else if (this.pressedKeys[this.keypress.right]) {
-        } else if (this.pressedKeys[this.keypress.right]) {
             this.velocity.x += xVel;
             this.direction = 'right';
             this.moved = true;
-        } else {
+        } else{
             this.moved = false;
         }
     }
     update() {
         super.update();
-        if (!this.moved) {
+        if(!this.moved){
             if (this.gravity) {
-                this.time += 1;
-                this.velocity.y += 0.5 + this.acceleration * this.time;
+                    this.time += 1;
+                    this.velocity.y += 0.5 + this.acceleration * this.time;
+                }
             }
-        }
-        else {
+        else{
             this.time = 0;
         }
-    }
-
+        }
+        
     /**
      * Overrides the reaction to the collision to handle
      *  - clearing the pressed keys array
@@ -142,7 +135,7 @@ class Player extends Character {
      *  - updating the player's direction   
      * @param {*} other - The object that the player is colliding with
      */
-    handleCollisionReaction(other) {
+    handleCollisionReaction(other) {    
         this.pressedKeys = {};
         this.updateVelocityAndDirection();
         super.handleCollisionReaction(other);
