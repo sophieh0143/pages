@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: cs-portfolio-lesson
 title: "Prompt Engineering"
 description: "Master the art of specific prompts by including context, the problem, what you've tried, and desired outcomes. Practice iterative refinement to get better AI responses."
 permalink: /cs-portfolio-quest/ai/submodule_2/
@@ -454,6 +454,8 @@ What am I missing about database connections in Flask routes?`;
 document.addEventListener('DOMContentLoaded', function() {
     loadPromptExercise();
 });
+
+localStorage.setItem('ai-submodule-2-completed', 'true');
+
 </script>
 
-{%- include tailwind/cs-portfolio-quest-lessons_info.html -%}

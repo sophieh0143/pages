@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: cs-portfolio-lesson
 title: "Resume & Interview Prep"
 description: "Learn to rewrite resume bullets with metrics using STAR format and prepare for the three most common interview questions by recording and analyzing your responses."
 permalink: /cs-portfolio-quest/ai/submodule_1/
@@ -353,3 +353,38 @@ Before the next session:
 - **Mock Interview Tools:** InterviewWarmup (Google), Pramp
 - **AI Assistants:** ChatGPT, Claude, Gemini
 - **Recording:** Phone camera, OBS Studio, Loom
+
+---
+<button onclick="markSubmodule1Complete()" style="padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+    ✅ Mark Submodule 1 Complete
+</button>
+
+<script>
+function markSubmodule1Complete() {
+    // Mark this submodule as completed
+    localStorage.setItem('ai-submodule-1-completed', 'true');
+    
+    // Show success message
+    alert('✅ Submodule 1 marked as complete!\n\nProgress saved. Continue to the next submodule.');
+    
+    // Optional: Update UI to show completion
+    event.target.textContent = '✅ Completed!';
+    event.target.style.background = '#6c757d';
+    event.target.disabled = true;
+}
+
+// On page load, check if already completed
+document.addEventListener('DOMContentLoaded', function() {
+    const completed = localStorage.getItem('ai-submodule-1-completed') === 'true';
+    if (completed) {
+        const btn = document.querySelector('button[onclick="markSubmodule1Complete()"]');
+        if (btn) {
+            btn.textContent = '✅ Already Completed';
+            btn.style.background = '#6c757d';
+            btn.disabled = true;
+        }
+    }
+});
+</script>
+
+
