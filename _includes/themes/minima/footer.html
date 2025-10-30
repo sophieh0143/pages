@@ -10,4 +10,31 @@
     </div> -->
 
     <p style="font-style: italic;">OpenAesthetic v3.0rc1.1</p>
+
+    {% unless page.footer.previous == nil %}
+        <a href="{{ page.footer.previous | relative_url }}">
+            <button class="footer-next-btn medium filledTinted primary">
+                ← Previous Page
+            </button>
+        </a>
+    {% endunless %}
+
+    {% unless page.footer.home == nil %}
+        <a href="{{ page.footer.home | relative_url }}">
+            <button class="footer-next-btn medium filledTinted primary">
+                🏠︎ Home Page
+            </button>
+        </a>
+    {% endunless %}
+
+        
+    {% unless page.footer.next == nil %}
+        <a href="{{ page.footer.next | relative_url }}">
+            <button class="footer-next-btn medium filledTinted primary">
+                → Next Page
+            </button>
+        </a>
+    {% endunless %}
+
+
 </footer>
