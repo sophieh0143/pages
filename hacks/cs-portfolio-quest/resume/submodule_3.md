@@ -14,523 +14,456 @@ date: 2025-10-21
 
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-<style>
-  /* Minimal, neutral style (inspired by Module 2) */
-  :root {
-    --main-text: #111;
-    --muted: #444;
-    --border: #ddd;
-    --accent: #000;
-    --bg: #fff;
-  }
-
-  /* Reset / container */
-  .max-w-3xl { max-width: 860px; margin: 0 auto; padding: 16px; background: var(--bg); color: var(--main-text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
-  h1 { font-size: 1.5rem; margin-bottom: 0.25rem; font-weight: 700; text-align: left; }
-  p.lead { color: var(--muted); margin-bottom: 1rem; }
-
-  /* Progress */
-  .progress-wrapper { border: 1px solid var(--border); border-radius: 6px; padding: 10px; margin-bottom: 16px; }
-  .progress-header { display:flex; justify-content:space-between; font-size: 0.9rem; color:var(--muted); }
-  .progress-bar-bg { width:100%; background: #f5f5f5; height: 8px; border-radius: 6px; margin-top:8px; }
-  .progress-bar-fill { height:8px; width:0%; background: var(--accent); border-radius:6px; transition: width 240ms ease; }
-
-  /* Sections */
-  section[data-step] { margin: 18px 0; }
-  .hidden { display: none; }
-
-  h2 { font-size: 1.125rem; margin-bottom: 8px; font-weight: 600; color: var(--main-text); }
-  .muted-box { border-left: 4px solid #e5e5e5; background: #fafafa; padding: 12px; border-radius: 4px; color: var(--muted); font-size: 0.95rem; }
-
-  /* Carousel */
-  .carousel { position: relative; width: 100%; overflow: hidden; margin: 12px 0; border-radius: 6px; border:1px solid var(--border); }
-  .carousel-inner { display:flex; transition: transform 400ms ease; width: 200%; }
-  .carousel-item { min-width: 100%; padding: 12px; box-sizing: border-box; }
-  .example-box { padding: 12px; border-radius: 6px; border: 1px solid var(--border); background: #fff; }
-  .bullet-points { margin:0; padding-left:20px; }
-
-  /* Drag/drop */
-  .drop-zone { min-height: 160px; border: 2px dashed var(--border); border-radius: 6px; padding: 12px; box-sizing: border-box; display:flex; flex-direction:column; align-items:center; justify-content:center; background: #fff; }
-  .drop-zone.drag-over { background: #f8fbff; border-color: #c9e0ff; transform: scale(1.01); }
-  .items-pool { display:flex; flex-wrap:wrap; gap:8px; padding:12px; border:1px solid var(--border); border-radius:6px; min-height:80px; background:#fafafa; }
-  .draggable-item { padding:8px 10px; border-radius:6px; border:1px solid #cfcfcf; background:#fff; cursor:grab; user-select:none; }
-  .draggable-item.dragging { opacity:0.5; }
-
-  .draggable-item.correct { border-color: #2e8b57; background:#f6fff6; }
-  .draggable-item.incorrect { border-color: #b22222; background:#fff6f6; animation: shake 0.45s; }
-
-  @keyframes shake {
-    0% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } 100% { transform: translateX(0); }
-  }
-
-  /* Form / profile builder (simple) */
-  form { margin-top: 8px; }
-  label.block { display:block; font-weight:600; margin-bottom:6px; }
-  .input, textarea, input[type="text"] { width:100%; padding:8px 10px; border:1px solid var(--border); border-radius:6px; box-sizing:border-box; font-size:0.95rem; }
-  textarea { min-height:92px; resize:vertical; }
-  .btn { display:inline-block; padding:8px 12px; border-radius:6px; text-decoration:none; border:1px solid #999; background:#fff; color:var(--accent); cursor:pointer; font-weight:600; }
-  .btn.primary { background:#000; color:#fff; border-color:#000; }
-  .btn.ghost { background:transparent; color:var(--accent); border-color:var(--border); }
-
-  /* Experience entries */
-  .entry { border-left:4px solid #e5e5e5; padding:12px; margin-bottom:12px; background:#fff; border-radius:4px; }
-  .entry .small { color:var(--muted); font-size:0.9rem; margin-bottom:8px; }
-
-  /* Linkedin-style preview simplified */
-  .linkedin-preview { border:1px solid var(--border); border-radius:6px; overflow:hidden; background:#fff; }
-  .linkedin-header { height:80px; background:#f3f3f3; position:relative; display:flex; align-items:center; padding-left:16px; }
-  .linkedin-profile-pic { width:80px; height:80px; border-radius:50%; background:#fff; border:3px solid #fff; display:flex; align-items:center; justify-content:center; font-size:32px; margin-right:12px; }
-  .linkedin-content { padding:16px; }
-  .linkedin-name { font-size:1.25rem; font-weight:700; margin:0; }
-  .linkedin-headline { color:var(--muted); margin:6px 0 12px 0; }
-
-  /* Footer actions */
-  .action-row { display:flex; gap:8px; margin-top:12px; }
-  .center { text-align:center; }
-
-  /* small responsive */
-  @media (max-width:640px){
-    .max-w-3xl { padding:12px; }
-    .linkedin-header { height:70px; }
-  }
-</style>
-
-<div class="max-w-3xl">
-  <h1>Professional Profile Builder</h1>
-  <p class="lead">Learn what makes a great resume and LinkedIn profile stand out to employers</p>
+<div class="max-w-3xl mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-2">Impact & Experience Builder</h1>
+  <p class="text-gray-600 mb-4">Learn to write measurable, clear experiences. Saved locally on your device.</p>
 
   <!-- Progress -->
-  <div class="progress-wrapper" aria-hidden="false">
-    <div class="progress-header">
-      <span>Progress</span><span id="progressLabel">Part 1 / 5</span>
+  <div class="border rounded p-3 mb-4">
+    <div class="flex justify-between text-sm">
+      <span>Progress</span><span id="progressLabel">Step 1 / 5</span>
     </div>
-    <div class="progress-bar-bg" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-      <div id="progressBar" class="progress-bar-fill" style="width: 0%;"></div>
+    <div class="w-full bg-gray-200 rounded h-2 mt-2">
+      <div id="progressBar" class="bg-blue-600 h-2 rounded" style="width:20%"></div>
     </div>
   </div>
 
-  <!-- Part 1: Why It Matters -->
-  <section data-step="0" class="">
-    <h2>🎯 Why Your Resume & LinkedIn Profile Matter</h2>
-    <p class="muted-box"><strong>Did you know?</strong> Recruiters spend an average of 6–7 seconds reviewing a resume. Make those seconds count!</p>
-    <p>Your resume and LinkedIn profile are often the <strong>first impression</strong> you make on potential employers. Let's understand what separates a great profile from a poor one.</p>
-    <div style="margin-top:8px;">
-      <button class="btn primary" id="toComparisonBtn">See the Difference →</button>
+  <!-- STEP 1: Why it matters -->
+  <section data-step="0" class="space-y-3">
+    <h2 class="text-xl font-semibold">Why this matters</h2>
+    <p>Your experience should show <b>action + result</b>. You’ll see examples and try a quick activity before writing your own.</p>
+    <details class="border rounded p-3">
+      <summary class="font-medium cursor-pointer">What employers look for first</summary>
+      <ul class="list-disc ml-5 mt-2 text-sm">
+        <li><b>Action verbs</b> (Developed, Optimized, Led)</li>
+        <li><b>Metrics</b> (% / time / $ / users)</li>
+        <li><b>Clear results</b> (what you improved and how it made an impact)</li>
+      </ul>
+    </details>
+    <div class="border rounded p-3">
+      <div class="font-medium mb-2">Mini-quiz: Which phrase is stronger?</div>
+      <div class="space-y-1 text-sm" id="miniQuiz">
+        <label class="flex items-center gap-2"><input type="radio" name="q1" value="a"> Helped the team with various tasks</label>
+        <label class="flex items-center gap-2"><input type="radio" name="q1" value="b"> Developed an API that reduced response time by 40%</label>
+      </div>
+      <p id="miniQuizResult" class="text-sm mt-2"></p>
+    </div>
+    <div>
+      <button id="toStep2" class="px-3 py-2 border rounded">See examples →</button>
     </div>
   </section>
 
-  <!-- Part 2: Good vs Bad Comparison Carousel -->
-  <section data-step="1" class="hidden" aria-hidden="true">
-    <h2>Good vs. Bad: What Employers Look For</h2>
-    <p>Swipe through to see examples and understand what makes them effective.</p>
-    <div class="carousel" aria-hidden="false">
-      <div class="carousel-inner" id="carouselInner">
-        <!-- Slide 1: Good Example -->
-        <div class="carousel-item">
-          <div class="example-box">
-            <h3>GOOD Example</h3>
-            <div>
-              <h4 style="margin:0;">Software Engineering Intern</h4>
-              <p class="small" style="margin:6px 0;"><em>Tech Solutions Inc. | June 2024 - August 2024</em></p>
-              <ul class="bullet-points">
-                <li>Developed and deployed a customer dashboard using React and Node.js, reducing support ticket response time by 35%</li>
-                <li>Collaborated with a team of 5 engineers to implement REST APIs serving 10,000+ daily active users</li>
-                <li>Optimized database queries in PostgreSQL, improving application load time by 50%</li>
-              </ul>
-              <p style="margin-top:8px;"><strong>Skills:</strong> JavaScript, React, Node.js, PostgreSQL, Git</p>
-            </div>
-            <h4 style="margin-top:12px;">Why This Works:</h4>
-            <ul class="bullet-points">
-              <li><strong>Specific & Quantifiable:</strong> Uses numbers to demonstrate impact</li>
-              <li><strong>Action-Oriented:</strong> Starts with strong verbs</li>
-              <li><strong>Technical Depth:</strong> Mentions tools and technologies</li>
-            </ul>
-          </div>
+  <!-- STEP 2: Good vs Bad -->
+  <section data-step="1" class="space-y-3 hidden">
+    <h2 class="text-xl font-semibold">Good vs Bad</h2>
+    <p class="text-gray-700">Toggle between examples to see what works.</p>
+    <div class="grid md:grid-cols-2 gap-3">
+      <!-- GOOD -->
+      <div class="border rounded p-3">
+        <h3 class="font-semibold mb-1">GOOD Example</h3>
+        <div>
+          <div class="font-medium">Software Engineering Intern</div>
+          <div class="text-sm text-gray-600 mb-2"><em>Tech Solutions Inc. • Jun 2024 – Aug 2024</em></div>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li>Developed a React/Node dashboard that reduced support time by <b>35%</b></li>
+            <li>Implemented REST APIs for <b>10,000+ DAU</b></li>
+            <li>Optimized PostgreSQL queries, improving load time by <b>50%</b></li>
+          </ul>
+          <p class="text-sm mt-2"><b>Skills:</b> JavaScript, React, Node.js, PostgreSQL, Git</p>
         </div>
-        <!-- Slide 2: Bad Example -->
-        <div class="carousel-item">
-          <div class="example-box">
-            <h3>BAD Example</h3>
-            <div>
-              <h4 style="margin:0;">Intern</h4>
-              <p class="small" style="margin:6px 0;"><em>Some Company | Summer 2024</em></p>
-              <ul class="bullet-points">
-                <li>Worked on coding projects</li>
-                <li>Helped the team with various tasks</li>
-                <li>Learned a lot about software development</li>
-              </ul>
-              <p style="margin-top:8px;"><strong>Skills:</strong> Coding, Computers, Hard worker</p>
-            </div>
-            <h4 style="margin-top:12px;">Why This Doesn't Work:</h4>
-            <ul class="bullet-points">
-              <li><strong>Too Vague:</strong> Lacks specific responsibilities</li>
-              <li><strong>No Measurable Impact:</strong> No metrics or outcomes</li>
-              <li><strong>Weak Verbs:</strong> Passive phrasing</li>
-            </ul>
-          </div>
+        <div class="mt-3">
+          <div class="font-semibold">Why it works</div>
+          <ul class="list-disc ml-5 text-sm mt-1">
+            <li>Specific and measurable</li>
+            <li>Strong verbs</li>
+            <li>Clear tools</li>
+          </ul>
+        </div>
+      </div>
+      <!-- BAD -->
+      <div class="border rounded p-3">
+        <h3 class="font-semibold mb-1">BAD Example</h3>
+        <div>
+          <div class="font-medium">Intern</div>
+          <div class="text-sm text-gray-600 mb-2"><em>Some Company • Summer 2024</em></div>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li>Worked on code projects</li>
+            <li>Helped the team with tasks</li>
+            <li>Learned a lot about development</li>
+          </ul>
+          <p class="text-sm mt-2"><b>Skills:</b> Coding, Computers, Hard worker</p>
+        </div>
+        <div class="mt-3">
+          <div class="font-semibold">Why it doesn’t work</div>
+          <ul class="list-disc ml-5 text-sm mt-1">
+            <li>Vague and lacks metrics</li>
+            <li>Weak verbs</li>
+            <li>No clear impact</li>
+          </ul>
         </div>
       </div>
     </div>
-    <div style="display:flex; justify-content:center; align-items:center; gap:12px; margin-top:12px;">
-      <button class="btn ghost" id="carouselPrev">← Example</button>
-      <span id="carouselIndicator" style="font-weight:700;">Good Example</span>
-      <button class="btn ghost" id="carouselNext">Example →</button>
-    </div>
-    <div style="margin-top:12px;">
-      <button class="btn primary" id="startActivityBtn">I Understand! Let's Practice →</button>
+    <div>
+      <button id="toStep3" class="px-3 py-2 border rounded">Practice: drag & drop →</button>
     </div>
   </section>
-  <!-- Part 3: Drag and Drop Activity -->
-  <section data-step="2" class="hidden" aria-hidden="true">
-    <h2>Interactive Activity: Sort Good vs. Bad</h2>
-    <p>Drag each item into the correct category. Can you identify what makes a good resume entry?</p>
-    <div class="center" style="margin:12px 0; font-weight:700;">
-      Score: <span id="score">0</span> / <span id="total">0</span>
-    </div>
-    <div style="margin:12px 0;">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-        <div class="drop-zone" id="goodZone" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
-          <h4 style="margin:0 0 6px 0;">GOOD Examples</h4>
-          <p class="small" style="margin:0; color:var(--muted);">Drag good examples here</p>
-        </div>
-        <div class="drop-zone" id="badZone" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="dragLeave(event)">
-          <h4 style="margin:0 0 6px 0;">BAD Examples</h4>
-          <p class="small" style="margin:0; color:var(--muted);">Drag bad examples here</p>
+
+  <!-- STEP 3: Drag & Drop -->
+  <section data-step="2" class="space-y-3 hidden">
+    <h2 class="text-xl font-semibold">Interactive: Sort Good vs Bad</h2>
+    <p>Drag each card into the correct column.</p>
+    <div class="text-center font-medium">Score: <span id="score">0</span> / <span id="total">0</span></div>
+    <div class="grid md:grid-cols-2 gap-3">
+      <div>
+        <div class="border-2 border-dashed rounded p-3 min-h-[160px]" id="goodZone">
+          <div class="font-semibold mb-1">GOOD</div>
+          <p class="text-sm text-gray-600">Drop the good ones here</p>
         </div>
       </div>
-      <h4 style="margin-top:12px; margin-bottom:8px;">Items to Sort:</h4>
-      <div class="items-pool" id="itemsPool" aria-live="polite"></div>
-    </div>
-    <div style="margin-top:12px;">
-      <button class="btn ghost hidden" id="checkAnswersBtn" onclick="checkAnswers()">Check My Answers</button>
-      <button class="btn primary hidden" id="continueToFormBtn" onclick="showForm()">Continue to Build My Profile →</button>
-    </div>
-  </section>
-  <!-- Part 4: Profile Building Form (simplified: only Summary + Experience) -->
-  <section data-step="3" class="hidden" aria-hidden="true">
-    <h2>✍️ Build Your Professional Profile</h2>
-    <p class="muted-box">Write a concise summary and add experiences. Use action verbs, quantify impact, and be specific.</p>
-    <form id="profileForm" class="" onsubmit="event.preventDefault(); generatePreview();">
-      <!-- Professional Summary -->
-      <div style="margin-top:8px;">
-        <label class="block" for="summary">Professional Summary *</label>
-        <textarea id="summary" class="input" placeholder="Example: Motivated computer science student with 2 years of full-stack development... " required></textarea>
-      </div>
-      <!-- Experience -->
-      <div style="margin-top:14px;">
-        <h3 style="margin:8px 0 6px 0;">Experience</h3>
-        <div class="muted-box" style="margin-bottom:8px;">Remember: start with strong verbs, include metrics when you can, and show outcomes.</div>
-        <div id="experienceContainer"></div>
-        <div style="margin-top:8px;">
-          <button type="button" class="btn" id="addExperienceBtn">+ Add Experience</button>
-          <button type="button" class="btn primary" id="previewBtn" style="margin-left:8px;"> My resume →</button>
+      <div>
+        <div class="border-2 border-dashed rounded p-3 min-h-[160px]" id="badZone">
+          <div class="font-semibold mb-1">BAD</div>
+          <p class="text-sm text-gray-600">Drop the bad ones here</p>
         </div>
       </div>
-    </form>
-  </section>
-  <!-- Part 5: LinkedIn Preview -->
-  <section data-step="4" class="hidden" aria-hidden="true">
-    <h2> Your LinkedIn-Style Profile Preview</h2>
-    <div id="linkedinPreview" class="linkedin-preview" aria-live="polite" style="margin-top:12px; padding:0;"></div>
-    <div class="muted-box" style="margin-top:12px;">
-      <strong>Congratulations!</strong> You've created a professional profile following industry best practices!
     </div>
-    <div class="action-row" style="margin-top:12px;">
-      <button class="btn ghost" id="editProfileBtn">← Edit Profile</button>
-      <button class="btn primary" id="completeLevelBtn">Continue to Level 4: Resume Generation →</button>
+    <div>
+      <div class="font-medium mb-1">Items:</div>
+      <div id="itemsPool" class="border rounded p-3 flex flex-wrap gap-2"></div>
+    </div>
+    <div class="flex gap-2">
+      <button id="checkAnswersBtn" class="px-3 py-2 border rounded hidden">Check my answers</button>
+      <button id="toStep4" class="px-3 py-2 border rounded hidden">Start writing →</button>
     </div>
   </section>
+
+  <!-- STEP 4: Writing Form -->
+  <section data-step="3" class="space-y-3 hidden">
+    <h2 class="text-xl font-semibold">Write your experience</h2>
+    <p class="text-gray-700">Start with a brief summary, then add experiences using verbs, metrics, and results.</p>
+    <div>
+      <label class="block text-sm font-medium">Professional Summary *</label>
+      <textarea id="summary" rows="3" class="w-full border rounded px-3 py-2" placeholder="Ex: CS student with full-stack experience; launched an app that reduced support time by 35%"></textarea>
+    </div>
+    <div class="border rounded p-3">
+      <div class="font-medium mb-2">Experiences</div>
+      <div id="experienceContainer" class="space-y-3"></div>
+      <button id="addExperienceBtn" class="px-3 py-2 border rounded">+ Add experience</button>
+    </div>
+    <div class="text-sm text-gray-600">
+      Tip: Use the <b>Action → Metric → Result</b> format. Example: “Optimized SQL queries, reducing latency by 50% and increasing weekly retention by 12%.”
+    </div>
+    <div>
+      <button id="toStep5" class="px-3 py-2 border rounded">Preview →</button>
+    </div>
+  </section>
+
+  <!-- STEP 5: Resume Preview -->
+  <section data-step="4" class="space-y-3 hidden">
+    <h2 class="text-xl font-semibold">Preview</h2>
+    <div id="resumePreview" class="border rounded p-4 space-y-3 text-sm leading-6"></div>
+    <div class="grid md:grid-cols-2 gap-2">
+      <button id="saveDraft" class="px-3 py-2 border rounded">Save Draft</button>
+      <button id="submitFinal" class="px-3 py-2 border rounded">Submit Final</button>
+    </div>
+    <p id="saveMessage" class="text-sm mt-1"></p>
+  </section>
+
+  <!-- Bottom Navigation -->
+  <div class="flex justify-between mt-4">
+    <button id="prevBtn" class="px-3 py-2 border rounded" disabled>Previous</button>
+    <!-- Removed the redundant "Next" button -->
+    <button
+      id="nextModuleBtnNav"
+      data-href="/cs-portfolio-quest/resume/submodule_4/"
+      class="px-3 py-2 border rounded hidden bg-red-600 text-white disabled:opacity-60"
+      disabled
+    >Next Module →</button>
+  </div>
 </div>
 
 <script>
-/* ============================
-   Module 3 — cleaned & fixed
-   - Simple neutral styling (like Module 2)
-   - Removed Education & Skills sections
-   - Fixed JS initialization & UX flow
-   ============================ */
+document.addEventListener('DOMContentLoaded', () => {
+  // --------- State ----------
+  const state = {
+    step: 0,
+    submitted: false,
+    summary: "",
+    experiences: [] // {title, company, dates, bullets}
+  };
 
-(function() {
-  // State
-  let currentStep = 0;
-  let currentCarouselIndex = 0;
-  let experienceCount = 0;
-  let dragDropItems = [
-    { text: "Increased user engagement by 45% through implementing personalized recommendations", good: true },
-    { text: "Worked on stuff for the company", good: false },
-    { text: "Responsible for things", good: false },
-    { text: "Developed automated testing suite reducing bug detection time by 60%", good: true },
+  // --------- DOM helpers ----------
+  const $  = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  const steps = $$('section[data-step]');
+  const progressBar   = $('#progressBar');
+  const progressLabel = $('#progressLabel');
+
+  const prevBtn = $('#prevBtn');
+  const nextModuleBtnNav = $('#nextModuleBtnNav');
+
+  // Step 1
+  const miniQuiz = $('#miniQuiz');
+  const miniQuizResult = $('#miniQuizResult');
+  const toStep2 = $('#toStep2');
+
+  // Step 2
+  const toStep3 = $('#toStep3');
+
+  // Step 3
+  const itemsPool = $('#itemsPool');
+  const goodZone = $('#goodZone');
+  const badZone  = $('#badZone');
+  const checkAnswersBtn = $('#checkAnswersBtn');
+  const toStep4 = $('#toStep4');
+  const scoreSpan = $('#score');
+  const totalSpan = $('#total');
+
+  // Step 4
+  const summaryEl = $('#summary');
+  const experienceContainer = $('#experienceContainer');
+  const addExperienceBtn = $('#addExperienceBtn');
+  const toStep5 = $('#toStep5');
+
+  // Step 5
+  const resumePreview = $('#resumePreview');
+  const saveDraftBtn = $('#saveDraft');
+  const submitFinalBtn = $('#submitFinal');
+  const saveMessage = $('#saveMessage');
+
+  // --------- Progress / navigation ----------
+  function showStep(i){
+    state.step = Math.max(0, Math.min(steps.length-1, i));
+    steps.forEach((el,idx)=>el.classList.toggle('hidden', idx!==state.step));
+    const pct = ((state.step+1)/steps.length)*100;
+    progressBar.style.width = pct + '%';
+    progressLabel.textContent = `Step ${state.step+1} / ${steps.length}`;
+    prevBtn.disabled = state.step===0;
+
+    const onLast = state.step === steps.length - 1;
+    nextModuleBtnNav.classList.toggle('hidden', !onLast);
+    nextModuleBtnNav.disabled = !state.submitted;
+
+    persist();
+    if (onLast) updateResumePreview();
+  }
+
+  prevBtn.addEventListener('click', ()=>showStep(state.step-1));
+
+  if (nextModuleBtnNav){
+    nextModuleBtnNav.addEventListener('click', (e)=>{
+      e.preventDefault();
+      if (!state.submitted){ alert("Submit Final first."); return; }
+      alert("Great! Next you’ll auto-generate your resume from what you wrote.");
+      const href = nextModuleBtnNav.getAttribute('data-href');
+      if (href) window.location.href = href;
+    });
+  }
+
+  // --------- STEP 1 ----------
+  if (miniQuiz){
+    miniQuiz.addEventListener('change', (e)=>{
+      const v = e.target.value;
+      if (!v) return;
+      const ok = v === 'b';
+      miniQuizResult.textContent = ok ? "Correct — action + metric = clear impact." : "The other option is better — more concrete and measurable.";
+      miniQuizResult.className = "text-sm mt-2 " + (ok ? "text-green-700" : "text-red-700");
+    });
+  }
+  toStep2?.addEventListener('click', ()=>showStep(1));
+
+  // --------- STEP 2 ----------
+  toStep3?.addEventListener('click', ()=>{
+    showStep(2);
+    initDragDrop();
+  });
+
+  // --------- STEP 3: Drag & Drop ----------
+  const dragDropItems = [
+    { text: "Increased engagement by 45% using personalized recommendations", good: true },
+    { text: "Worked on team stuff", good: false },
+    { text: "Was responsible for tasks", good: false },
+    { text: "Implemented automated tests and cut detection time by 60%", good: true },
     { text: "Used Java and Python", good: false },
-    { text: "Helped with projects", good: false },
-    { text: "Led team of 4 developers to deliver mobile app with 50,000+ downloads in first month", good: true },
-    { text: "Good at teamwork and communication", good: false },
-    { text: "Optimized database queries reducing server costs by $2,000/month", good: true },
-    { text: "Did various tasks as assigned", good: false },
-    { text: "Designed and implemented RESTful API serving 100,000+ requests daily", good: true },
-    { text: "Fast learner who can do many things", good: false }
+    { text: "Helped on projects", good: false },
+    { text: "Led 4 devs and launched an app with 50,000+ downloads in 1 month", good: true },
+    { text: "I’m good at teamwork", good: false },
+    { text: "Optimized queries and saved $2,000/month on servers", good: true },
+    { text: "Completed assigned tasks", good: false },
+    { text: "Designed a REST API with 100,000+ requests/day", good: true },
+    { text: "I learn fast", good: false }
   ];
-  const userAnswers = {}; // keyed by pool item unique id
+  const answers = {}; // id -> true/false
 
-  // DOM references
-  const steps = Array.from(document.querySelectorAll('section[data-step]'));
-  const progressBar = document.getElementById('progressBar');
-  const progressLabel = document.getElementById('progressLabel');
-
-  // Carousel controls
-  const carouselInner = document.getElementById('carouselInner');
-  const carouselPrev = document.getElementById('carouselPrev');
-  const carouselNext = document.getElementById('carouselNext');
-  const carouselIndicator = document.getElementById('carouselIndicator');
-
-  // Buttons
-  const toComparisonBtn = document.getElementById('toComparisonBtn');
-  const startActivityBtn = document.getElementById('startActivityBtn');
-  const checkAnswersBtn = document.getElementById('checkAnswersBtn');
-  const continueToFormBtn = document.getElementById('continueToFormBtn');
-  const addExperienceBtn = document.getElementById('addExperienceBtn');
-  const previewBtn = document.getElementById('previewBtn');
-  const editProfileBtn = document.getElementById('editProfileBtn');
-  const completeLevelBtn = document.getElementById('completeLevelBtn');
-
-  // Pools & containers
-  const itemsPool = document.getElementById('itemsPool');
-  const totalSpan = document.getElementById('total');
-  const scoreSpan = document.getElementById('score');
-  const goodZone = document.getElementById('goodZone');
-  const badZone = document.getElementById('badZone');
-  const experienceContainer = document.getElementById('experienceContainer');
-  const linkedinPreview = document.getElementById('linkedinPreview');
-
-  // Utilities for UI
-  function updateProgress() {
-    const pct = ((currentStep + 1) / steps.length) * 100;
-    if (progressBar) progressBar.style.width = pct + '%';
-    if (progressLabel) progressLabel.textContent = `Part ${currentStep + 1} / ${steps.length}`;
-    // Update aria
-    if (progressBar) progressBar.parentElement.setAttribute('aria-valuenow', Math.round(pct));
-  }
-
-  function showStep(stepNum) {
-    currentStep = Math.max(0, Math.min(steps.length - 1, stepNum));
-    steps.forEach((el, idx) => {
-      const hidden = idx !== currentStep;
-      el.classList.toggle('hidden', hidden);
-      el.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+  function initDragDrop(){
+    itemsPool.innerHTML = "";
+    [goodZone, badZone].forEach(z=>z.innerHTML = z.innerHTML); // keep headers
+    const shuffled = [...dragDropItems].sort(()=>Math.random()-0.5);
+    shuffled.forEach((item, idx)=>{
+      const div = document.createElement('div');
+      div.className = "px-3 py-2 border rounded bg-white cursor-move text-sm";
+      div.draggable = true;
+      const id = `itm-${Date.now()}-${idx}`;
+      div.dataset.id = id;
+      div.dataset.good = String(item.good);
+      div.textContent = item.text;
+      div.addEventListener('dragstart', ev=>{
+        ev.dataTransfer.setData('text/plain', id);
+        div.classList.add('opacity-50');
+      });
+      div.addEventListener('dragend', ()=>div.classList.remove('opacity-50'));
+      itemsPool.appendChild(div);
+      answers[id] = undefined;
     });
-    updateProgress();
-    // Scroll to top of container for better UX on small screens
-    const container = document.querySelector('.max-w-3xl');
-    if (container) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  /* ------------------------------
-     Carousel (Good / Bad)
-     ------------------------------ */
-  function updateCarouselIndicator() {
-    carouselIndicator.textContent = currentCarouselIndex === 0 ? 'Good Example' : 'Bad Example';
-    // disable/enable prev/next visually
-    carouselPrev.disabled = currentCarouselIndex === 0;
-    carouselNext.disabled = currentCarouselIndex === 1;
-    carouselInner.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
-  }
-
-  function moveCarousel(direction) {
-    currentCarouselIndex = Math.max(0, Math.min(1, currentCarouselIndex + direction));
-    updateCarouselIndicator();
-  }
-
-  /* ------------------------------
-     Drag & Drop Activity
-     ------------------------------ */
-
-  // Create items pool (id unique per run)
-  function initializeDragDrop() {
-    const shuffled = [...dragDropItems].sort(() => Math.random() - 0.5);
-    itemsPool.innerHTML = '';
-    shuffled.forEach((item, index) => {
-      // use stable id to map userAnswers
-      const id = `item-${Date.now()}-${index}`;
-      const el = document.createElement('div');
-      el.className = 'draggable-item';
-      el.draggable = true;
-      el.textContent = item.text;
-      el.dataset.id = id;
-      el.dataset.good = String(item.good);
-      el.addEventListener('dragstart', dragStart);
-      el.addEventListener('dragend', dragEnd);
-      itemsPool.appendChild(el);
-      userAnswers[id] = undefined; // not placed yet
-    });
-    // set total & reset score
-    const total = itemsPool.children.length;
-    (document.getElementById('total') || {textContent:''}).textContent = total;
-    scoreSpan.textContent = '0';
+    totalSpan.textContent = String(shuffled.length);
+    scoreSpan.textContent = "0";
     checkAnswersBtn.classList.add('hidden');
-    continueToFormBtn.classList.add('hidden');
+    toStep4.classList.add('hidden');
   }
 
-  function dragStart(ev) {
-    ev.dataTransfer.setData('text/plain', ev.target.dataset.id);
-    ev.currentTarget.classList.add('dragging');
-    // add a small delay so class applies visually
-    setTimeout(() => ev.currentTarget.classList.add('dragging'), 0);
+  function zoneCommon(zone){
+    zone.addEventListener('dragover', e=>{ e.preventDefault(); zone.classList.add('bg-gray-50'); });
+    zone.addEventListener('dragleave', ()=>zone.classList.remove('bg-gray-50'));
+    zone.addEventListener('drop', e=>{
+      e.preventDefault();
+      zone.classList.remove('bg-gray-50');
+      const id = e.dataTransfer.getData('text/plain');
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if (!el) return;
+      zone.appendChild(el);
+      answers[id] = (zone.id === 'goodZone');
+      if (itemsPool.children.length === 0) checkAnswersBtn.classList.remove('hidden');
+    });
   }
+  zoneCommon(goodZone);
+  zoneCommon(badZone);
 
-  function dragEnd(ev) {
-    ev.currentTarget.classList.remove('dragging');
-  }
-
-  function allowDrop(ev) {
-    ev.preventDefault();
-    ev.currentTarget.classList.add('drag-over');
-  }
-
-  function dragLeave(ev) {
-    ev.currentTarget.classList.remove('drag-over');
-  }
-
-  function drop(ev) {
-    ev.preventDefault();
-    ev.currentTarget.classList.remove('drag-over');
-    const itemId = ev.dataTransfer.getData('text/plain');
-    const targetIsGood = ev.currentTarget.id === 'goodZone';
-    const itemEl = document.querySelector(`[data-id="${itemId}"]`);
-    if (!itemEl) return;
-    // append the draggable to the drop zone
-    ev.currentTarget.appendChild(itemEl);
-    userAnswers[itemId] = targetIsGood;
-    // if pool is empty, reveal check button
-    if (itemsPool.children.length === 0) {
-      checkAnswersBtn.classList.remove('hidden');
-    }
-  }
-
-  function checkAnswers() {
+  checkAnswersBtn?.addEventListener('click', ()=>{
     let correct = 0;
-    const entries = Object.keys(userAnswers);
-    entries.forEach(id => {
-      const item = document.querySelector(`[data-id="${id}"]`);
-      if (!item) return; // if removed or missing
-      const isGood = item.dataset.good === 'true';
-      const pickedGood = userAnswers[id] === true;
-      if (isGood === pickedGood) {
-        item.classList.add('correct');
-        item.classList.remove('incorrect');
+    Object.keys(answers).forEach(id=>{
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if (!el) return;
+      const isGood = el.dataset.good === 'true';
+      const pickedGood = answers[id] === true;
+      if (isGood === pickedGood){
+        el.classList.remove('border-red-600','bg-red-50');
+        el.classList.add('border-green-600','bg-green-50');
         correct++;
       } else {
-        item.classList.add('incorrect');
-        item.classList.remove('correct');
+        el.classList.remove('border-green-600','bg-green-50');
+        el.classList.add('border-red-600','bg-red-50');
       }
     });
-
     scoreSpan.textContent = String(correct);
-    if (correct === entries.length) {
-      setTimeout(() => {
-        alert('Perfect! You got them all correct! 🎉');
-        checkAnswersBtn.classList.add('hidden');
-        continueToFormBtn.classList.remove('hidden');
-      }, 300);
+    toStep4.classList.remove('hidden');
+    if (correct === Object.keys(answers).length){
+      alert("Perfect! 🎉");
     } else {
-      alert(`You got ${correct} out of ${entries.length} correct. Review the incorrect ones (marked in red) and try again or continue to the form to practice writing better entries.`);
-      continueToFormBtn.classList.remove('hidden');
+      alert(`You got ${correct}/${Object.keys(answers).length}. Review the red ones or continue.`);
     }
+  });
+
+  toStep4?.addEventListener('click', ()=>showStep(3));
+
+  // --------- STEP 4: Form (summary + experiences) ----------
+  addExperienceBtn?.addEventListener('click', ()=>addExperience());
+  function addExperience(initial={}){
+    state.experiences.push({
+      title: initial.title || "",
+      company: initial.company || "",
+      dates: initial.dates || "",
+      bullets: initial.bullets || ""
+    });
+    renderExperiences();
+    persist();
   }
 
-  /* ------------------------------
-     Experience Form Management
-     ------------------------------ */
-  function addExperience(initial = {}) {
-    experienceCount++;
-    const id = experienceCount;
-    const wrapper = document.createElement('div');
-    wrapper.className = 'entry';
-    wrapper.id = `exp-${id}`;
-
-    wrapper.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <strong>Experience ${id}</strong>
-        <button type="button" class="btn" data-remove="${id}" aria-label="Remove experience ${id}">Remove</button>
-      </div>
-      <div style="margin-top:8px;">
-        <label class="block">Job Title *</label>
-        <input type="text" id="expTitle${id}" class="input" placeholder="Software Engineering Intern" value="${escapeHtml(initial.title||'')}" required>
-      </div>
-      <div style="margin-top:8px;">
-        <label class="block">Company *</label>
-        <input type="text" id="expCompany${id}" class="input" placeholder="Tech Solutions Inc." value="${escapeHtml(initial.company||'')}" required>
-      </div>
-      <div style="margin-top:8px;">
-        <label class="block">Dates *</label>
-        <input type="text" id="expDates${id}" class="input" placeholder="June 2024 - August 2024" value="${escapeHtml(initial.dates||'')}" required>
-      </div>
-      <div style="margin-top:8px;">
-        <label class="block">Description * (Use bullet points, start with action verbs!)</label>
-        <textarea id="expDesc${id}" class="input" placeholder="• Built X that reduced Y by Z..." required>${escapeHtml(initial.desc||'')}</textarea>
-      </div>
-    `;
-
-    // remove handler
-    wrapper.querySelector(`[data-remove="${id}"]`).addEventListener('click', () => {
-      wrapper.remove();
+  function renderExperiences(){
+    experienceContainer.innerHTML = "";
+    state.experiences.forEach((ex, i)=>{
+      const wrap = document.createElement('div');
+      wrap.className = "border-l-4 border-gray-200 bg-white p-3 rounded";
+      wrap.innerHTML = `
+        <div class="flex justify-between items-center">
+          <div class="font-semibold">Experience ${i+1}</div>
+          <button data-rm="${i}" class="px-2 py-1 border rounded text-sm">Remove</button>
+        </div>
+        <div class="mt-2 grid md:grid-cols-2 gap-2">
+          <div>
+            <label class="block text-sm font-medium">Job Title *</label>
+            <input data-f="title" data-i="${i}" class="w-full border rounded px-3 py-2" placeholder="Software Engineering Intern" value="${escapeHtml(ex.title)}">
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Company *</label>
+            <input data-f="company" data-i="${i}" class="w-full border rounded px-3 py-2" placeholder="Tech Solutions Inc." value="${escapeHtml(ex.company)}">
+          </div>
+        </div>
+        <div class="mt-2">
+          <label class="block text-sm font-medium">Dates *</label>
+          <input data-f="dates" data-i="${i}" class="w-full border rounded px-3 py-2" placeholder="Jun 2024 – Aug 2024" value="${escapeHtml(ex.dates)}">
+        </div>
+        <div class="mt-2">
+          <label class="block text-sm font-medium">Bullets * (use “•” on separate lines)</label>
+          <textarea data-f="bullets" data-i="${i}" rows="3" class="w-full border rounded px-3 py-2" placeholder="• Developed X that reduced Y by Z%\n• Led 3 people to launch ...\n• Optimized SQL queries ...">${escapeHtml(ex.bullets)}</textarea>
+        </div>
+      `;
+      experienceContainer.appendChild(wrap);
     });
 
-    experienceContainer.appendChild(wrapper);
-    // scroll into view
-    wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    // handlers
+    experienceContainer.querySelectorAll('[data-rm]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const i = +btn.getAttribute('data-rm');
+        state.experiences.splice(i,1);
+        renderExperiences();
+        persist();
+      });
+    });
+    experienceContainer.querySelectorAll('input[data-f], textarea[data-f]').forEach(inp=>{
+      inp.addEventListener('input', ()=>{
+        const i = +inp.getAttribute('data-i');
+        const f = inp.getAttribute('data-f');
+        state.experiences[i][f] = inp.value;
+        persist();
+      });
+    });
   }
 
-  function collectExperiences() {
-    const arr = [];
-    for (let i = 1; i <= experienceCount; i++) {
-      const titleEl = document.getElementById(`expTitle${i}`);
-      if (!titleEl) continue;
-      const title = titleEl.value.trim();
-      const company = (document.getElementById(`expCompany${i}`) || {value:''}).value.trim();
-      const dates = (document.getElementById(`expDates${i}`) || {value:''}).value.trim();
-      const desc = (document.getElementById(`expDesc${i}`) || {value:''}).value.trim();
-      if (title && company && dates && desc) {
-        arr.push({ title, company, dates, desc });
-      }
-    }
-    return arr;
-  }
+  summaryEl?.addEventListener('input', ()=>{
+    state.summary = summaryEl.value;
+    persist();
+  });
 
-  /* ------------------------------
-     Preview Generator
-     ------------------------------ */
-  function generatePreview() {
-    const summaryEl = document.getElementById('summary');
-    if (!summaryEl) return;
-    const summary = summaryEl.value.trim();
-    if (!summary) {
-      alert('Please fill in your professional summary.');
-      showStep(3);
+  toStep5?.addEventListener('click', ()=>{
+    if (!state.summary.trim()){
+      alert("Write your Professional Summary before continuing.");
       return;
     }
+    showStep(4);
+    updateResumePreview();
+  });
 
-    const experiences = collectExperiences();
+  // --------- STEP 5: Preview / Save / Submit ----------
+  function updateResumePreview(){
+    const parts = [];
 
-    // Build preview HTML (simple LinkedIn-like)
-    let html = '';
-    html += `<div class="linkedin-header"><div class="linkedin-profile-pic">👤</div></div>`;
-    html += `<div class="linkedin-content">`;
-    html += `<h1 class="linkedin-name">Your Name</h1>`;
-    html += `<p class="linkedin-headline">${escapeHtml(summary)}</p>`;
+    // Header (summary only in this module)
+    parts.push(`<div class="text-lg font-bold">Professional Summary</div>`);
+    parts.push(`<div>${nl2br(escapeHtml(state.summary || "Add a brief professional summary."))}</div>`);
 
-    html += `<div style="margin-top:12px;"><h3 style="margin:0 0 6px 0;">About</h3><p style="margin:0 0 10px 0;">${escapeHtml(summary)}</p></div>`;
-
-    if (experiences.length) {
-      html += `<div style="margin-top:12px;"><h3 style="margin:0 0 8px 0;">Experience</h3>`;
-      experiences.forEach(ex => {
-        html += `<div style="margin-bottom:12px;">`;
-        html += `<h4 style="margin:0; font-size:1rem; font-weight:700;">${escapeHtml(ex.title)}</h4>`;
-        html += `<p class="small" style="margin:4px 0 6px 0;">${escapeHtml(ex.company)} • ${escapeHtml(ex.dates)}</p>`;
-        html += `<p style="white-space:pre-line; margin:0;">${escapeHtml(ex.desc)}</p>`;
-        html += `</div>`;
+    // Experiences
+    parts.push(`<div class="mt-3 text-base font-semibold">Experience</div>`);
+    if (state.experiences.length){
+      state.experiences.forEach(ex=>{
+        if (!ex.title && !ex.company && !ex.dates && !ex.bullets) return;
+        parts.push(`<div class="mt-1">
+          <div class="font-medium">${escapeHtml(ex.title || "Job title")}</div>
+          <div class="text-gray-700 text-sm">${escapeHtml(ex.company || "Company")} • ${escapeHtml(ex.dates || "Dates")}</div>
+          ${renderBullets(ex.bullets)}
+        </div>`);
       });
-      html += `</div>`;
     } else {
-      html += `<div style="margin-top:12px;"><h3 style="margin:0 0 6px 0;">Experience</h3><p>(No experience added)</p></div>`;
+      parts.push(`<div class="text-sm text-gray-500">Add at least one experience.</div>`);
     }
 
     html += `</div>`; // linkedin-content
@@ -539,75 +472,81 @@ date: 2025-10-21
     showStep(4);
   }
 
-  /* ------------------------------
-     Helpers
-     ------------------------------ */
-  function escapeHtml(s) {
-    if (!s) return '';
-    return String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+  function renderBullets(text){
+    const lines = (text || "").split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+    if (!lines.length) return `<div class="text-sm text-gray-500">Add bullets with metrics and impact.</div>`;
+    const items = lines.map(l=>`<li>${escapeHtml(l.replace(/^•\s*/,'') || '')}</li>`).join('');
+    return `<ul class="list-disc ml-5 text-sm mt-1 space-y-1">${items}</ul>`;
   }
 
-  /* ------------------------------
-     Initialization & Event Wiring
-     ------------------------------ */
-  function init() {
-    // initial progress + step
-    showStep(0);
-    updateCarouselIndicator();
+  saveDraftBtn?.addEventListener('click', ()=>{
+    persist();
+    updateResumePreview();
+    saveMessage.textContent = "Draft saved on this device.";
+    saveMessage.className = "text-sm mt-1 text-green-700";
+  });
 
-    // wire buttons (guard with exist checks)
-    if (toComparisonBtn) toComparisonBtn.addEventListener('click', () => showStep(1));
-    if (carouselPrev) carouselPrev.addEventListener('click', () => moveCarousel(-1));
-    if (carouselNext) carouselNext.addEventListener('click', () => moveCarousel(1));
-    if (startActivityBtn) startActivityBtn.addEventListener('click', () => {
-      showStep(2);
-      initializeDragDrop();
+  submitFinalBtn?.addEventListener('click', async ()=>{
+    updateResumePreview();
+    const ok = await submitFinal({
+      summary: state.summary,
+      experiences: state.experiences
     });
-    if (checkAnswersBtn) checkAnswersBtn.addEventListener('click', checkAnswers);
-    if (continueToFormBtn) continueToFormBtn.addEventListener('click', () => showForm());
-    if (addExperienceBtn) addExperienceBtn.addEventListener('click', () => addExperience());
-    if (previewBtn) previewBtn.addEventListener('click', generatePreview);
-    if (editProfileBtn) editProfileBtn.addEventListener('click', () => showStep(3));
-    if (completeLevelBtn) completeLevelBtn.addEventListener('click', () => {
-      alert('Congratulations! You completed Level 3!\n\nYou now understand:\n✓ What makes a resume effective\n✓ How to write impactful experience descriptions\n✓ How to structure a LinkedIn profile\n\nReady to generate your professional resume?');
-      window.location.href = '/cs-portfolio-quest/resume/submodule_4/';
-    });
+    state.submitted = !!ok;
+    persist();
 
-    // drop zones events
-    [goodZone, badZone].forEach(zone => {
-      if (!zone) return;
-      zone.addEventListener('dragover', allowDrop);
-      zone.addEventListener('dragleave', dragLeave);
-      zone.addEventListener('drop', drop);
-    });
+    if (ok){
+      saveMessage.textContent = "Submitted! Your information has been received.";
+      saveMessage.className = "text-sm mt-1 text-green-700";
+      // enable and turn the Next Module button green
+      nextModuleBtnNav.disabled = false;
+      nextModuleBtnNav.classList.remove('bg-red-600');
+      nextModuleBtnNav.classList.add('bg-green-600');
+    } else {
+      saveMessage.textContent = "Something went wrong. Try again.";
+      saveMessage.className = "text-sm mt-1 text-red-700";
+    }
+  });
 
-    // initialize experience with one blank entry for convenience
-    addExperience();
-
-    // Accessibility: allow keyboard enter on items pool elements? (not necessary now)
+  async function submitFinal(payload){
+    console.log("Would submit:", payload);
+    //FOR BACKEND LATER
+    // await fetch("/api/resume/module3/submit", { method:"POST", headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    return true;
   }
 
-  // Exposed for inline handlers older code might call (keeps compatibility)
-  window.showForm = function() { showStep(3); };
-  window.addExperience = function() { addExperience(); };
-  window.generatePreview = function() { generatePreview(); };
-  window.allowDrop = allowDrop;
-  window.dragLeave = dragLeave;
-  window.drag = function(ev) { /* kept for potential inline events */ };
-  window.drop = drop;
-  window.checkAnswers = checkAnswers;
-
-  // Start when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  // --------- Persistence ----------
+  const STORAGE_KEY = "resume_builder_module3_v1";
+  function persist(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }catch(e){}
+  }
+  function restore(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) { // initial state
+        addExperience();
+        return;
+      }
+      const s = JSON.parse(raw);
+      state.step = 0;               // always start on Step 1
+      state.submitted = !!s.submitted;
+      state.summary = s.summary || "";
+      state.experiences = Array.isArray(s.experiences) ? s.experiences : [];
+      summaryEl.value = state.summary;
+      renderExperiences();
+    }catch(e){
+      addExperience();
+    }
   }
 
-})();
+  // --------- Utils ----------
+  function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  function nl2br(s){ return String(s||"").replace(/\n/g,"<br>"); }
+
+  // --------- Boot ----------
+  restore();
+  showStep(0);
+});
 </script>
