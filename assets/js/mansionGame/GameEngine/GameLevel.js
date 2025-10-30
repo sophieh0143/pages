@@ -54,11 +54,7 @@ class GameLevel {
   }
 
   update() {
-    // Clear the canvas (identity transform)
     this.gameEnv.clear()
-
-    // Apply camera transform if active so subsequent draw/update calls render in camera space
-    this.gameEnv.pushCamera()
 
     for (let gameObject of this.gameEnv.gameObjects) {
       // Check if gameObject has an update method before calling it
@@ -66,9 +62,6 @@ class GameLevel {
         gameObject.update()
       }
     }
-
-    // Restore context after drawing world objects
-    this.gameEnv.popCamera()
 
     if (typeof this.gameLevel.update === "function") {
       this.gameLevel.update()

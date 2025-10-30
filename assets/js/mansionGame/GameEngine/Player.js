@@ -21,8 +21,8 @@ class Player extends Character {
         // Increment static player counter and assign unique id
         Player.playerCount = (Player.playerCount || 0) + 1;
         this.id = data?.id ? data.id.toLowerCase() : `player${Player.playerCount}`;
-        this.keypress = data?.keypress || { up: 87, left: 65, down: 83, right: 68 };
-        this.touchOptions = data?.touchOptions || { interactLabel: "E", position: "left" };
+        this.keypress = data?.keypress || {up: 87, left: 65, down: 83, right: 68};
+        this.touchOptions = data?.touchOptions || {interactLabel: "E", position: "left"};
         this.touchOptions.id = `touch-controls-${this.id}`;
         this.touchOptions.mapping = this.keypress;
         this.pressedKeys = {}; // active keys array
@@ -94,7 +94,7 @@ class Player extends Character {
             this.velocity.y += this.yVelocity;
             this.velocity.x += xVel;
             this.direction = 'downRight';
-            // Single key movements (left, right, up, down) 
+        // Single key movements (left, right, up, down) 
         } else if (this.pressedKeys[this.keypress.up]) {
             this.velocity.y -= this.yVelocity;
             this.direction = 'up';
@@ -111,23 +111,23 @@ class Player extends Character {
             this.velocity.x += xVel;
             this.direction = 'right';
             this.moved = true;
-        } else {
+        } else{
             this.moved = false;
         }
     }
     update() {
         super.update();
-        if (!this.moved) {
+        if(!this.moved){
             if (this.gravity) {
-                this.time += 1;
-                this.velocity.y += 0.5 + this.acceleration * this.time;
+                    this.time += 1;
+                    this.velocity.y += 0.5 + this.acceleration * this.time;
+                }
             }
-        }
-        else {
+        else{
             this.time = 0;
         }
-    }
-
+        }
+        
     /**
      * Overrides the reaction to the collision to handle
      *  - clearing the pressed keys array
@@ -135,7 +135,7 @@ class Player extends Character {
      *  - updating the player's direction   
      * @param {*} other - The object that the player is colliding with
      */
-    handleCollisionReaction(other) {
+    handleCollisionReaction(other) {    
         this.pressedKeys = {};
         this.updateVelocityAndDirection();
         super.handleCollisionReaction(other);
