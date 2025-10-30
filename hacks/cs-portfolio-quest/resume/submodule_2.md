@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: cs-portfolio-lesson
 title: "Submodule 2"
 description: "Submodule 2 of Resume Building Mini-Quest"
 permalink: /cs-portfolio-quest/resume/submodule_2/

@@ -1,7 +1,7 @@
 ---
-layout: post
-title: "Submodule 5: LinkedIn Profile Builder"
-description: "Build your professional LinkedIn profile with AI assistance"
+layout: cs-portfolio-lesson
+title: "Submodule 5"
+description: "Submodule 5 of Resume Building Mini-Quest"
 permalink: /cs-portfolio-quest/resume/submodule_5/
 parent: "Resume Building"
 team: "Grinders"
