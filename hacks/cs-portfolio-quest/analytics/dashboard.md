@@ -1234,12 +1234,55 @@ document.querySelectorAll('.chart-btn').forEach(btn => {
 });
 
 // Filters
-['moduleFilter', 'gradeFilter', 'timeFilter', 'studentSearch'].forEach(id => {
-  document.getElementById(id).addEventListener('change', function() {
-    // Implement filtering logic here
-    console.log('Filter changed:', id, this.value);
-    // In a real implementation, you would filter studentData and re-render
+let filteredData = [];
+
+function applyFilters() {
+  const moduleFilter = document.getElementById('moduleFilter').value;
+  const gradeFilter = document.getElementById('gradeFilter').value;
+  const timeFilter = document.getElementById('timeFilter').value;
+  
+  filteredData = studentData.filter(record => {
+    // Module filter
+    if (moduleFilter !== 'all' && record.module.toLowerCase() !== moduleFilter.toLowerCase()) {
+      return false;
+    }
+    
+    // Grade filter
+    const score = parseFloat(record.score || 0);
+    if (gradeFilter !== 'all') {
+      if (gradeFilter === 'a' && score < 90) return false;
+      if (gradeFilter === 'b' && (score < 80 || score >= 90)) return false;
+      if (gradeFilter === 'c' && (score < 70 || score >= 80)) return false;
+      if (gradeFilter === 'below' && score >= 70) return false;
+    }
+    
+    // Time filter
+    if (timeFilter !== 'all' && record.submissionDate) {
+      const recordDate = new Date(record.submissionDate);
+      const now = new Date();
+      const daysDiff = Math.floor((now - recordDate) / (1000 * 60 * 60 * 24));
+      
+      if (timeFilter === 'week' && daysDiff > 7) return false;
+      if (timeFilter === 'month' && daysDiff > 30) return false;
+      if (timeFilter === 'quarter' && daysDiff > 90) return false;
+    }
+    
+    return true;
   });
+  
+  // Re-render with filtered data
+  const originalData = studentData;
+  studentData = filteredData.length > 0 ? filteredData : originalData;
+  
+  updateStatistics();
+  createCharts();
+  displayGrades();
+  
+  studentData = originalData; // Restore original data
+}
+
+['moduleFilter', 'gradeFilter', 'timeFilter'].forEach(id => {
+  document.getElementById(id).addEventListener('change', applyFilters);
 });
 
 document.getElementById('studentSearch').addEventListener('input', function() {
@@ -1275,12 +1318,6 @@ uploadArea.addEventListener('drop', (e) => {
     document.getElementById('csvFileInput').dispatchEvent(new Event('change'));
   }
 });
-
-// Initialize with sample data on load (optional)
-// Uncomment to auto-load sample data
-// window.addEventListener('load', () => {
-//   document.getElementById('loadSampleBtn').click();
-// });
 </script>
 
 ## 📖 How to Use This Dashboard
