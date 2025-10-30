@@ -15,7 +15,7 @@ lxdData:
       Level: 1
       Description: "Learn about the Purpose of Frontend in this Lesson!"
       Categories: ["Frontend", "HTML", "CSS", "Javascript"]
-      Video: "/cs-portfolio-quest/frontend/submodule_1-video"
+      Video: "https://www.youtube.com/live/7C4dv8vuwEk?si=jk5fBRVyYVxM70xC"
       Lessons: "/cs-portfolio-quest/frontend/submodule_1/"
       Image: "/images/cs-portfolio-quest/frontend/frontend.png"
       Alt: "Frontend Submodule 1"
@@ -24,7 +24,7 @@ lxdData:
       Level: 2
       Description: "Learn about Markdown to HTML & Full Stack in this Lesson!"
       Categories: ["Frontend", "HTML", "CSS", "Javascript"]
-      Video: "/cs-portfolio-quest/frontend/submodule_2-video"
+      Video: "https://youtu.be/nu_pCVPKzTk?si=fmdT2DhLI_dMOOXi"
       Lessons: "/cs-portfolio-quest/frontend/submodule_2/"
       Image: "/images/cs-portfolio-quest/frontend/fullstack.png"
       Alt: "Frontend Submodule 2"
@@ -33,7 +33,7 @@ lxdData:
       Level: 3
       Description: "Learn about CSS Styling in this lesson!"
       Categories: ["Frontend", "HTML", "CSS", "Javascript"]
-      Video: "/cs-portfolio-quest/frontend/submodule_3-video"
+      Video: "https://youtu.be/OXGznpKZ_sA?si=DocJUtY8PBd7Nw-e"
       Lessons: "/cs-portfolio-quest/frontend/submodule_3/"
       Image: "/images/cs-portfolio-quest/frontend/css.png"
       Alt: "Frontend Submodule 3"
@@ -42,7 +42,7 @@ lxdData:
       Level: 4
       Description: "Learn about Tailwind and Sass in this lesson!"
       Categories: ["Frontend", "HTML", "CSS", "Javascript"]
-      Video: "/cs-portfolio-quest/frontend/submodule_4-video"
+      Video: "https://youtu.be/lCxcTsOHrjo?si=OCUB7OCeN9PRzcvH"
       Lessons: "/cs-portfolio-quest/frontend/submodule_4/"
       Image: "/images/cs-portfolio-quest/frontend/tailwind.png"
       Alt: "Frontend Submodule 4"
@@ -51,7 +51,7 @@ lxdData:
       Level: 5
       Description: "Learn About Javascript in this Lesson!"
       Categories: ["Frontend", "HTML", "CSS", "Javascript"]
-      Video: "/cs-portfolio-quest/frontend/submodule_5-video"
+      Video: "https://youtu.be/EerdGm-ehJQ?si=kml1IpI_4ZoXtOT_"
       Lessons: "/cs-portfolio-quest/frontend/submodule_5/"
       Image: "/images/cs-portfolio-quest/frontend/javascript.png"
       Alt: "Frontend Submodule 5"
@@ -60,7 +60,7 @@ lxdData:
       Level: 6
       Description: "Learn about Component Integration in this lesson!"
       Categories: ["Frontend", "HTML", "CSS", "Javascript"]
-      Video: "/cs-portfolio-quest/frontend/submodule_6-video"
+      Video: "https://youtu.be/tUGB5UKIOrY?si=x-UTlOuWwFFSW4iC"
       Lessons: "/cs-portfolio-quest/frontend/submodule_6/"
       Image: "/images/cs-portfolio-quest/frontend/integration.png"
       Alt: "Frontend Submodule 6"

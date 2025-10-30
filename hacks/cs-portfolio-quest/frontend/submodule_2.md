@@ -352,6 +352,17 @@ date: 2025-10-21
 
 </style>
 
+## Lesson Objectives
+
+By the end of this lesson, you will be able to:
+
+- Explain the relationship between Markdown and HTML in web development.
+- Identify key differences between Markdown syntax and HTML tags.
+- Convert Markdown content into HTML manually and using automated tools.
+- Understand how frontend rendering connects to backend data handling in a full-stack environment.
+- Reflect on the advantages of using Markdown for project documentation and web publishing.
+
+
 ## Why Convert Markdown to HTML?
 - Markdown is **simple and easy to read** for humans.  
 - HTML is **structured and readable by browsers**.  
