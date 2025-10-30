@@ -798,7 +798,9 @@ document.getElementById('loadSampleBtn').addEventListener('click', function() {
 });
 
 // Process and display data
-function processData() {
+function processData(dataToProcess = null) {
+  const data = dataToProcess || studentData;
+  
   // Show all sections
   document.getElementById('controlsPanel').style.display = 'flex';
   document.getElementById('statsGrid').style.display = 'grid';
@@ -809,19 +811,21 @@ function processData() {
   document.getElementById('performanceHistogram').style.display = 'block';
   document.getElementById('gradingSection').style.display = 'block';
   
-  updateStatistics();
+  updateStatistics(data);
   generateAIInsights();
-  createCharts();
-  displayGrades();
+  createCharts(data);
+  displayGrades(data);
 }
 
 // Update statistics
-function updateStatistics() {
-  const uniqueStudents = [...new Set(studentData.map(d => d.student))];
-  const completedLessons = studentData.filter(d => d.completion === 'Completed');
-  const avgScore = completedLessons.reduce((sum, d) => sum + parseFloat(d.score || 0), 0) / completedLessons.length;
-  const completionRate = (completedLessons.length / studentData.length) * 100;
-  const avgTime = studentData.reduce((sum, d) => sum + parseFloat(d.timeSpent || 0), 0) / studentData.length;
+function updateStatistics(data = studentData) {
+  const uniqueStudents = [...new Set(data.map(d => d.student))];
+  const completedLessons = data.filter(d => d.completion === 'Completed');
+  const avgScore = completedLessons.length > 0 ? 
+    completedLessons.reduce((sum, d) => sum + parseFloat(d.score || 0), 0) / completedLessons.length : 0;
+  const completionRate = data.length > 0 ? (completedLessons.length / data.length) * 100 : 0;
+  const avgTime = data.length > 0 ? 
+    data.reduce((sum, d) => sum + parseFloat(d.timeSpent || 0), 0) / data.length : 0;
   
   document.getElementById('totalStudents').textContent = uniqueStudents.length;
   document.getElementById('avgGrade').textContent = avgScore.toFixed(1) + '%';
@@ -912,20 +916,20 @@ function generateMLPredictions() {
 }
 
 // Create charts
-function createCharts() {
-  createProgressChart();
-  createGradeDistribution();
-  createHeatmap();
-  createHistogram();
+function createCharts(data = studentData) {
+  createProgressChart(data);
+  createGradeDistribution(data);
+  createHeatmap(data);
+  createHistogram(data);
 }
 
 // Progress Chart
-function createProgressChart() {
+function createProgressChart(data = studentData) {
   const ctx = document.getElementById('progressChartCanvas').getContext('2d');
   
   // Group by date
   const dateGroups = {};
-  studentData.forEach(d => {
+  data.forEach(d => {
     const date = d.submissionDate || new Date().toISOString().split('T')[0];
     if (!dateGroups[date]) dateGroups[date] = [];
     dateGroups[date].push(parseFloat(d.score || 0));
@@ -987,11 +991,11 @@ function createProgressChart() {
 }
 
 // Grade Distribution
-function createGradeDistribution() {
+function createGradeDistribution(data = studentData) {
   const ctx = document.getElementById('gradeDistCanvas').getContext('2d');
   
   const grades = { A: 0, B: 0, C: 0, D: 0, F: 0 };
-  studentData.forEach(d => {
+  data.forEach(d => {
     const score = parseFloat(d.score || 0);
     if (score >= 90) grades.A++;
     else if (score >= 80) grades.B++;
@@ -1039,16 +1043,16 @@ function createGradeDistribution() {
 }
 
 // Heatmap
-function createHeatmap() {
+function createHeatmap(data = studentData) {
   const ctx = document.getElementById('heatmapCanvas').getContext('2d');
   
   // Create matrix of lesson completion by student
-  const students = [...new Set(studentData.map(d => d.student))].slice(0, 10);
-  const lessons = [...new Set(studentData.map(d => d.lesson))];
+  const students = [...new Set(data.map(d => d.student))].slice(0, 10);
+  const lessons = [...new Set(data.map(d => d.lesson))];
   
   const matrix = students.map(student => 
     lessons.map(lesson => {
-      const record = studentData.find(d => d.student === student && d.lesson === lesson);
+      const record = data.find(d => d.student === student && d.lesson === lesson);
       return record ? parseFloat(record.score || 0) : 0;
     })
   );
@@ -1087,10 +1091,10 @@ function createHeatmap() {
 }
 
 // Histogram
-function createHistogram() {
+function createHistogram(data = studentData) {
   const ctx = document.getElementById('histogramCanvas').getContext('2d');
   
-  const scores = studentData.map(d => parseFloat(d.score || 0));
+  const scores = data.map(d => parseFloat(d.score || 0));
   const bins = [0, 20, 40, 60, 70, 80, 90, 100];
   const histogram = bins.slice(0, -1).map((bin, idx) => ({
     range: `${bin}-${bins[idx + 1]}`,
@@ -1139,10 +1143,10 @@ function createHistogram() {
 }
 
 // Display student grades
-function displayGrades() {
+function displayGrades(data = studentData) {
   const studentGrades = {};
   
-  studentData.forEach(d => {
+  data.forEach(d => {
     if (!studentGrades[d.student]) {
       studentGrades[d.student] = {
         lessons: [],
@@ -1234,14 +1238,12 @@ document.querySelectorAll('.chart-btn').forEach(btn => {
 });
 
 // Filters
-let filteredData = [];
-
 function applyFilters() {
   const moduleFilter = document.getElementById('moduleFilter').value;
   const gradeFilter = document.getElementById('gradeFilter').value;
   const timeFilter = document.getElementById('timeFilter').value;
   
-  filteredData = studentData.filter(record => {
+  const filteredData = studentData.filter(record => {
     // Module filter
     if (moduleFilter !== 'all' && record.module.toLowerCase() !== moduleFilter.toLowerCase()) {
       return false;
@@ -1271,14 +1273,7 @@ function applyFilters() {
   });
   
   // Re-render with filtered data
-  const originalData = studentData;
-  studentData = filteredData.length > 0 ? filteredData : originalData;
-  
-  updateStatistics();
-  createCharts();
-  displayGrades();
-  
-  studentData = originalData; // Restore original data
+  processData(filteredData);
 }
 
 ['moduleFilter', 'gradeFilter', 'timeFilter'].forEach(id => {
