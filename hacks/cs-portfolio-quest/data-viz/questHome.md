@@ -28,41 +28,6 @@ lxdData:
       Lessons: "/cs-portfolio-quest/data-viz/submodule_2/"
       Image: "/images/cs-portfolio-quest/data-viz.svg"
       Alt: "Data Viz Submodule 2"
-    - Title: "Submodule 3"
-      Genre: "Practice"
-      Level: 3
-      Description: "Team-defined data visualization module"
-      Categories: ["Visualization", "ML", "Collation"]
-      Video: "/cs-portfolio-quest/data-viz/submodule_3-video"
-      Lessons: "/cs-portfolio-quest/data-viz/submodule_3/"
-      Image: "/images/cs-portfolio-quest/data-viz.svg"
-      Alt: "Data Viz Submodule 3"
-    - Title: "Submodule 4"
-      Genre: "Practice"
-      Level: 4
-      Description: "Team-defined data visualization module"
-      Categories: ["Visualization", "ML", "Collation"]
-      Video: "/cs-portfolio-quest/data-viz/submodule_4-video"
-      Lessons: "/cs-portfolio-quest/data-viz/submodule_4/"
-      Image: "/images/cs-portfolio-quest/data-viz.svg"
-      Alt: "Data Viz Submodule 4"
-    - Title: "Submodule 5"
-      Genre: "Practice"
-      Level: 5
-      Description: "Team-defined data visualization module"
-      Categories: ["Visualization", "ML", "Collation"]
-      Video: "/cs-portfolio-quest/data-viz/submodule_5-video"
-      Lessons: "/cs-portfolio-quest/data-viz/submodule_5/"
-      Image: "/images/cs-portfolio-quest/data-viz.svg"
-      Alt: "Data Viz Submodule 5"
-    - Title: "Submodule 6"
-      Genre: "Practice"
-      Level: 6
-      Description: "Team-defined data visualization module"
-      Categories: ["Visualization", "ML", "Collation"]
-      Video: "/cs-portfolio-quest/data-viz/submodule_6-video"
-      Lessons: "/cs-portfolio-quest/data-viz/submodule_6/"
-      Image: "/images/cs-portfolio-quest/data-viz.svg"
-      Alt: "Data Viz Submodule 6"
 ---
+
 {%- include tailwind/cs-portfolio-mini_quest_info.html -%}
