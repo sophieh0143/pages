@@ -125,7 +125,11 @@ layout: opencs
 
     <h3>{{ page.title | escape }}</h3>
     {%- if page.description -%}
-      <p class="page-description">{{ page.description }}</p>
+      {%- if site.html_escape.description -%}
+        <p class="page-description">{{ page.description | escape }}</p>
+      {%- else -%}
+        <p class="page-description">{{ page.description }}</p>
+      {%- endif -%}
     {%- endif -%}
   </header>
 
@@ -183,7 +187,33 @@ layout: opencs
       {% endif %}
       <!-- ✅ End of Modular Upload -->
 
-      <!-- Completion toast -->
+      <!-- Navigation buttons -->
+      <div class="max-w-3xl mx-auto mt-12 flex items-center justify-between gap-4">
+        {% assign currentLesson = page.submodule | plus: 0 %}
+        {% assign prevLesson = currentLesson | minus: 1 %}
+        {% assign nextLesson = currentLesson | plus: 1 %}
+        {% assign basePath = page.url | split: '/submodule_' | first %}
+        
+        {% if currentLesson > 1 %}
+        <a href="{{ basePath }}/submodule_{{ prevLesson }}/" class="iridescent text-white px-6 py-3 rounded-lg font-semibold transition">
+          ← Previous Lesson
+        </a>
+        {% else %}
+        <div></div>
+        {% endif %}
+
+        {% if currentLesson < 6 %}
+        <a href="{{ basePath }}/submodule_{{ nextLesson }}/" id="next-lesson-btn" class="iridescent text-white px-6 py-3 rounded-lg font-semibold transition opacity-50 pointer-events-none" aria-disabled="true">
+          Next Lesson →
+        </a>
+        {% else %}
+        <a href="{{ basePath }}/" id="back-to-module-btn" class="iridescent text-white px-6 py-3 rounded-lg font-semibold transition">
+          Back to Module →
+        </a>
+        {% endif %}
+      </div>
+
+      <!-- Completion notification toast -->
       <div id="completion-toast" class="fixed bottom-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-32 transition-transform duration-300 z-50" style="display: none;">
         <span class="font-semibold">✓ Lesson {{ page.submodule }} completed!</span>
       </div>
@@ -199,7 +229,7 @@ layout: opencs
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
 
-<!-- ===== Progress / Scroll Lock ===== -->
+<!-- ===== Mini-quest locking/progress (AUTO-COMPLETE ON SCROLL) ===== -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const wrap = document.getElementById("lesson-container");
@@ -213,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const miniQuest = getMiniQuestSlug();
   if (!miniQuest) return;
 
-  const lessonNumber = Number(wrap.dataset.lesson);
+  const lessonNumber = Number(wrap.dataset.lesson); // 1..6
   const NS = "cs-portfolio-quest";
 
   const k = (m,n) => `${NS}:${m}:lesson:${n}`;
@@ -221,34 +251,70 @@ document.addEventListener("DOMContentLoaded", function () {
   const markDone = (m,n) => localStorage.setItem(k(m,n), "done");
 
   const toast = document.getElementById("completion-toast");
+  const nextBtn = document.getElementById("next-lesson-btn");
+  const backBtn = document.getElementById("back-to-module-btn");
   let hasCompleted = isDone(miniQuest, lessonNumber);
   let hasShownToast = false;
 
   function showCompletionToast() {
     if (!toast || hasShownToast) return;
     hasShownToast = true;
+    
     toast.style.display = "block";
-    setTimeout(() => toast.style.transform = "translateY(0)", 10);
+    setTimeout(() => {
+      toast.style.transform = "translateY(0)";
+    }, 10);
+    
     setTimeout(() => {
       toast.style.transform = "translateY(150%)";
-      setTimeout(() => toast.style.display = "none", 300);
+      setTimeout(() => {
+        toast.style.display = "none";
+      }, 300);
     }, 3000);
   }
 
+  function enableNextButton() {
+    const btn = nextBtn || backBtn;
+    if (!btn) return;
+    btn.classList.remove("opacity-50", "pointer-events-none");
+    btn.setAttribute("aria-disabled", "false");
+  }
+
   const activateOnScroll = () => {
+    // If already completed, don't trigger again
     if (hasCompleted) return;
+
     const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 100);
+    
     if (scrolledToBottom) {
+      // Mark as complete (same variable/storage as button used)
       markDone(miniQuest, lessonNumber);
       hasCompleted = true;
+      
+      // Show notification
       showCompletionToast();
+      
+      // Enable next button if it exists
+      enableNextButton();
+      
+      // Remove listener - no longer needed
       window.removeEventListener("scroll", activateOnScroll);
       window.removeEventListener("resize", activateOnScroll);
     }
   };
 
+  // If already completed, enable next button
+  if (hasCompleted) {
+    enableNextButton();
+  }
+
+  // Check immediately on load (in case page is short)
   activateOnScroll();
+  
+  // Listen for scroll
   window.addEventListener("scroll", activateOnScroll, { passive: true });
+  
+  // Also check on resize
   window.addEventListener("resize", activateOnScroll, { passive: true });
 });
 </script>
