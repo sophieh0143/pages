@@ -442,7 +442,7 @@ summary:hover {
 </style>
 
 <div class="intro-section">
-  <h1>🤖 Coding with AI - The Realistic Version</h1>
+  <h1>Coding with AI - The Realistic Version</h1>
   <p><strong>Learn to work WITH AI, not just copy from it.</strong></p>
   <p>This module teaches you the SPEC framework for better AI prompts, how to debug effectively, and the critical security checks you must perform on ANY AI-generated code.</p>
   <p><em>The golden rule: Understand and verify before you use.</em></p>
@@ -461,7 +461,7 @@ AI coding assistants like ChatGPT, Claude, and GitHub Copilot are powerful tools
 ---
 
 <details open>
-  <summary>📚 Module Guide - Click to expand</summary>
+  <summary>Module Guide - Click to expand</summary>
   <div style="margin-top: 15px;">
     <h4>What You'll Learn:</h4>
     <ol>
@@ -501,7 +501,7 @@ AI coding assistants like ChatGPT, Claude, and GitHub Copilot are powerful tools
 
 <div class="example-grid">
   <div class="example-card bad">
-    <h4>❌ Bad Prompt</h4>
+    <h4>Bad Prompt</h4>
     <pre>"Write a function to validate users"</pre>
     <p><strong>Problems:</strong></p>
     <ul>
@@ -513,7 +513,7 @@ AI coding assistants like ChatGPT, Claude, and GitHub Copilot are powerful tools
   </div>
 
   <div class="example-card good">
-    <h4>✅ Good Prompt (SPEC)</h4>
+    <h4>Good Prompt (SPEC)</h4>
     <pre>Create a Python user validation function.
 Platform: Python 3.9, no external libs
 Input: dict with username, email, password
@@ -536,7 +536,7 @@ Output: (False, ['Username too short',
 Fill out each section of the SPEC framework below. We'll use this to guide your code development.
 
 <div class="spec-section">
-  <h3>📝 S - Specific</h3>
+  <h3>S - Specific</h3>
   <div class="description">
     <strong>Describe the EXACT functionality you need.</strong><br>
     Be precise: "validate user registration data" not just "validate users"<br>
@@ -551,7 +551,7 @@ Fill out each section of the SPEC framework below. We'll use this to guide your 
 </div>
 
 <div class="spec-section">
-  <h3>💻 P - Platform</h3>
+  <h3>P - Platform</h3>
   <div class="description">
     <strong>Specify your technical environment.</strong><br>
     Include: Programming language, version, frameworks, libraries (or restrictions)<br>
@@ -566,7 +566,7 @@ Fill out each section of the SPEC framework below. We'll use this to guide your 
 </div>
 
 <div class="spec-section">
-  <h3>📊 E - Examples</h3>
+  <h3>E - Examples</h3>
   <div class="description">
     <strong>Provide concrete input/output examples.</strong><br>
     Show: Sample inputs and their expected outputs<br>
@@ -582,7 +582,7 @@ Fill out each section of the SPEC framework below. We'll use this to guide your 
 </div>
 
 <div class="spec-section">
-  <h3>⚙️ C - Constraints</h3>
+  <h3>C - Constraints</h3>
   <div class="description">
     <strong>Define all requirements and limitations.</strong><br>
     Specify: Validation rules, security requirements, performance needs, style guidelines<br>
@@ -636,7 +636,7 @@ Now it's time to submit your code for security analysis. Either:
 2. Paste existing code you want to validate
 
 <div class="spec-section">
-  <h3>📄 Submit Your Code</h3>
+  <h3>Submit Your Code</h3>
   <div class="description">
     Paste your code below. Our AI security analyzer will check it against the 5 essential security requirements.
   </div>
@@ -674,7 +674,7 @@ Now it's time to submit your code for security analysis. Either:
   
   <div style="margin-top: 15px;">
     <button id="check-button" class="button-primary" onclick="checkCodeSecurity()">
-      🔍 Run Security Analysis
+      Run Security Analysis
     </button>
   </div>
 </div>
@@ -686,7 +686,7 @@ Now it's time to submit your code for security analysis. Either:
 ## Part 4: The 5 Essential Security Checks
 
 <div class="danger-box">
-  <h2>⚠️ Non-Negotiable Security Requirements</h2>
+  <h2>Non-Negotiable Security Requirements</h2>
   <p>Before deploying ANY code (AI-generated or not), verify these 5 critical security areas:</p>
 </div>
 
@@ -702,7 +702,7 @@ Now it's time to submit your code for security analysis. Either:
 
 <div class="example-grid">
   <div class="example-card bad">
-    <h4>❌ Vulnerable Code</h4>
+    <h4>Vulnerable Code</h4>
     <pre># Hardcoded secret
 API_KEY = "sk_live_1234567890"
 
@@ -723,7 +723,7 @@ def admin():
   </div>
 
   <div class="example-card good">
-    <h4>✅ Secure Code</h4>
+    <h4>Secure Code</h4>
     <pre># Environment variable
 API_KEY = os.getenv("API_KEY")
 
@@ -754,7 +754,7 @@ def admin():
 ## Part 5: The Trust But Verify Rule
 
 <div class="success-box">
-  <h2>✅ Your Checklist for AI-Generated Code</h2>
+  <h2>Your Checklist for AI-Generated Code</h2>
   <p>For EVERY piece of AI code you consider using:</p>
   
   <h3><span class="step-number">1</span> Understand It</h3>
@@ -786,7 +786,7 @@ def admin():
 ## Practice Scenarios
 
 <details>
-  <summary>📝 Scenario 1: User Login System</summary>
+  <summary>Scenario 1: User Login System</summary>
   <div style="margin-top: 15px;">
     <p><strong>Task:</strong> You need to create a login validation function.</p>
     <p><strong>Write a SPEC prompt that would generate secure, working code.</strong></p>
@@ -801,7 +801,7 @@ def admin():
 </details>
 
 <details>
-  <summary>📝 Scenario 2: API Endpoint Security</summary>
+  <summary>Scenario 2: API Endpoint Security</summary>
   <div style="margin-top: 15px;">
     <p><strong>Situation:</strong> You have an API endpoint that accepts user data.</p>
     <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px;">@app.route('/api/user', methods=['POST'])
@@ -816,7 +816,7 @@ def create_user():
 </details>
 
 <details>
-  <summary>📝 Scenario 3: Code Review Challenge</summary>
+  <summary>Scenario 3: Code Review Challenge</summary>
   <div style="margin-top: 15px;">
     <p><strong>You receive this code from AI:</strong></p>
     <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px;">def process_payment(amount, card_number):
@@ -847,7 +847,7 @@ def create_user():
 ## Quick Security Audit Prompt
 
 <div class="info-box">
-  <h3>🔍 Security Review Template</h3>
+  <h3>Security Review Template</h3>
   <p>When you want AI to review your code for vulnerabilities, use this prompt:</p>
   <pre style="background: #2d2d2d; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto;">"Perform a security audit on this code. Check for:
 1. SQL injection vulnerabilities
@@ -872,12 +872,12 @@ For each issue found:
 <div class="success-box">
   <h2>Key Takeaways</h2>
   <ul>
-    <li>✅ Use the <strong>SPEC framework</strong> for better AI prompts</li>
-    <li>✅ Follow the <strong>4-step debugging template</strong> when asking for help</li>
-    <li>✅ ALWAYS check the <strong>5 essential security requirements</strong></li>
-    <li>✅ Apply <strong>Trust But Verify</strong>: understand, test, secure, simplify</li>
-    <li>✅ Never deploy code you don't understand</li>
-    <li>✅ AI is a tool, not a replacement for thinking</li>
+    <li>Use the <strong>SPEC framework</strong> for better AI prompts</li>
+    <li>Follow the <strong>4-step debugging template</strong> when asking for help</li>
+    <li>ALWAYS check the <strong>5 essential security requirements</strong></li>
+    <li>Apply <strong>Trust But Verify</strong>: understand, test, secure, simplify</li>
+    <li>Never deploy code you don't understand</li>
+    <li>AI is a tool, not a replacement for thinking</li>
   </ul>
 </div>
 
@@ -908,9 +908,9 @@ SPEC Framework Context:
     // Show loading state
     resultDiv.className = 'security-result loading';
     resultDiv.style.display = 'block';
-    resultDiv.innerHTML = '<p style="font-size: 18px;">🔍 Analyzing code security... This may take a moment.</p>';
+    resultDiv.innerHTML = '<p style="font-size: 18px;">Analyzing code security... This may take a moment.</p>';
     button.disabled = true;
-    button.textContent = '⏳ Analyzing...';
+    button.textContent = 'Analyzing...';
     
     // Build comprehensive prompt for security analysis
     const prompt = `You are a senior security engineer reviewing code. Analyze this code for security vulnerabilities.
@@ -1000,7 +1000,7 @@ Be thorough and specific. For each vulnerability, explain what it is and how to 
         console.error('Security check error:', error);
         resultDiv.className = 'security-result fail';
         resultDiv.innerHTML = `
-            <h3 style="margin-top: 0;">❌ Analysis Error</h3>
+            <h3 style="margin-top: 0;">Analysis Error</h3>
             <p><strong>Failed to analyze code:</strong> ${error.message}</p>
             <div style="margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 5px;">
                 <p><strong>Possible causes:</strong></p>
@@ -1021,7 +1021,7 @@ Be thorough and specific. For each vulnerability, explain what it is and how to 
         `;
     } finally {
         button.disabled = false;
-        button.textContent = '🔍 Run Security Analysis';
+        button.textContent = 'Run Security Analysis';
     }
 }
 
@@ -1034,7 +1034,7 @@ function displayResults(analysis) {
     
     let html = `
         <div class="score-display">
-            ${passed ? '✅' : '❌'} Security Score: ${analysis.score}/100
+            ${passed ? 'PASS' : 'FAIL'} Security Score: ${analysis.score}/100
         </div>
         <p style="font-size: 18px; font-weight: bold;">${passed ? 'PASSED - Code looks secure!' : 'NEEDS IMPROVEMENT - Security issues found'}</p>
         <p style="font-size: 16px; line-height: 1.6;">${analysis.feedback}</p>
@@ -1043,7 +1043,7 @@ function displayResults(analysis) {
     if (analysis.vulnerabilities && analysis.vulnerabilities.length > 0) {
         html += `
             <div style="margin-top: 20px;">
-                <h4 style="margin-bottom: 10px; font-size: 18px;">🔍 Security Issues Found:</h4>
+                <h4 style="margin-bottom: 10px; font-size: 18px;">Security Issues Found:</h4>
                 <ul class="vulnerability-list">
                     ${analysis.vulnerabilities.map(v => `<li style="font-size: 15px;">${v}</li>`).join('')}
                 </ul>
@@ -1054,7 +1054,7 @@ function displayResults(analysis) {
     if (analysis.recommendations && analysis.recommendations.length > 0) {
         html += `
             <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 5px;">
-                <h4 style="margin-top: 0; margin-bottom: 10px; font-size: 18px;">💡 How to Fix:</h4>
+                <h4 style="margin-top: 0; margin-bottom: 10px; font-size: 18px;">How to Fix:</h4>
                 <ul class="vulnerability-list">
                     ${analysis.recommendations.map(r => `<li style="font-size: 15px;">${r}</li>`).join('')}
                 </ul>
@@ -1063,7 +1063,7 @@ function displayResults(analysis) {
     } else if (passed) {
         html += `
             <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 5px;">
-                <h4 style="margin-top: 0;">✨ Great work!</h4>
+                <h4 style="margin-top: 0;">Great work!</h4>
                 <p>Your code passed the security checks. Remember to:</p>
                 <ul>
                     <li>Keep dependencies updated</li>
@@ -1083,4 +1083,3 @@ function displayResults(analysis) {
 localStorage.setItem('ai-submodule-2-completed', 'true');
 
 </script>
-
