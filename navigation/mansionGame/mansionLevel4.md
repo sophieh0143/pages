@@ -1,6 +1,6 @@
 ---
 layout: opencs
-title: Adventure Game
+title: Mansion Level 4
 permalink: /gamify/mansion4
 ---
 <div id="gameContainer">
