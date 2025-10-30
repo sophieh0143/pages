@@ -6,7 +6,6 @@ permalink: /cs-portfolio-quest/frontend/submodule_2/
 parent: "Frontend Development"
 team: "Creators"
 submodule: 2
-microblog: True
 breadcumb: True 
 categories: [CSP, Submodule, HTML]
 tags: [markdown, html, fullstack]
@@ -20,10 +19,8 @@ date: 2025-10-21
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <style>
-  /* ---------- Keep original styling intact (copied verbatim) ---------- */
   body {
     font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at top, #1e293b, #0f172a);
     color: white;
     margin: 0;
     overflow-x: hidden;
@@ -58,7 +55,7 @@ date: 2025-10-21
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 40px;
+    gap: 100px;
     margin-top: 50px;
     position: relative;
     z-index: 2;
@@ -142,7 +139,7 @@ date: 2025-10-21
   }
 
   .editor-container {
-    margin: 60px auto;
+    margin: 120px auto 
     background: #1e293b;
     border-radius: 16px;
     padding: 30px;
@@ -155,13 +152,13 @@ date: 2025-10-21
     background: #0f172a;
     border-radius: 12px;
     min-height: 200px;
-    padding: 15px;
+    padding: 5px;
     color: #e2e8f0;
   }
 
   #htmlPreview {
     border: 1px solid #475569;
-    margin-top: 20px;
+    margin-top: 60px;
   }
 
   .split-view {
@@ -432,7 +429,7 @@ This process is used by platforms like **GitHub Pages**, **Notion**, and **Obsid
 - **Static Site Generators:** Markdown powers entire websites when compiled into HTML.
 
 ---
-<div class="section-divider"></div>
+
 
 <section>
   <h2>WordQuill Helper</h2>
@@ -447,7 +444,7 @@ This process is used by platforms like **GitHub Pages**, **Notion**, and **Obsid
 
     <div class="split-view">
       <div style="min-width:360px;max-width:520px;">
-        <h3>🖊️ Markdown Editor</h3>
+        <h3>Markdown Editor</h3>
         <div id="editor"></div>
 
         <!-- Markdown source (syntax highlighted) -->
@@ -900,7 +897,7 @@ The **frontend’s job** in this system is to:
       const response = responseInput.value.trim();
 
       if (!name || !response) {
-        messageDiv.textContent = "⚠️ Please fill in both fields.";
+        messageDiv.textContent = "Please fill in both fields.";
         messageDiv.style.color = "#f87171";
         return;
       }
@@ -914,15 +911,15 @@ The **frontend’s job** in this system is to:
 
         if (res.ok) {
           const data = await res.json();
-          messageDiv.textContent = `✅ Response saved successfully! (ID: ${data.id})`;
+          messageDiv.textContent = `Response saved successfully! (ID: ${data.id})`;
           messageDiv.style.color = "#4ade80";
           responseInput.value = "";
         } else {
-          messageDiv.textContent = "⚠️ Error submitting response.";
+          messageDiv.textContent = "Error submitting response.";
           messageDiv.style.color = "#facc15";
         }
       } catch (err) {
-        messageDiv.textContent = "❌ Could not connect to server.";
+        messageDiv.textContent = "Could not connect to server.";
         messageDiv.style.color = "#f87171";
       }
     });
