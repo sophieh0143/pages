@@ -167,35 +167,26 @@ document.addEventListener('DOMContentLoaded', ()=>{
 </script>
 
 
-<html>
+
+<html lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVA AI Assistant</title>
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-        /* Removed the background gradient */
-        background: transparent; 
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: Arial, sans-serif;
-      }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-        }
-        .api-setup {
-            display: none;
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
         }
         .eva-loader-container {
-            position: relative;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
             cursor: pointer;
             transition: transform 0.3s ease;
+            z-index: 1000;
         }
         .eva-loader-container:hover {
             transform: scale(1.05);
@@ -203,56 +194,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
         .eva-loader-container:active {
             transform: scale(0.95);
         }
-        .eva-loader-container.disabled {
-            pointer-events: none;
-            opacity: 0.5;
-        }
-        .status-text {
-            position: absolute;
-            bottom: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
-            white-space: nowrap;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            min-width: 250px;
-        }
-        .conversation-box {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            width: 400px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        .conversation-box.hidden {
-            display: none;
-        }
-        .message {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        .message.user {
-            background: #e3f2fd;
-            text-align: right;
-        }
-        .message.eva {
-            background: #f3e5f5;
-            text-align: left;
-        }
-        .message strong {
-            display: block;
-            margin-bottom: 5px;
-            color: #667eea;
-        }
         .modelViewPort {
             perspective: 1000px;
-            width: 20rem;
+            width: 15rem;
             aspect-ratio: 1;
             border-radius: 50%;
             display: flex;
@@ -391,46 +335,44 @@ document.addEventListener('DOMContentLoaded', ()=>{
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- API Key Setup -->
-        <div class="api-setup" id="apiSetup">
-            <h2>🤖 Setup Gemini API Key</h2>
-            <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API Key">
-            <button onclick="saveApiKey()">Start EVA</button>
-            <p style="font-size: 12px; color: #666; margin-top: 10px;">
-                Get your free API key at: <a href="https://aistudio.google.com/app/apikey" target="_blank">Google AI Studio</a>
-            </p>
-        </div>
-        <!-- EVA Robot -->
-        <div class="eva-loader-container" id="evaContainer">
-            <div class="loader">
-                <div class="modelViewPort">
-                    <div class="eva">
-                        <div class="head">
-                            <div class="eyeChamber">
-                                <div class="eye"></div>
-                                <div class="eye"></div>
-                            </div>
+    <!-- EVA Robot -->
+    <div class="eva-loader-container" id="evaContainer">
+        <div class="loader">
+            <div class="modelViewPort">
+                <div class="eva">
+                    <div class="head">
+                        <div class="eyeChamber">
+                            <div class="eye"></div>
+                            <div class="eye"></div>
                         </div>
-                        <div class="body">
-                            <div class="hand"></div>
-                            <div class="hand"></div>
-                            <div class="scannerThing" id="scanner"></div>
-                            <div class="scannerOrigin" id="scannerOrigin"></div>
-                        </div>
+                    </div>
+                    <div class="body">
+                        <div class="hand"></div>
+                        <div class="hand"></div>
+                        <div class="scannerThing" id="scanner"></div>
+                        <div class="scannerOrigin" id="scannerOrigin"></div>
                     </div>
                 </div>
             </div>
-            <div class="status-text" id="statusText">Click to Talk to EVA</div>
         </div>
-        <!-- Conversation History -->
-        <div class="conversation-box" id="conversationBox"></div>
     </div>
     <script>
-        // Replace 'YOUR_GEMINI_API_KEY_HERE' with your actual API key
-        let apiKey = 'AIzaSyDUYqdvpsJGpJPVmcUIviywtyhXqJ2L1mg';
+        // Replace with your actual API key
+        let apiKey = 'pretend its here';
         let isListening = false;
         let recognition = null;
+        // EVA's personality and specialization
+        const EVA_SYSTEM_PROMPT = `You are ACE (AI Career Expert), a friendly and sharp interview prep coach for high school students getting ready for tech interviews.
+Your expertise: computer science fundamentals, problem-solving, communication skills, resume tips, and mock interview practice. You specialize in helping students build confidence while explaining their projects, coding logic, and teamwork experiences.
+CRITICAL RULES:
+Keep ALL responses to 2–3 sentences MAX
+Be chill, encouraging, and easy to talk to — like a mentor who gets it
+Go straight to the point — no formal lecture tone
+Use simple, real-world examples whenever possible
+If the student seems unsure, ask if they want you to explain or quiz them more
+Avoid long lists or jargon unless the student asks for detail`;
+        // Conversation history storage
+        let conversationHistory = [];
         // Initialize Speech Recognition
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -440,12 +382,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
             recognition.lang = 'en-US';
             recognition.onresult = async (event) => {
                 const transcript = event.results[0][0].transcript;
-                addMessage('user', transcript);
                 await sendToGemini(transcript);
             };
             recognition.onerror = (event) => {
                 console.error('Speech recognition error:', event.error);
-                updateStatus('Error: ' + event.error);
                 stopListening();
             };
             recognition.onend = () => {
@@ -467,7 +407,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
             isListening = true;
             document.getElementById('scanner').classList.add('active');
             document.getElementById('scannerOrigin').classList.add('active');
-            updateStatus('Listening... Speak now!');
             try {
                 recognition.start();
             } catch (e) {
@@ -478,60 +417,84 @@ document.addEventListener('DOMContentLoaded', ()=>{
             isListening = false;
             document.getElementById('scanner').classList.remove('active');
             document.getElementById('scannerOrigin').classList.remove('active');
-            updateStatus('Click to Talk to EVA');
-        }
-        function updateStatus(text) {
-            document.getElementById('statusText').textContent = text;
-        }
-        function addMessage(sender, text) {
-            const conversationBox = document.getElementById('conversationBox');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
-            const label = sender === 'user' ? 'You' : 'EVA';
-            messageDiv.innerHTML = `<strong>${label}:</strong>${text}`;
-            conversationBox.appendChild(messageDiv);
-            conversationBox.scrollTop = conversationBox.scrollHeight;
         }
         async function sendToGemini(text) {
-            updateStatus('EVA is thinking...');
+            // Add user message to history
+            conversationHistory.push({
+                role: "user",
+                parts: [{ text: text }]
+            });
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`;
+            const requestBody = {
+                system_instruction: {
+                    parts: [{ text: EVA_SYSTEM_PROMPT }]
+                },
+                contents: conversationHistory
+            };
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                const response = await fetch(url, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: text
-                            }]
-                        }]
-                    })
+                    body: JSON.stringify(requestBody)
                 });
                 if (!response.ok) {
-                    throw new Error(`API Error: ${response.status}`);
+                    const errorText = await response.text();
+                    throw new Error(`API Error: ${response.status} - ${errorText}`);
                 }
                 const data = await response.json();
+                if (!data.candidates || !data.candidates[0]) {
+                    throw new Error('Unexpected API response structure');
+                }
                 const reply = data.candidates[0].content.parts[0].text;
-                addMessage('eva', reply);
+                // Add EVA's response to history
+                conversationHistory.push({
+                    role: "model",
+                    parts: [{ text: reply }]
+                });
                 speak(reply);
             } catch (error) {
                 console.error('Gemini API Error:', error);
-                const errorMsg = 'Sorry, I encountered an error. Please check your API key.';
-                addMessage('eva', errorMsg);
-                speak(errorMsg);
+                speak('Sorry, I encountered an error.');
             }
         }
         function speak(text) {
-            updateStatus('EVA is speaking...');
+            if (!window.speechSynthesis) {
+                return;
+            }
+            // Cancel any ongoing speech
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
             const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
             utterance.rate = 1.0;
             utterance.pitch = 1.2;
             utterance.volume = 1.0;
-            utterance.onend = () => {
-                updateStatus('Click to Talk to EVA');
-            };
+            // Wait for voices and select a female voice
+            const voices = speechSynthesis.getVoices();
+            const femaleVoice = voices.find(voice =>
+                voice.lang.startsWith('en') && voice.name.toLowerCase().includes("female")
+            ) || voices.find(voice =>
+                voice.lang.startsWith('en') && (
+                    voice.name.includes("Google") || 
+                    voice.name.includes("Samantha") || 
+                    voice.name.includes("Jenny") ||
+                    voice.name.includes("Zira") ||
+                    voice.name.includes("Susan")
+                )
+            );
+            if (femaleVoice) {
+                utterance.voice = femaleVoice;
+            }
             window.speechSynthesis.speak(utterance);
+        }
+        // Ensure voices are loaded
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = () => {
+                speechSynthesis.getVoices();
+            };
         }
     </script>
 </body>
