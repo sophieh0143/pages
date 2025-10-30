@@ -300,126 +300,6 @@ document.addEventListener('keydown', function(event) {
 </style>
 
 # Code
-
- ``` html
- {%- include themes/minima/base.html -%}
-
-<!-- Microblog Layout: For lesson pages with microblog overlay/side panel -->
-{%- if page.microblog %}
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
-<style>
-  /* Microblog overlay styles */
-  #microblog-overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 400px;
-    max-width: 90vw;
-    height: 100vh;
-    box-shadow: -2px 0 12px rgba(0,0,0,0.12);
-    z-index: 1000;
-    transform: translateX(100%);
-    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
-    display: flex;
-    flex-direction: column;
-  }
-  #microblog-overlay.open {
-    transform: translateX(0);
-  }
-  #microblog-toggle-btn {
-    position: fixed;
-    top: 4.5rem;
-    right: 2.5rem;
-    z-index: 1100;
-    background: #191d26;
-    color: white;
-    border-radius: 999px;
-    padding: 1rem 1.5rem;
-    font-size: 1.3rem;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s;
-    opacity: 0.97;
-    touch-action: manipulation;
-  }
-  #microblog-toggle-btn:hover {
-    background: #1e40af;
-    opacity: 1;
-  }
-  /* Removed custom close-btn styles, now using Tailwind only */
-  @media (max-width: 600px) {
-    #microblog-overlay {
-      width: 100vw;
-      max-width: 100vw;
-    }
-    #microblog-toggle-btn {
-      right: 0.5rem;
-      top: 3.5rem;
-      padding: 1.2rem 2.2rem;
-      font-size: 1.5rem;
-      min-width: 56px;
-      min-height: 56px;
-      border-radius: 50%;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.18);
-    }
-  }
-</style>
-
-<!-- Main lesson content -->
-<main id="lesson-content">
-  <!-- Microblog toggle button (floating, mobile-friendly) -->
-  <button id="microblog-toggle-btn" aria-label="Open Microblog">💬 Microblog</button>
-  <!-- Microblog panel (hidden by default) -->
-  <aside id="microblog-panel" class="fixed top-20 right-0 h-[calc(100vh-theme(spacing.20))] sm:w-[400px] max-w-full shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col bg-gray-600" tabindex="-1" aria-label="Microblog panel">
-    <div class="flex items-center justify-end p-2 border-b border-gray-200">
-      <button id="microblog-close-btn" class="p-2 text-2xl font-bold text-gray-700 hover:text-red-600 border border-gray-300 rounded-full shadow focus:outline-none" aria-label="Close Microblog">&times;</button>
-    </div>
-    <div class="microblog-content flex-1 overflow-y-auto px-4 pb-4">
-      {% if page.microblog_heading %}
-        <h2 class="text-xl font-bold mb-4">{{ page.microblog_heading }}</h2>
-      {% endif %}
-      {% if page.microblog_content %}
-        {{ page.microblog_content }}
-      {% else %}
-        <!-- Slot for microblog code: include microblog-playground or other content -->
-        {% include microblog_foundation.html %}
-      {% endif %}
-    </div>
-  </aside>
-</main>
-
-<script>
-const overlay = document.getElementById('microblog-panel');
-const toggleBtn = document.getElementById('microblog-toggle-btn');
-const closeBtn = document.getElementById('microblog-close-btn');
-
-function openMicroblog() {
-  overlay.classList.add('open');
-  overlay.style.transform = 'translateX(0)';
-  overlay.focus();
-  toggleBtn.style.display = 'none';
-}
-function closeMicroblog() {
-  overlay.classList.remove('open');
-  overlay.style.transform = 'translateX(100%)';
-  toggleBtn.style.display = '';
-}
-toggleBtn.onclick = openMicroblog;
-closeBtn.onclick = closeMicroblog;
-</script>
-{%- endif -%}
-
- ```
-<<<<<<< HEAD
-
-
  
 ```html
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -518,11 +398,180 @@ document.getElementById('microblog-form').onsubmit = async function(e) {
   }
 };
 ```
-<<<<<<< HEAD
-# AI API Quiz
-=======
->>>>>>> e8f4a8b881f2be69151026f5038007d1207e31c6
 
+
+
+<style>
+#quiz-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.question-block {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.question-block h3 {
+  color: #000000 !important;
+  margin-bottom: 15px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  padding: 15px;
+  text-align: left;
+  background-color: #e8f4f8;
+  border: 2px solid #b8d4e0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #000000;
+  transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+  background-color: #d0e8f2;
+  transform: translateX(5px);
+}
+
+.option-btn.correct {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #000000;
+}
+
+.option-btn.incorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #000000;
+}
+
+.option-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.feedback {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.feedback.correct {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.feedback.incorrect {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+#score-container {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+#score-container h3 {
+  color: #000000;
+}
+
+#score-container p {
+  color: #000000;
+}
+
+.reset-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.reset-btn:hover {
+  background-color: #0056b3;
+}
+</style>
+
+<script>
+let score = 0;
+let questionsAnswered = 0;
+
+function checkAnswer(questionNum, selectedOption, isCorrect) {
+  const feedbackDiv = document.getElementById('feedback' + questionNum);
+  const buttons = document.querySelectorAll('#question' + questionNum + ' .option-btn');
+  
+  // Disable all buttons for this question
+  buttons.forEach(btn => btn.disabled = true);
+  
+  // Mark the selected button
+  event.target.classList.add(isCorrect ? 'correct' : 'incorrect');
+  
+  // Show feedback
+  if (isCorrect) {
+    feedbackDiv.textContent = '✅ Correct! Great job!';
+    feedbackDiv.className = 'feedback correct';
+    score++;
+  } else {
+    feedbackDiv.textContent = '❌ Incorrect. Review the prompt types table above.';
+    feedbackDiv.className = 'feedback incorrect';
+  }
+  
+  questionsAnswered++;
+  
+  // Show final score after all questions answered
+  if (questionsAnswered === 3) {
+    setTimeout(() => {
+      document.querySelectorAll('.question-block').forEach(block => block.style.display = 'none');
+      document.getElementById('score-container').style.display = 'block';
+      document.getElementById('final-score').textContent = `You scored ${score} out of 3!`;
+    }, 1500);
+  }
+}
+
+function resetQuiz() {
+  score = 0;
+  questionsAnswered = 0;
+  
+  // Reset all questions
+  document.querySelectorAll('.question-block').forEach(block => {
+    block.style.display = 'block';
+  });
+  
+  // Reset all buttons
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.disabled = false;
+    btn.classList.remove('correct', 'incorrect');
+  });
+  
+  // Clear feedback
+  document.querySelectorAll('.feedback').forEach(feedback => {
+    feedback.textContent = '';
+    feedback.className = 'feedback';
+  });
+  
+  // Hide score container
+  document.getElementById('score-container').style.display = 'none';
+}
+</script>
 **Step-by-step:**
 
 1. **`e.preventDefault()`** - Stops the form from refreshing the page (default behavior)
@@ -588,3 +637,44 @@ async function renderMicroblogTable() {
 
 ---
 
+# AI API Quiz
+<div id="quiz-container">
+  <div class="question-block" id="question1">
+    <h3>Question 1: Which following action is using AI API</h3>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(1, 'A', false)">A) "Copy and phaste the text to move your essay."</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'B', false)">B) "Build a snake game by coding oneself."</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'C', false)">C) "Using a phone to take pictures for your friends"</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'D', true)">D) "Using the customer service chatbot in the house renting website"</button>
+    </div>
+    <div id="feedback1" class="feedback"></div>
+  </div>
+
+  <div class="question-block" id="question2">
+    <h3>Question 2: What is the main difference between a zero-shot prompt and an instructional prompt?</h3>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(2, 'A', false)">A) Zero-shot prompts are longer than instructional prompts</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'B', true)">B) Instructional prompts use direct command verbs while zero-shot prompts are simple instructions without examples</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'C', false)">C) Zero-shot prompts always include examples</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'D', false)">D) Instructional prompts require images</button>
+    </div>
+    <div id="feedback2" class="feedback"></div>
+  </div>
+
+  <div class="question-block" id="question3">
+    <h3>Question 3: Which of the following demonstrates a contextual prompt?</h3>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(3, 'A', false)">A) "Explain photosynthesis."</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'B', false)">B) "Write something about biology."</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'C', true)">C) "This text is for an undergrad course on behavioral economics. Rephrase it in simpler language."</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'D', false)">D) "You are a scientist. Describe your work."</button>
+    </div>
+    <div id="feedback3" class="feedback"></div>
+  </div>
+
+  <div id="score-container" style="display: none;">
+    <h3>Quiz Complete! 🎉</h3>
+    <p id="final-score"></p>
+    <button onclick="resetQuiz()" class="reset-btn">Try Again</button>
+  </div>
+</div>
