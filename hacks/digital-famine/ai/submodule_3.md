@@ -32,7 +32,12 @@ An typical example of using an AI API is to build a **customer service chatbot**
 ## Microblog System Architecture: Layered AI Approach
 This article is the main technical reference for the microblog system, which uses a layered approach to enable interactive, AI-powered microblogging on any lesson or article page.
 
-## Architectural Overview
+#
+#
+#
+#
+# Layers Overview
+
 1. Layout Layer 
 
 Handles the inclusion of all required dependencies (Tailwind CSS, jQuery, and microblog scripts).
@@ -426,3 +431,217 @@ async function renderMicroblogTable() {
 renderMicroblogTable();
 </script>
 ```
+## AI API Quiz
+
+<div id="quiz-container">
+  <div class="question-block" id="question1">
+    <h3>Question 1: Which following action is using AI API</h3>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(1, 'A', false)">A) "Copy and phaste the text to move your essay."</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'B', false)">B) "Build a snake game by coding oneself."</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'C', false)">C) "Using a phone to take pictures for your friends"</button>
+      <button class="option-btn" onclick="checkAnswer(1, 'D', true)">D) "Using the customer service chatbot in the house renting website"</button>
+    </div>
+    <div id="feedback1" class="feedback"></div>
+  </div>
+
+  <div class="question-block" id="question2">
+    <h3>Question 2: What is the main difference between a zero-shot prompt and an instructional prompt?</h3>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(2, 'A', false)">A) Zero-shot prompts are longer than instructional prompts</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'B', true)">B) Instructional prompts use direct command verbs while zero-shot prompts are simple instructions without examples</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'C', false)">C) Zero-shot prompts always include examples</button>
+      <button class="option-btn" onclick="checkAnswer(2, 'D', false)">D) Instructional prompts require images</button>
+    </div>
+    <div id="feedback2" class="feedback"></div>
+  </div>
+
+  <div class="question-block" id="question3">
+    <h3>Question 3: Which of the following demonstrates a contextual prompt?</h3>
+    <div class="options">
+      <button class="option-btn" onclick="checkAnswer(3, 'A', false)">A) "Explain photosynthesis."</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'B', false)">B) "Write something about biology."</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'C', true)">C) "This text is for an undergrad course on behavioral economics. Rephrase it in simpler language."</button>
+      <button class="option-btn" onclick="checkAnswer(3, 'D', false)">D) "You are a scientist. Describe your work."</button>
+    </div>
+    <div id="feedback3" class="feedback"></div>
+  </div>
+
+  <div id="score-container" style="display: none;">
+    <h3>Quiz Complete! 🎉</h3>
+    <p id="final-score"></p>
+    <button onclick="resetQuiz()" class="reset-btn">Try Again</button>
+  </div>
+</div>
+
+<style>
+#quiz-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.question-block {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.question-block h3 {
+  color: #000000 !important;
+  margin-bottom: 15px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  padding: 15px;
+  text-align: left;
+  background-color: #e8f4f8;
+  border: 2px solid #b8d4e0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #000000;
+  transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+  background-color: #d0e8f2;
+  transform: translateX(5px);
+}
+
+.option-btn.correct {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #000000;
+}
+
+.option-btn.incorrect {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #000000;
+}
+
+.option-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.feedback {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.feedback.correct {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.feedback.incorrect {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+#score-container {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+#score-container h3 {
+  color: #000000;
+}
+
+#score-container p {
+  color: #000000;
+}
+
+.reset-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.reset-btn:hover {
+  background-color: #0056b3;
+}
+</style>
+
+<script>
+let score = 0;
+let questionsAnswered = 0;
+
+function checkAnswer(questionNum, selectedOption, isCorrect) {
+  const feedbackDiv = document.getElementById('feedback' + questionNum);
+  const buttons = document.querySelectorAll('#question' + questionNum + ' .option-btn');
+  
+  // Disable all buttons for this question
+  buttons.forEach(btn => btn.disabled = true);
+  
+  // Mark the selected button
+  event.target.classList.add(isCorrect ? 'correct' : 'incorrect');
+  
+  // Show feedback
+  if (isCorrect) {
+    feedbackDiv.textContent = '✅ Correct! Great job!';
+    feedbackDiv.className = 'feedback correct';
+    score++;
+  } else {
+    feedbackDiv.textContent = '❌ Incorrect. Review the prompt types table above.';
+    feedbackDiv.className = 'feedback incorrect';
+  }
+  
+  questionsAnswered++;
+  
+  // Show final score after all questions answered
+  if (questionsAnswered === 3) {
+    setTimeout(() => {
+      document.querySelectorAll('.question-block').forEach(block => block.style.display = 'none');
+      document.getElementById('score-container').style.display = 'block';
+      document.getElementById('final-score').textContent = `You scored ${score} out of 3!`;
+    }, 1500);
+  }
+}
+
+function resetQuiz() {
+  score = 0;
+  questionsAnswered = 0;
+  
+  // Reset all questions
+  document.querySelectorAll('.question-block').forEach(block => {
+    block.style.display = 'block';
+  });
+  
+  // Reset all buttons
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.disabled = false;
+    btn.classList.remove('correct', 'incorrect');
+  });
+  
+  // Clear feedback
+  document.querySelectorAll('.feedback').forEach(feedback => {
+    feedback.textContent = '';
+    feedback.className = 'feedback';
+  });
+  
+  // Hide score container
+  document.getElementById('score-container').style.display = 'none';
+}
+</script>
