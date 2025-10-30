@@ -8,7 +8,7 @@ team: "Thinkers"
 submodule: 4
 categories: [CSP, Submodule, AIUsage]
 tags: [ai, submodule, thinkers]
-author: "Ansh Kumar - Thinkers"
+author: "Thinkers Team"
 date: 2025-10-21
 ---
 
@@ -26,6 +26,7 @@ date: 2025-10-21
 
 body {
     line-height: 1.6;
+    color: var(--text-dark);
 }
 
 .intro-section {
@@ -47,46 +48,56 @@ body {
     color: white;
 }
 
+.intro-section strong {
+    color: white;
+}
+
+.intro-section em {
+    color: white;
+}
+
 .guide-box {
-    background: #e7f3ff;
-    border-left: 4px solid var(--primary-color);
+    background: #1e5287;
+    border-left: 4px solid #4a9eff;
     padding: 20px;
     margin: 20px 0;
     border-radius: 5px;
+    color: #ffffff;
 }
 
 .guide-box h3 {
-    color: var(--primary-color);
+    color: #ffffff;
     margin-top: 0;
 }
 
-.guide-box p, .guide-box ul, .guide-box li {
-    color: var(--text-dark);
+.guide-box p, .guide-box ul, .guide-box li, .guide-box strong {
+    color: #ffffff;
 }
 
 details {
-    background: white;
-    border: 2px solid #dee2e6;
+    background: #2C3E50;
+    border: 2px solid #34495e;
     border-radius: 8px;
     padding: 15px;
     margin: 15px 0;
+    color: #ffffff;
 }
 
-details h4, details ol, details li, details p {
-    color: var(--text-dark);
+details h4, details ol, details li, details p, details strong {
+    color: #ffffff;
 }
 
 summary {
     cursor: pointer;
     font-weight: bold;
-    color: var(--primary-color);
+    color: #1e5287;
     font-size: 18px;
     padding: 10px;
     user-select: none;
 }
 
 summary:hover {
-    color: #0056b3;
+    color: #4a9eff;
 }
 
 .code-editor {
@@ -113,11 +124,12 @@ summary:hover {
 .spec-section {
     margin: 25px 0;
     padding: 25px;
-    background: white;
-    border: 2px solid var(--primary-color);
+    background: #2C3E50;
+    border: 2px solid #4a9eff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: transform 0.2s, box-shadow 0.2s;
+    color: #ffffff;
 }
 
 .spec-section:hover {
@@ -126,38 +138,38 @@ summary:hover {
 }
 
 .spec-section h3 {
-    color: var(--primary-color);
+    color: #4a9eff;
     margin-top: 0;
     font-size: 22px;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid #4a9eff;
     padding-bottom: 10px;
     margin-bottom: 15px;
 }
 
 .spec-section .description {
-    color: var(--text-dark);
+    color: #ffffff;
     margin-bottom: 15px;
     font-size: 15px;
     line-height: 1.6;
 }
 
 .spec-section .description strong {
-    color: var(--text-dark);
+    color: #ffffff;
 }
 
 .spec-section .example-box {
-    background: #e8f5e9;
-    border-left: 4px solid var(--success-color);
+    background: #1a7f37;
+    border-left: 4px solid #2ea44f;
     padding: 15px;
     margin: 15px 0;
     border-radius: 5px;
     font-family: 'Courier New', monospace;
     font-size: 13px;
-    color: var(--text-dark);
+    color: #ffffff;
 }
 
 .spec-section .example-box strong {
-    color: var(--text-dark);
+    color: #ffffff;
 }
 
 .spec-section input {
@@ -198,33 +210,41 @@ summary:hover {
 }
 
 .security-result.pass {
-    background: #d4edda;
-    border: 2px solid var(--success-color);
-    color: #155724;
+    background: #1a7f37;
+    border: 2px solid #2ea44f;
+    color: #ffffff;
 }
 
-.security-result.pass h3, .security-result.pass h4, .security-result.pass p, .security-result.pass li {
-    color: #155724;
+.security-result.pass h3, .security-result.pass h4, .security-result.pass p, .security-result.pass li, .security-result.pass strong {
+    color: #ffffff;
+}
+
+.security-result.pass ul {
+    color: #ffffff;
 }
 
 .security-result.fail {
-    background: #f8d7da;
-    border: 2px solid var(--danger-color);
-    color: #721c24;
+    background: #9B3434;
+    border: 2px solid #c24444;
+    color: #ffffff;
 }
 
-.security-result.fail h3, .security-result.fail h4, .security-result.fail p, .security-result.fail li {
-    color: #721c24;
+.security-result.fail h3, .security-result.fail h4, .security-result.fail p, .security-result.fail li, .security-result.fail strong {
+    color: #ffffff;
+}
+
+.security-result.fail ul, .security-result.fail ol {
+    color: #ffffff;
 }
 
 .security-result.loading {
-    background: #d1ecf1;
-    border: 2px solid var(--info-color);
-    color: #0c5460;
+    background: #2C7A7B;
+    border: 2px solid #3da5a7;
+    color: #ffffff;
 }
 
-.security-result.loading p {
-    color: #0c5460;
+.security-result.loading p, .security-result.loading strong {
+    color: #ffffff;
 }
 
 .vulnerability-list {
@@ -273,20 +293,21 @@ summary:hover {
 }
 
 .info-box {
-    background: #fff8e1;
-    border: 2px solid var(--warning-color);
+    background: #2a5885;
+    border: 2px solid #3d7bb5;
     border-radius: 8px;
     padding: 20px;
     margin: 20px 0;
+    color: #ffffff;
 }
 
 .info-box h2, .info-box h3, .info-box h4 {
-    color: #d84315;
+    color: #ffffff;
     margin-top: 0;
 }
 
-.info-box p, .info-box li, .info-box strong {
-    color: var(--text-dark);
+.info-box p, .info-box li, .info-box strong, .info-box ol {
+    color: #ffffff;
 }
 
 .info-box pre {
@@ -294,37 +315,39 @@ summary:hover {
 }
 
 .success-box {
-    background: #d4edda;
-    border: 2px solid var(--success-color);
+    background: #1a7f37;
+    border: 2px solid #2ea44f;
     border-radius: 8px;
     padding: 20px;
     margin: 20px 0;
+    color: #ffffff;
 }
 
 .success-box h2, .success-box h3, .success-box h4 {
-    color: #155724;
+    color: #ffffff;
     margin-top: 0;
 }
 
-.success-box p, .success-box li, .success-box strong {
-    color: var(--text-dark);
+.success-box p, .success-box li, .success-box strong, .success-box ul, .success-box ol {
+    color: #ffffff;
 }
 
 .danger-box {
-    background: #f8d7da;
-    border: 2px solid var(--danger-color);
+    background: #9B3434;
+    border: 2px solid #c24444;
     border-radius: 8px;
     padding: 20px;
     margin: 20px 0;
+    color: #ffffff;
 }
 
 .danger-box h2, .danger-box h3, .danger-box h4 {
-    color: #721c24;
+    color: #ffffff;
     margin-top: 0;
 }
 
-.danger-box p, .danger-box li, .danger-box strong {
-    color: var(--text-dark);
+.danger-box p, .danger-box li, .danger-box strong, .danger-box ul {
+    color: #ffffff;
 }
 
 .example-grid {
@@ -347,21 +370,23 @@ summary:hover {
 }
 
 .example-card.bad {
-    background: #ffebee;
-    border-color: var(--danger-color);
+    background: #9B3434;
+    border-color: #c24444;
+    color: #ffffff;
 }
 
-.example-card.bad h4, .example-card.bad p, .example-card.bad li, .example-card.bad strong {
-    color: var(--text-dark);
+.example-card.bad h4, .example-card.bad p, .example-card.bad li, .example-card.bad strong, .example-card.bad ul {
+    color: #ffffff;
 }
 
 .example-card.good {
-    background: #e8f5e9;
-    border-color: var(--success-color);
+    background: #1a7f37;
+    border-color: #2ea44f;
+    color: #ffffff;
 }
 
-.example-card.good h4, .example-card.good p, .example-card.good li, .example-card.good strong {
-    color: var(--text-dark);
+.example-card.good h4, .example-card.good p, .example-card.good li, .example-card.good strong, .example-card.good ul {
+    color: #ffffff;
 }
 
 .example-card h4 {
@@ -381,7 +406,7 @@ summary:hover {
     display: inline-block;
     width: 30px;
     height: 30px;
-    background: var(--primary-color);
+    background: #4a9eff;
     color: white;
     border-radius: 50%;
     text-align: center;
@@ -398,21 +423,21 @@ summary:hover {
 .checklist li {
     padding: 10px;
     margin: 10px 0;
-    background: white;
-    border-left: 4px solid var(--success-color);
+    background: #2C3E50;
+    border-left: 4px solid #2ea44f;
     border-radius: 5px;
-    color: var(--text-dark);
+    color: #ffffff;
 }
 
 .checklist li:before {
     content: "✓ ";
-    color: var(--success-color);
+    color: #2ea44f;
     font-weight: bold;
     margin-right: 10px;
 }
 
 .checklist li strong {
-    color: var(--text-dark);
+    color: #ffffff;
 }
 </style>
 
@@ -588,16 +613,16 @@ Fill out each section of the SPEC framework below. We'll use this to guide your 
   <h3>The Debugging Template</h3>
   
   <p><span class="step-number">1</span><strong>Problem:</strong> One sentence - be specific</p>
-  <p style="margin-left: 50px; font-style: italic; color: #555;">Example: "Function returns None instead of calculated average"</p>
+  <p style="margin-left: 50px; font-style: italic; color: #e0e0e0;">Example: "Function returns None instead of calculated average"</p>
   
   <p><span class="step-number">2</span><strong>Expected vs Actual:</strong> What should happen vs what is happening</p>
-  <p style="margin-left: 50px; font-style: italic; color: #555;">Expected: Returns float average of list<br>Actual: Returns None</p>
+  <p style="margin-left: 50px; font-style: italic; color: #e0e0e0;">Expected: Returns float average of list<br>Actual: Returns None</p>
   
   <p><span class="step-number">3</span><strong>Minimal Code:</strong> Only the relevant parts</p>
-  <p style="margin-left: 50px; font-style: italic; color: #555;">Don't paste 500 lines - just the function and test case</p>
+  <p style="margin-left: 50px; font-style: italic; color: #e0e0e0;">Don't paste 500 lines - just the function and test case</p>
   
   <p><span class="step-number">4</span><strong>What You've Tried:</strong> Show you've made an effort</p>
-  <p style="margin-left: 50px; font-style: italic; color: #555;">1. Checked if list is empty<br>2. Added print statements<br>3. Tested with simple data</p>
+  <p style="margin-left: 50px; font-style: italic; color: #e0e0e0;">1. Checked if list is empty<br>2. Added print statements<br>3. Tested with simple data</p>
 </div>
 
 **Why this works:** You're showing you've done the work, giving AI enough context, and asking efficiently.
@@ -977,7 +1002,7 @@ Be thorough and specific. For each vulnerability, explain what it is and how to 
         resultDiv.innerHTML = `
             <h3 style="margin-top: 0;">❌ Analysis Error</h3>
             <p><strong>Failed to analyze code:</strong> ${error.message}</p>
-            <div style="margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 5px;">
+            <div style="margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 5px;">
                 <p><strong>Possible causes:</strong></p>
                 <ul>
                     <li>Backend server is not running</li>
@@ -1028,7 +1053,7 @@ function displayResults(analysis) {
     
     if (analysis.recommendations && analysis.recommendations.length > 0) {
         html += `
-            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 5px;">
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 5px;">
                 <h4 style="margin-top: 0; margin-bottom: 10px; font-size: 18px;">💡 How to Fix:</h4>
                 <ul class="vulnerability-list">
                     ${analysis.recommendations.map(r => `<li style="font-size: 15px;">${r}</li>`).join('')}
@@ -1037,7 +1062,7 @@ function displayResults(analysis) {
         `;
     } else if (passed) {
         html += `
-            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 5px;">
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 5px;">
                 <h4 style="margin-top: 0;">✨ Great work!</h4>
                 <p>Your code passed the security checks. Remember to:</p>
                 <ul>
