@@ -380,25 +380,22 @@ function downloadCert(course, org, date) {
   canvas.width = 1400;
   canvas.height = 1000;
   
-  // Background gradient
-  const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-  grad.addColorStop(0, '#1a1a2e');
-  grad.addColorStop(1, '#16213e');
-  ctx.fillStyle = grad;
+// Background - elegant cream
+  ctx.fillStyle = '#f8f6f0';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  // Outer border
-  ctx.strokeStyle = '#ea8c33';
+  // Outer border - navy
+  ctx.strokeStyle = '#2c3e50';
   ctx.lineWidth = 25;
   ctx.strokeRect(50, 50, canvas.width - 100, canvas.height - 100);
   
-  // Inner border
-  ctx.strokeStyle = '#d67324';
+  // Inner border - gold accent
+  ctx.strokeStyle = '#c9b037';
   ctx.lineWidth = 3;
   ctx.strokeRect(80, 80, canvas.width - 160, canvas.height - 160);
   
   // Decorative corners
-  ctx.fillStyle = '#ea8c33';
+  ctx.fillStyle = '#c9b037';
   ctx.beginPath();
   ctx.arc(80, 80, 15, 0, Math.PI * 2);
   ctx.arc(canvas.width - 80, 80, 15, 0, Math.PI * 2);
@@ -407,7 +404,7 @@ function downloadCert(course, org, date) {
   ctx.fill();
   
   // Title
-  ctx.fillStyle = '#ea8c33';
+  ctx.fillStyle = '#2c3e50';
   ctx.font = 'bold 60px Georgia';
   ctx.textAlign = 'center';
   ctx.fillText('CERTIFICATE', canvas.width / 2, 200);
@@ -416,13 +413,12 @@ function downloadCert(course, org, date) {
   ctx.fillText('OF COMPLETION', canvas.width / 2, 260);
   
   // Decorative line under title
-  ctx.strokeStyle = '#ea8c33';
+  ctx.strokeStyle = '#c9b037';
   ctx.lineWidth = 4;
   ctx.beginPath();
   ctx.moveTo(400, 290);
   ctx.lineTo(1000, 290);
   ctx.stroke();
-  
   // "This is to certify that"
   ctx.fillStyle = '#ffffff';
   ctx.font = '28px Arial';
