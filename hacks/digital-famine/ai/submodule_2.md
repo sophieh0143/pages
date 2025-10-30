@@ -1,7 +1,7 @@
 ---
 layout: base
 title: "Prompt Engineering"
-background: images/digital-famine/underwateraienv.png
+background: images/digital-famine/underwater_plants_kelp.jpg
 description: "Using different Prompts"
 permalink: /digital-famine/ai/submodule_2/
 breadcrumb: true
