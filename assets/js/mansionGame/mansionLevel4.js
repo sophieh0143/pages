@@ -39,8 +39,27 @@ class MansionLevel4 {
 		upLeft: {row: 0, start: 0, columns: 3, rotate: Math.PI/16},
 		upRight: {row: 1, start: 0, columns: 3, rotate: -Math.PI/16},
 		hitbox: { widthPercentage: 0.45, heightPercentage: 0.2 },
-	// Use WASD keys (matches other levels). If you want arrow-keys too, update Player to accept arrays.
-	keypress: { up: 87, left: 65, down: 83, right: 68 } // W,A,S,D
+	// Use both WASD and Arrow keys for movement
+	// keypress: { up: 38, left: 37, down: 40, right: 39 }, // Arrow keys
+	wasdKeypress: { up: 87, left: 65, down: 83, right: 68 }, // W,A,S,D
+	// Override the handleKeyDown method to support both key sets
+	handleKeyDown: function(event) {
+		const { keyCode } = event;
+		if (keyCode === this.wasdKeypress.up || keyCode === this.keypress.up) this.pressedKeys[this.keypress.up] = true;
+		if (keyCode === this.wasdKeypress.left || keyCode === this.keypress.left) this.pressedKeys[this.keypress.left] = true;
+		if (keyCode === this.wasdKeypress.down || keyCode === this.keypress.down) this.pressedKeys[this.keypress.down] = true;
+		if (keyCode === this.wasdKeypress.right || keyCode === this.keypress.right) this.pressedKeys[this.keypress.right] = true;
+		this.updateVelocityAndDirection();
+	},
+	// Override the handleKeyUp method to support both key sets
+	handleKeyUp: function(event) {
+		const { keyCode } = event;
+		if (keyCode === this.wasdKeypress.up || keyCode === this.keypress.up) delete this.pressedKeys[this.keypress.up];
+		if (keyCode === this.wasdKeypress.left || keyCode === this.keypress.left) delete this.pressedKeys[this.keypress.left];
+		if (keyCode === this.wasdKeypress.down || keyCode === this.keypress.down) delete this.pressedKeys[this.keypress.down];
+		if (keyCode === this.wasdKeypress.right || keyCode === this.keypress.right) delete this.pressedKeys[this.keypress.right];
+		this.updateVelocityAndDirection();
+	}
 	};
 
 	// List of objects defnitions for this level
