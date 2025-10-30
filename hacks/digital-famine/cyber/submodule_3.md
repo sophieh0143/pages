@@ -10,6 +10,7 @@ categories: [CSP, Submodule, Frontend]
 tags: [css, styling, fundamentals]
 author: "Aaryav, Dhyan, Aditya, Aarnav, Saathwik, West"
 date: 2025-10-21
+microblog: true
 ---
 
 # Mission 3 — Encrypt the Launch Codes
