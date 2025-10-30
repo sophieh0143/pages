@@ -141,6 +141,30 @@ console.log(z);
 <button onclick="showAnswer()">Show Example Answer</button>
 <p id="example-answer" style="background-color: white; color: blue;"></p>
 
+## Function
+Functions are reusable blocks of code that code to be more efficiently and concisely managed. In JavaScript, they are formatted like the following:
+
+```
+function name(p1, p2) {
+    // Code here
+}
+```
+
+These are each of the individual components of a function:
+
+<ol>
+    <li>Each function must be initialized with the keyword 'function'</li>
+    <br>
+    <li>Next comes the name of the function followed by a pair of parentheses ()</li>
+    <br>
+    <li>Inside the parentheses are optional parameters that can be used in the function</li>
+    <br>
+    <li>After the function name and possible parameters have been established, curly brackets { } are used to hold the code</li>
+    <br>
+    <li>At this point, you write the code you want to reuse!</li>
+    <br>
+</ol>
+
 <a href="{{site.baseurl}}/cs-portfolio-quest/frontend/submodule_4" 
    style="display:inline-block; background-color:#1e3a8a; color:white; text-decoration:none; 
           padding:10px 20px; border-radius:8px; border:none; cursor:pointer; 
