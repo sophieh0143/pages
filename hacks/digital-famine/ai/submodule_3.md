@@ -2,6 +2,7 @@
 layout: post
 title: "AI APIs"
 description: "Going over how to use AI APIs"
+background: images/platformer/backgrounds/images.png.jpeg
 permalink: /digital-famine/ai/submodule_3/
 breadcrumb: true
 microblog: true
