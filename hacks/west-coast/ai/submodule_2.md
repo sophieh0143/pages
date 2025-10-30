@@ -27,12 +27,18 @@ LLMs don't have memory like humans. Instead, they have a **context window** - th
 <style>
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
     color: #eee !important;
     line-height: 1.7;
+  }
+
+  .wrapper {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .post-content {
+    max-width: 100% !important;
   }
   
   h1 {
