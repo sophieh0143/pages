@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: base
 title: "Prompt Engineering"
 background: images/digital-famine/underwateraienv.png
 description: "Using different Prompts"
