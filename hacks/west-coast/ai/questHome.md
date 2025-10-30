@@ -49,26 +49,6 @@ lxdData:
       Image: "/images/WC_AI_Submodule4RM.png"
       Alt: "AI Key 4"
       RequiresLevel: 3
-    - Title: "Key 5"
-      Genre: "Assessment"
-      Level: 5
-      Description: "Team-defined AI usage module"
-      Categories: ["ChatGPT", "Prompting", "AI Limitations", "Generation"]
-      Video: "/west-coast/ai/submodule_5-video"
-      Lessons: "/west-coast/ai/submodule_5/"
-      Image: "/images/west-coast/ai.svg"
-      Alt: "AI Key 5"
-      RequiresLevel: 4
-    - Title: "Key 6"
-      Genre: "Assessment"
-      Level: 6
-      Description: "Team-defined AI usage module"
-      Categories: ["ChatGPT", "Prompting", "AI Limitations", "Generation"]
-      Video: "/west-coast/ai/submodule_6-video"
-      Lessons: "/west-coast/ai/submodule_6/"
-      Image: "/images/west-coast/ai.svg"
-      Alt: "AI Key 6"
-      RequiresLevel: 5
 ---
 {%- include tailwind/quests/west-coast.html -%}
 
