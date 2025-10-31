@@ -19,8 +19,22 @@ date: 2025-10-21
     .exercise-section {
         background-color: blue;
         opacity: 0.6;
-        border-color: red;
+        border-color: black;
+        border-width: 5px;
         border-style: solid;
+        border-radius: 5px;
+    }
+
+    .code-input {
+        margin-left: 5px;
+        margin-top: auto;
+        margin-bottom: auto;    
+        margin-right: auto;
+    }
+
+    .example-answer {
+        color: black;
+        background-color: #8C00FF;
     }
 </style>
 
@@ -134,12 +148,14 @@ console.log(z);
 
 <div class="exercise-section">
     <h4>Exercises</h4>
-    <p width="100%">Define two variables and define new variables by using operators on those two variables</p>
-    <textarea rows="10" cols="70" placeholder="code goes here"></textarea>
+    <p width="100%">Define two variables and define new variables by using operators on those two variables.</p>
+    <textarea class="code-input" rows="10" cols="70" placeholder="CODE HERE"></textarea>
+
+    <button onclick="showAnswer()">Show Example Answer</button>
+    <p class="example-answer" id="example-answer"></p>
 </div>
 
-<button onclick="showAnswer()">Show Example Answer</button>
-<p id="example-answer" style="background-color: white; color: blue;"></p>
+
 
 ## Function
 Functions are reusable blocks of code that code to be more efficiently and concisely managed. In JavaScript, they are formatted like the following:
