@@ -558,6 +558,8 @@ date: 2025-10-21
             </p>
         </div>
 
+        <img src="{{site.baseurl}}/images/docx/Quests_QuestOfCode-AIUsage-Thinkers_image3.png" height="625">
+
         <div class="comparison-grid">
             <div class="speech-bubble bad">
                 <h3>Bad Prompt</h3>

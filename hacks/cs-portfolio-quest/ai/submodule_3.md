@@ -614,6 +614,7 @@ date: 2025-10-21
 
     <!-- PAGE 1: Resume Transformation -->
     <div class="comic-page active" id="page-1">
+        <img src="{{site.baseurl}}/images/docx/Quests_QuestOfCode-AIUsage-Thinkers_image1.png" height="625">
         <div class="comic-panel">
             <h2 style="color: #000; font-size: 32px; margin-bottom: 20px;">Comic Strip 1: Resume Transformation</h2>
             <p style="color: #000; font-size: 18px; line-height: 1.8;">

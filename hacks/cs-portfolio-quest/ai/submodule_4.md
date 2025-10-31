@@ -2,7 +2,7 @@
 layout: post
 title: "AI Usage Certification"
 description: "Complete your AI Usage Quest and earn your official certification from Open Coding Society. Add it to your LinkedIn profile to showcase your skills."
-permalink: /cs-portfolio-quest/ai/submodule_5/
+permalink: /cs-portfolio-quest/ai/submodule_4/
 parent: "AI Usage"
 team: "Thinkers"
 submodule: 5
@@ -15,6 +15,8 @@ date: 2025-10-21
 # AI Usage Quest Certification
 
 Congratulations on completing the AI Usage Quest! Earn your official certification from **Open Coding Society**.
+
+<img src="{{site.baseurl}}/images/docx/Quests_QuestOfCode-AIUsage-Thinkers_image5.png" height="625">
 
 ---
 
@@ -97,6 +99,8 @@ Congratulations on completing the AI Usage Quest! Earn your official certificati
 5. **Skills:** AI Prompting, ChatGPT, Code Review, Resume Writing
 
 **Pro Tip:** Add this to your "Licenses & Certifications" section!
+
+<img src="{{site.baseurl}}/images/docx/Quests_QuestOfCode-AIUsage-Thinkers_image2.png" height="625">
 
 ---
 

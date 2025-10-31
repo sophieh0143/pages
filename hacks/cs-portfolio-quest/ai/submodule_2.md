@@ -565,6 +565,7 @@ date: 2025-10-21
 
     <!-- PAGE 1: The SPEC Framework -->
     <div class="comic-page active" id="page-1">
+      <img src="{{site.baseurl}}/images/docx/Quests_QuestOfCode-AIUsage-Thinkers_image4.png" height="625">
         <div class="comic-panel">
             <h2 style="color: #000; font-size: 32px; margin-bottom: 20px;">Comic Strip 1: The SPEC Framework</h2>
             <p style="color: #000; font-size: 18px; line-height: 1.8;">
@@ -677,6 +678,7 @@ date: 2025-10-21
 
     <!-- PAGE 2: Debug Like You Mean It -->
     <div class="comic-page" id="page-2">
+      <img src="{{site.baseurl}}/images/docx/Quests_QuestOfCode-AIUsage-Thinkers_image6.png" height="625">
         <div class="comic-panel">
             <h2 style="color: #000; font-size: 32px; margin-bottom: 20px;">Comic Strip 2: Debug Like You Mean It</h2>
             <p style="color: #000; font-size: 18px; margin-bottom: 20px;">
