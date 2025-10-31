@@ -205,22 +205,28 @@ Once an ID is in place, in JavaScript, a variable is defined that retrieves the 
 
 Now, at this point, the variable can be used to access the HTML by using `.innerHTML = " ";` allowing for the text of the HTML tag to be directly modified.
 
-<a href="{{site.baseurl}}/cs-portfolio-quest/frontend/submodule_4" 
-   style="display:inline-block; background-color:#1e3a8a; color:white; text-decoration:none; 
-          padding:10px 20px; border-radius:8px; border:none; cursor:pointer; 
-          text-align:center; transition:background-color 0.2s;"
-   onmouseover="this.style.backgroundColor='#1d4ed8'" 
-   onmouseout="this.style.backgroundColor='#1e3a8a'">
-  Previous
-</a>
-<a href="{{site.baseurl}}/cs-portfolio-quest/frontend/submodule_6" 
-   style="display:inline-block; background-color:#1e3a8a; color:white; text-decoration:none; 
-          padding:10px 20px; border-radius:8px; border:none; cursor:pointer; 
-          text-align:center; transition:background-color 0.2s;"
-   onmouseover="this.style.backgroundColor='#1d4ed8'" 
-   onmouseout="this.style.backgroundColor='#1e3a8a'">
-  Next
-</a>
+## Console and console.log()
+A very useful part of JavaScript is the tools it provides to help developers debug their code.
+
+<br>
+
+The most prominent of these 'tools' is console.log(), while allow developers to output and record how their code works and reacts in a special place on a web page called the console.
+
+<br>
+
+The console can be accessed by the shortcut Control+Shift+J for Windows and Linux or Command+Option+J for Mac.
+
+<br>
+
+Using console.log() outputs stuff straight here to the console. You can only use console.log() in the console itself! Try it out by typing the following code in the console: `console.log("Hello, World!");`.
+
+<br>
+
+It should output Hello World.
+
+<br>
+
+console.log() is used in many applications beyond this, and is helpful for debugging certain parts of your code. So, when trying to identify why certain parts of the codes are acting in an unintended manner, consider using console.log() to help out.
     
 <script>
     function showAnswer() {
