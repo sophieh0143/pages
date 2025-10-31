@@ -1,6 +1,6 @@
 ---
 layout: cs-portfolio-lesson
-title: "Submodule 2"
+title: "Submodule 2: Certificates and Badges"
 description: "Submodule 2 of Analytics/Admin Mini-Quest"
 permalink: /cs-portfolio-quest/analytics/submodule_2/
 parent: "Analytics/Admin"
@@ -264,12 +264,12 @@ date: 2025-10-21
 </style>
 
 <div class="container">
-  <h2 class="section-title">🏅 Earned Certificates</h2>
+  <h2 class="section-title">Earned Certificates</h2>
   <div class="certificates-grid">
     <div class="cert-card cert-red">
       <span class="cert-badge">Verified</span>
       <h3 class="cert-title">Advanced Python Programming</h3>
-      <div class="cert-org">Data Science Academy</div>
+      <div class="cert-org">Open Coding Society</div>
       <div class="cert-date">September 2024</div>
       <div class="cert-actions">
         <button class="btn btn-download" onclick="downloadCert('Advanced Python Programming', 'Data Science Academy', 'September 2024')">⬇ Download</button>
@@ -279,7 +279,7 @@ date: 2025-10-21
     <div class="cert-card cert-orange">
       <span class="cert-badge">Verified</span>
       <h3 class="cert-title">Data Analysis with Python</h3>
-      <div class="cert-org">Data Science Institute</div>
+      <div class="cert-org">Open Coding Society</div>
       <div class="cert-date">June 2024</div>
       <div class="cert-actions">
         <button class="btn btn-download" onclick="downloadCert('Data Analysis with Python', 'Data Science Institute', 'June 2024')">⬇ Download</button>
@@ -289,7 +289,7 @@ date: 2025-10-21
     <div class="cert-card cert-purple">
       <span class="cert-badge">Verified</span>
       <h3 class="cert-title">Machine Learning Fundamentals</h3>
-      <div class="cert-org">AI Learning Hub</div>
+      <div class="cert-org">Open Coding Society</div>
       <div class="cert-date">July 2024</div>
       <div class="cert-actions">
         <button class="btn btn-download" onclick="downloadCert('Machine Learning Fundamentals', 'AI Learning Hub', 'July 2024')">⬇ Download</button>
@@ -299,7 +299,7 @@ date: 2025-10-21
   </div>
 
   <div class="skills-card">
-    <h2 class="section-title">⭐ Skills Mastery</h2>
+    <h2 class="section-title">Skills Mastery</h2>
     <div class="skill-item">
       <div class="skill-header">
         <span class="skill-name">Data Analysis</span>
@@ -357,7 +357,7 @@ date: 2025-10-21
   </div>
 
   <div class="badges-card">
-    <h2 class="section-title">🎖️ Achievement Badges</h2>
+    <h2 class="section-title">Achievement Badges</h2>
     <div class="badges-grid">
       <div class="badge badge-red">Python Master</div>
       <div class="badge badge-orange">Data Wizard</div>
