@@ -144,10 +144,66 @@ class MansionLevel1 {
       };
 
     // Initialize Background Music
-    const backgroundMusic = new Audio(path + "SpookyScarySkeletons.mp3");
-    backgroundMusic.loop = true;
-    backgroundMusic.volume = 0.5;
-    backgroundMusic.play();
+// Initialize Background Music
+const backgroundMusic = new Audio(path + "/audio/SpookyScarySkeletons.mp3");
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.5;
+
+// Try to play immediately (may be blocked by browser)
+backgroundMusic.play().catch(error => {
+  console.log("Autoplay blocked");
+});
+
+// Create music toggle button sprite
+const music_button_data = {
+  id: 'MusicToggle',
+  greeting: "Toggle music on/off",
+  src: path + "/images/gamify/invisDoorCollisionSprite.png", // Use a music icon sprite if you have one
+  SCALE_FACTOR: 8,
+  ANIMATION_RATE: 0,
+  pixels: {width: 256, height: 256},
+  INIT_POSITION: { x: width - 80, y: 40 }, // Top right corner
+  orientation: {rows: 1, columns: 1},
+  down: {row: 0, start: 0, columns: 1},
+  hitbox: {widthPercentage: 0.8, heightPercentage: 0.8},
+  isMusicPlaying: false,
+  interact: function() {
+    if (this.spriteData.isMusicPlaying) {
+      backgroundMusic.pause();
+      this.spriteData.isMusicPlaying = false;
+      console.log("Music paused");
+    } else {
+      backgroundMusic.play().catch(error => {
+        console.error("Failed to play audio:", error);
+      });
+      this.spriteData.isMusicPlaying = true;
+      console.log("Music playing");
+    }
+  }
+};
+
+// Add to your classes array
+this.classes = [
+  { class: GameEnvBackground, data: image_data_background },
+  { class: Npc, data: objective_sprite_data },
+  { class: Player, data: sprite_data_mc },
+  { class: Npc, data: sprite_data_pantrydoor },
+  { class: Npc, data: music_button_data } // Add this line
+];
+    }
+  }
+};
+
+// Add to your classes array
+this.classes = [
+  { class: GameEnvBackground, data: image_data_background },
+  { class: Npc, data: objective_sprite_data },
+  { class: Player, data: sprite_data_mc },
+  { class: Npc, data: sprite_data_pantrydoor },
+  { class: Npc, data: music_button_data } // Add this line
+];
+  });
+}, { once: true });
     // List of objects definitions for this level
     this.classes = [
       { class: GameEnvBackground, data: image_data_background },
