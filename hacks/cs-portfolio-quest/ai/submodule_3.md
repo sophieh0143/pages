@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Real Project Example"
-description: "A walkthrough of simplifying a Flask/Spring backend into Flask-only using AI assistance, broken into phases: understanding the system, planning migration, implementing changes, and debugging."
+title: "Resume & Interview Prep"
+description: "Learn to rewrite resume bullets with metrics using STAR format and prepare for the three most common interview questions by recording and analyzing your responses."
 permalink: /cs-portfolio-quest/ai/submodule_3/
 parent: "AI Usage"
 team: "Thinkers"
