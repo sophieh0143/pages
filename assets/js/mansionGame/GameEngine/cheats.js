@@ -33,24 +33,36 @@ export function addLevelNavigationButtons(gameInstance) {
     // Create Previous Level button (far left)
     const prevButton = document.createElement("button");
     prevButton.id = "prevLevelButton";
-    prevButton.innerText = "Previous Level";
+    prevButton.innerText = "Previous Level ↩";
     prevButton.className = "medium filledHighlight primary";
     prevButton.onclick = function() {
         console.log("Previous Level button clicked");
         console.log("Transitioning to the previous level...");
         gameInstance.loadPreviousLevel();
     };
+    prevButton.style.cssText = `
+        background-color: #f26767ff;
+        font-weight: bold;
+        font-size: 12px;
+        font: 'Press Start 2P', monospace;
+    `;
 
     // Create Next Level button (far right)
     const nextButton = document.createElement("button");
     nextButton.id = "nextLevelButton";
-    nextButton.innerText = "Next Level";
+    nextButton.innerText = "Next Level ↪";
     nextButton.className = "medium filledHighlight primary";
     nextButton.onclick = function() {
         console.log("Next Level button clicked");
         console.log("Transitioning to the next level...");
         gameInstance.loadNextLevel();
     };
+    nextButton.style.cssText = `
+        background-color: #6ae378ff;
+        font-weight: bold;
+        font-size: 12px;
+        font: 'Press Start 2P', monospace;
+    `;
 
     // Create a center container for Home and Cheats Menu
     const centerContainer = document.createElement("div");
@@ -69,12 +81,37 @@ export function addLevelNavigationButtons(gameInstance) {
         console.log("Cheats Menu button clicked");
         openCheatsMenu(gameInstance);
     };
+    cheatsButton.style.cssText = `
+        background-color: #a46ae3ff;
+        font-weight: bold;
+        font-size: 12px;
+        font: 'Press Start 2P', monospace;
+    `;
+    
 
     // Create Home button (center)
-    const homeButton = document.createElement("button");
+   const homeButton = document.createElement("button");
     homeButton.id = "homeButton";
-    homeButton.innerText = "Home";
-    homeButton.className = "medium filledHighlight primary";
+    homeButton.innerText = "🏠";
+    // Remove class-based styling so it's just the emoji; apply minimal styles to remove border/background
+    homeButton.className = "";
+    homeButton.setAttribute("aria-label", "Home");
+    homeButton.title = "Home";
+    homeButton.style.cssText = `
+        background: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        font-size: 40px;
+        line-height: 1;
+        cursor: pointer;
+        box-shadow: none;
+        outline: none;
+        -webkit-appearance: none;
+    `;
+    // Optional: prevent focus outline on click (keep keyboard accessibility if desired)
+    homeButton.onfocus = () => homeButton.style.outline = "none";
+
     homeButton.onclick = function() {
         console.log("Home button clicked");
         console.log("Returning to home...");
@@ -90,6 +127,12 @@ export function addLevelNavigationButtons(gameInstance) {
         console.log("Info button clicked");
         openInfoMenu();
     };
+     infoButton.style.cssText = `
+        background-color: #e67e22;
+        font-weight: bold;
+        font-size: 12px;
+        font: 'Press Start 2P', monospace;
+    `;
 /**
  * Creates and opens the info menu popup
  */
@@ -164,9 +207,9 @@ function openInfoMenu() {
     infoSection.innerHTML = `
         <strong>Game Title:</strong> Mansion Adventure<br>
         <strong>Version:</strong> 1.0.0<br>
-        <strong>Developer:</strong> Your Name Here<br>
-        <strong>Description:</strong> Placeholder description for your game.<br>
-        <strong>Controls:</strong> Arrow keys to move, Space to jump.<br>
+        <strong>Developer:</strong> DNHS CSSE Per. 1<br>
+        <strong>Description:</strong> Find all the keys to escape the haunted mansion!<br>
+        <strong>Controls:</strong> WASD keys to move.<br>
         <strong>More info coming soon...</strong>
     `;
 
@@ -259,7 +302,7 @@ function openCheatsMenu(gameInstance) {
     const modalContent = document.createElement("div");
     modalContent.style.cssText = `
         background: linear-gradient(145deg, #2c3e50, #34495e);
-        border: 4px solid #3498db;
+        border: 4px solid #a46ae3ff;
         border-radius: 15px;
         padding: 30px;
         max-width: 500px;
@@ -274,7 +317,7 @@ function openCheatsMenu(gameInstance) {
     title.innerText = "🎮 CHEATS MENU 🎮";
     title.style.cssText = `
         text-align: center;
-        color: #3498db;
+        color: #a46ae3ff;
         margin-bottom: 25px;
         font-size: 18px;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
