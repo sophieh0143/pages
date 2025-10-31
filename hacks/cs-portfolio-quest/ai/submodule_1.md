@@ -488,6 +488,25 @@ date: 2025-10-21
         text-shadow: 3px 3px 0px #FF6B6B, 6px 6px 0px #4ECDC4 !important;
     }
 
+    /* Ensure inline code and pre blocks are readable inside lesson panels */
+    .post-content .comic-container code,
+    .post-content .comic-container pre,
+    .post-content .comic-container kbd,
+    .post-content .comic-container samp {
+        background-color: #f5f5f5 !important;
+        color: #111 !important;
+        padding: 2px 6px !important;
+        border-radius: 6px !important;
+        border: 1px solid rgba(0,0,0,0.08) !important;
+        font-family: monospace !important;
+        font-size: 0.95em !important;
+    }
+
+    .post-content .comic-container pre {
+        padding: 12px !important;
+        overflow: auto !important;
+    }
+
     /* Form control overrides to prevent black-on-black from theme rules */
     .post-content #lesson-container .prose .comic-container select,
     .post-content #lesson-container .prose .comic-container input,
