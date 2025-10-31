@@ -10,7 +10,7 @@ class MansionLevel1_Pantry {
     let path = gameEnv.path;
 
     // Background data
-    const image_background = path + "/images/mansionGame/kitchen_pantry.png";
+    const image_background = path + "/images/mansionGame/kitchen_pantry.png"; // be sure to include the path
     const image_data_background = {
         name: 'background',
         greeting: "This is the pantry, you will search for ingredients and create a potion.",
@@ -19,50 +19,48 @@ class MansionLevel1_Pantry {
         mode: 'contain',
     };
 
-    const sprite_src_mc = path + "/images/gamify/spookMcWalk.png";
-    const MC_SCALE_FACTOR = 6;
-    const sprite_data_mc = {
-        id: 'Spook',
-        greeting: "Hi, I am Spook.",
-        src: sprite_src_mc,
-        SCALE_FACTOR: MC_SCALE_FACTOR,
-        STEP_FACTOR: 800,
-        ANIMATION_RATE: 10,
-        INIT_POSITION: { x: (width / 2 - width / (5 * MC_SCALE_FACTOR)), y: height - (height / MC_SCALE_FACTOR)}, 
-        pixels: {height: 2400, width: 3600},
-        orientation: {rows: 2, columns: 3},
-        down: {row: 1, start: 0, columns: 3},
-        downRight: {row: 1, start: 0, columns: 3, rotate: Math.PI/16},
-        downLeft: {row: 0, start: 0, columns: 3, rotate: -Math.PI/16},
-        left: {row: 0, start: 0, columns: 3},
-        right: {row: 1, start: 0, columns: 3},
-        up: {row: 1, start: 0, columns: 3},
-        upLeft: {row: 0, start: 0, columns: 3, rotate: Math.PI/16},
-        upRight: {row: 1, start: 0, columns: 3, rotate: -Math.PI/16},
-        hitbox: {widthPercentage: 0.45, heightPercentage: 0.2},
-        keypress: {up: 87, left: 65, down: 83, right: 68}, // W, A, S, D
-        // Wall boundaries - adjust these values based on your pantry image
-        boundaries: {
-            top: height * 0.15,      // Top wall (15% from top)
-            bottom: height * 0.95,   // Bottom wall (95% from top)
-            left: width * 0.05,      // Left wall (5% from left)
-            right: width * 0.95      // Right wall (95% from left)
-        }
-    };
+    const sprite_src_mc = path + "/images/gamify/spookMcWalk.png"; // be sure to include the path
+        const MC_SCALE_FACTOR = 6;
+        const sprite_data_mc = {
+            id: 'Spook',
+            greeting: "Hi, I am Spook.",
+            src: sprite_src_mc,
+            SCALE_FACTOR: MC_SCALE_FACTOR,
+            STEP_FACTOR: 800,
+            ANIMATION_RATE: 10,
+            INIT_POSITION: { x: (width / 2 - width / (5 * MC_SCALE_FACTOR)), y: height - (height / MC_SCALE_FACTOR)}, 
+            pixels: {height: 2400, width: 3600},
+            orientation: {rows: 2, columns: 3},
+            down: {row: 1, start: 0, columns: 3},
+            downRight: {row: 1, start: 0, columns: 3, rotate: Math.PI/16},
+            downLeft: {row: 0, start: 0, columns: 3, rotate: -Math.PI/16},
+            left: {row: 0, start: 0, columns: 3},
+            right: {row: 1, start: 0, columns: 3},
+            up: {row: 1, start: 0, columns: 3},
+            upLeft: {row: 0, start: 0, columns: 3, rotate: Math.PI/16},
+            upRight: {row: 1, start: 0, columns: 3, rotate: -Math.PI/16},
+            hitbox: {widthPercentage: 0.45, heightPercentage: 0.2},
+            keypress: {up: 87, left: 65, down: 83, right: 68} // W, A, S, D
+           
 
-    const sprite_src_pantrydoor = path + "/images/gamify/invisDoorCollisionSprite.png";
-    const sprite_greet_pantrydoor = "Would you like to exit the pantry? Press E";
-    const sprite_data_pantrydoor = {
-        id: 'PantryDoor',
-        greeting: sprite_greet_pantrydoor,
-        src: sprite_src_pantrydoor,
-        SCALE_FACTOR: 12,
-        ANIMATION_RATE: 100,
-        pixels: {width: 128, height: 128},
-        INIT_POSITION: { x: (width / 2 - 64), y: (height - (height * 0.18)) },
-        orientation: {rows: 1, columns: 1},
-        down: {row: 0, start: 0, columns: 1},
-        hitbox: {widthPercentage: 0.15, heightPercentage: 0.22},
+        };
+
+const sprite_src_pantrydoor = path + "/images/gamify/invisDoorCollisionSprite.png"; // replace with your door sprite if needed
+  const sprite_greet_pantrydoor = "Would you like to exit the pantry? Press E";
+  const sprite_data_pantrydoor = {
+    id: 'PantryDoor',
+    greeting: sprite_greet_pantrydoor,
+    src: sprite_src_pantrydoor,
+    // Make the door slightly smaller by increasing SCALE_FACTOR and reducing pixels
+    SCALE_FACTOR: 12,
+    ANIMATION_RATE: 100,
+    pixels: {width: 128, height: 128},
+    // Position door at bottom middle of the pantry; subtract half of expected width to center
+    INIT_POSITION: { x: (width / 2 - 64), y: (height - (height * 0.18)) },
+    orientation: {rows: 1, columns: 1},
+    down: {row: 0, start: 0, columns: 1},
+    // Slightly smaller hitbox now that the door is smaller
+    hitbox: {widthPercentage: 0.15, heightPercentage: 0.22},
         dialogues: [
           "Do you wish to exit?"
         ],
@@ -70,6 +68,7 @@ class MansionLevel1_Pantry {
           // no immediate reaction; interaction handled in interact()
         },
         interact: function() {
+          // show a simple dialogue asking the player to enter the pantry
           if (this.dialogueSystem && this.dialogueSystem.isDialogueOpen()) {
             this.dialogueSystem.closeDialogue();
           }
@@ -91,14 +90,18 @@ class MansionLevel1_Pantry {
               action: () => {
                 this.dialogueSystem.closeDialogue();
 
+                // transition to new level — replace THIS_FILE_HERE with your level class
                 if (gameEnv && gameEnv.gameControl) {
                   const gameControl = gameEnv.gameControl;
 
+                  // Store original classes so you can return later if desired
                   gameControl._originalLevelClasses = gameControl.levelClasses;
 
+                  // Restore the original level classes (return to mansion)
                   if (gameControl._originalLevelClasses && gameControl._originalLevelClasses.length) {
                     gameControl.levelClasses = gameControl._originalLevelClasses;
                   } else {
+                    // Fallback to explicitly return to MansionLevel1
                     gameControl.levelClasses = [MansionLevel1];
                   }
                   gameControl.currentLevelIndex = 0;
@@ -115,7 +118,7 @@ class MansionLevel1_Pantry {
             }
           ]);
         }
-    };
+      };
 
     // List of objects definitions for this level
     this.classes = [
