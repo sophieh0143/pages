@@ -503,27 +503,86 @@ date: 2025-10-21
   </div>
 </div>
 
-<script type="module">
-    import { javaURI } from '{{ site.baseurl }}/assets/js/api/config.js';
-    try {
-      const res = await fetch(`${pythonURI}/api/people/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        },
-      });
-      console.log(res)
-      if (res.ok) {
-        console.log(res)
-      } else {
-        throw new Error();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-</script>
+<!-- Flask data pull -->
 
-<script>
+<!-- <script type="module">
+  import { javaURI } from '{{ site.baseurl }}/assets/js/api/config.js';
+  import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+
+  async function fetchPeople() {
+    for (let id = 1; id <= 2; id++) {
+      try {
+        const res = await fetch(`${pythonURI}/api/user`, {
+          ...fetchOptions,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          },
+        });
+
+        console.log(`Request for ID ${id} → Status: ${res.status}`);
+
+        if (res.status === 404) {
+          console.log(`ID ${id} not found. Terminating loop.`);
+          break; // stop loop if 404
+        }
+
+        if (res.ok) {
+          const data = await res.json();
+          console.log(`Data for ID ${id}:`, data);
+        } else {
+          console.warn(`Request failed for ID ${id} with status ${res.status}`);
+        }
+
+      } catch (err) {
+        console.error(`Error fetching ID ${id}:`, err);
+        break; // optional: stop on network or fetch error
+      }
+    }
+  }
+
+  fetchPeople();
+</script> -->
+
+<script type="module">
+  import { javaURI } from '{{ site.baseurl }}/assets/js/api/config.js';
+  import { pythonURI, fetchOptions } from '{{ site.baseurl }}/assets/js/api/config.js';
+
+  async function fetchPeople() {
+    for (let id = 1; id <= 100; id++) {
+      try {
+        const res = await fetch(`${javaURI}/api/person/${id}`, {
+          ...fetchOptions,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          },
+        });
+
+        console.log(`Request for ID ${id} → Status: ${res.status}`);
+
+        if (res.status === 404) {
+          console.log(`ID ${id} not found. Terminating loop.`);
+          break; // stop loop if 404
+        }
+
+        if (res.ok) {
+          const data = await res.json();
+          console.log(`Data for ID ${id}:`, data);
+          console.log(`Email for ID ${id}:`, data.email);
+        } else {
+          console.warn(`Request failed for ID ${id} with status ${res.status}`);
+        }
+
+      } catch (err) {
+        console.error(`Error fetching ID ${id}:`, err);
+        break; // optional: stop on network or fetch error
+      }
+    }
+  }
+
+  fetchPeople();
+
   const students = [
     {
       id: 1,
