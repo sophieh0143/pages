@@ -10,6 +10,7 @@ categories: [CSP, Submodule, Frontend]
 tags: [frontend, purpose, fundamentals]
 author: "Aaryav, Dhyan, Aditya, Aarnav, Saathwik, West"
 date: 2025-10-21
+microblog: true
 ---
 
 Earth’s intel vault has been wiped clean. Your first assignment is to revive the SQLite backbone that keeps orbital radar and field agents in sync.
