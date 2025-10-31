@@ -43,12 +43,6 @@ Congratulations on completing the AI Usage Quest! Earn your official certificati
         <p>Follow the Flask/Spring migration walkthrough</p>
     </div>
     
-    <div id="check-submodule-4">
-        <span id="icon-4">⏳</span>
-        <strong>Submodule 4: Coding with AI</strong>
-        <p>Apply SPEC framework and security checks</p>
-    </div>
-    
     <div id="progress-container">
         <div id="overall-progress">0% Complete</div>
     </div>
