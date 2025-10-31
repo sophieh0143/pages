@@ -10,6 +10,7 @@ categories: [CSP, Submodule, Frontend]
 tags: [javascript, events, handling]
 author: "Aaryav, Dhyan, Aditya, Aarnav, Saathwik, West"
 date: 2025-10-21
+microblog: true
 ---
 
 # Final Sequence — Unlock the Sacred Vault
