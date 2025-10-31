@@ -41,7 +41,7 @@ lxdData:
       Description: "Final line of defense from foreign invaders. Sort the headlines to practice understanding of bias and wording."
       Categories: ["Certificate", "Integration", "Achievement"]
       Lessons: "/digital-famine/media-lit/submodule_4/"
-      Image: "/images/digital-famine/congratulations.png"
+      Image: "/images/digital-famine/sort.png"
       Alt: "Analytics Submodule 4"
     - Title: "Vault"
       Genre: "Integration"
@@ -50,7 +50,7 @@ lxdData:
       Categories: ["Certificate", "Integration", "Achievement"]
       Video: "/digital-famine/media-lit/submodule_5-video"
       Lessons: "/digital-famine/media-lit/submodule_5/"
-      Image: "/images/digital-famine/media-lit.svg"
+      Image: "/images/digital-famine/congratulations.png"
       Alt: "Analytics Submodule 5"
 ---
 {%- include tailwind/cs-portfolio-quest_info.html -%}
@@ -63,7 +63,7 @@ body {
   background-size: cover;
 }
 
-/* Optional: overlay for better contrast! */
+/* Optional: overlay for better contrast */
 body::before {
   content: '';
   position: fixed;
