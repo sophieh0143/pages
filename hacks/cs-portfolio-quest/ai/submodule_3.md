@@ -604,6 +604,35 @@ date: 2025-10-21
         color: #6c6c6c !important;
         opacity: 1 !important;
     }
+
+    /* Ensure dropdown options are visible (replicated from submodule_1) */
+    .post-content #lesson-container .prose .comic-container option {
+        background-color: #fff !important;
+        color: #000 !important;
+    }
+
+    /* Broader dropdown fixes (some pages use different layout wrappers) */
+    .post-content .comic-container option,
+    .comic-container option,
+    .comic-container select,
+    .interview-analyzer select,
+    .interview-analyzer option {
+        background-color: #fff !important;
+        color: #000 !important;
+    }
+
+    /* Try to force native dropdown to use our styling where possible */
+    .comic-container select {
+        background-color: #fff !important;
+        color: #000 !important;
+        -webkit-appearance: menulist-button !important;
+        appearance: menulist-button !important;
+    }
+
+    /* Hide IE/Edge default expand arrow so background shows consistently */
+    .comic-container select::-ms-expand {
+        display: none !important;
+    }
 </style>
 
 <div class="comic-container">
