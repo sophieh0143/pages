@@ -555,6 +555,18 @@ date: 2025-10-30
                                 <p class="text-lg font-semibold text-green-400">Badge Earned: Prompt Master 🏆</p>
                                 <p class="text-sm text-gray-300 mt-2">You've mastered the art of prompt engineering!</p>
                             </div>
+                            <div id="code-reveal" class="section-hidden mb-4">
+                                <div class="bg-green-900/30 border-2 border-green-500 rounded-lg p-6">
+                                    <p class="text-xl font-bold text-green-400 mb-2">🔑 Your Code Number: 6</p>
+                                    <p class="text-sm text-gray-300">Remember this number! You'll need it along with the other module codes to unlock the final challenge.</p>
+                                </div>
+                            </div>
+                            <div id="retry-message" class="section-hidden mb-4">
+                                <div class="bg-red-900/30 border-2 border-red-500 rounded-lg p-6">
+                                    <p class="text-xl font-bold text-red-400 mb-2">⚠️ Try Again!</p>
+                                    <p class="text-sm text-gray-300">You need to get all questions correct to receive your code for the final challenge.</p>
+                                </div>
+                            </div>
                             <button onclick="resetQuiz()"
                                 class="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded-lg font-semibold">Try
                                 Again</button>
@@ -611,6 +623,12 @@ date: 2025-10-30
                     document.querySelectorAll('.question-block').forEach(block => block.style.display = 'none');
                     document.getElementById('score-container').classList.remove('section-hidden');
                     document.getElementById('final-score').textContent = `You scored ${score} out of ${totalQuestions}!`;
+
+                    if (score === totalQuestions) {
+                        document.getElementById('code-reveal').classList.remove('section-hidden');
+                    } else {
+                        document.getElementById('retry-message').classList.remove('section-hidden');
+                    }
                 }, 1500);
             }
         }
@@ -634,6 +652,8 @@ date: 2025-10-30
             });
 
             document.getElementById('score-container').classList.add('section-hidden');
+            document.getElementById('code-reveal').classList.add('section-hidden');
+            document.getElementById('retry-message').classList.add('section-hidden');
         }
     </script>
 </body>

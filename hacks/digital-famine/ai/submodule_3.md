@@ -543,6 +543,12 @@ function checkAnswer(questionNum, selectedOption, isCorrect) {
       document.querySelectorAll('.question-block').forEach(block => block.style.display = 'none');
       document.getElementById('score-container').style.display = 'block';
       document.getElementById('final-score').textContent = `You scored ${score} out of 3!`;
+
+      if (score === 3) {
+        document.getElementById('code-reveal').style.display = 'block';
+      } else {
+        document.getElementById('retry-message').style.display = 'block';
+      }
     }, 1500);
   }
 }
@@ -550,26 +556,28 @@ function checkAnswer(questionNum, selectedOption, isCorrect) {
 function resetQuiz() {
   score = 0;
   questionsAnswered = 0;
-  
+
   // Reset all questions
   document.querySelectorAll('.question-block').forEach(block => {
     block.style.display = 'block';
   });
-  
+
   // Reset all buttons
   document.querySelectorAll('.option-btn').forEach(btn => {
     btn.disabled = false;
     btn.classList.remove('correct', 'incorrect');
   });
-  
+
   // Clear feedback
   document.querySelectorAll('.feedback').forEach(feedback => {
     feedback.textContent = '';
     feedback.className = 'feedback';
   });
-  
-  // Hide score container
+
+  // Hide score container and messages
   document.getElementById('score-container').style.display = 'none';
+  document.getElementById('code-reveal').style.display = 'none';
+  document.getElementById('retry-message').style.display = 'none';
 }
 </script>
 **Step-by-step:**
@@ -675,6 +683,18 @@ async function renderMicroblogTable() {
   <div id="score-container" style="display: none;">
     <h3>Quiz Complete! 🎉</h3>
     <p id="final-score"></p>
+    <div id="code-reveal" style="display: none; margin: 20px 0;">
+      <div style="background: #10b981; padding: 20px; border-radius: 8px; border: 2px solid #059669;">
+        <p style="font-size: 20px; font-weight: bold; color: white; margin-bottom: 10px;">🔑 Your Code Number: 1</p>
+        <p style="color: white;">Remember this number! You'll need it along with the other module codes to unlock the final challenge.</p>
+      </div>
+    </div>
+    <div id="retry-message" style="display: none; margin: 20px 0;">
+      <div style="background: #ef4444; padding: 20px; border-radius: 8px; border: 2px solid #dc2626;">
+        <p style="font-size: 20px; font-weight: bold; color: white; margin-bottom: 10px;">⚠️ Try Again!</p>
+        <p style="color: white;">You need to get all questions correct to receive your code for the final challenge.</p>
+      </div>
+    </div>
     <button onclick="resetQuiz()" class="reset-btn">Try Again</button>
   </div>
 </div>
