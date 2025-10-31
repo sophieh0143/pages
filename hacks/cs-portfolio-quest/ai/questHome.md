@@ -40,20 +40,11 @@ lxdData:
     - Title: "Coding with AI - The Realistic Version"
       Genre: "Assessment"
       Level: 4
-      Description: "Use the SPEC framework for code generation, follow a debugging template, and always run security checks. The key principle: understand and verify before using any AI-generated code."
+      Description: "Earn a certificate by completing a realistic coding project using AI tools, focusing on prompt engineering, code generation, debugging, and security best practices."
       Categories: ["ChatGPT", "Prompting", "Vibe Coding"]
       Video: "/cs-portfolio-quest/ai/submodule_4-video"
       Lessons: "/cs-portfolio-quest/ai/submodule_4/"
       Image: "/images/cs-portfolio-quest/ai.svg"
       Alt: "AI Submodule 4"
-    - Title: "Gemini/Workspace Integration"
-      Genre: "Assessment"
-      Level: 5
-      Description: "When AI integration helps: summarizing documents, extracting action items, basic data work. When it doesn't: technical content, legal documents, anything requiring perfect accuracy. Includes warning signs for unreliable output."
-      Categories: ["ChatGPT", "Prompting", "Vibe Coding"]
-      Video: "/cs-portfolio-quest/ai/submodule_5-video"
-      Lessons: "/cs-portfolio-quest/ai/submodule_5/"
-      Image: "/images/cs-portfolio-quest/ai.svg"
-      Alt: "AI Submodule 5"
 ---
 {%- include tailwind/cs-portfolio-mini_quest_info.html -%}
