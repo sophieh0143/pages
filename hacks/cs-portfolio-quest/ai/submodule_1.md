@@ -595,6 +595,7 @@ date: 2025-10-21
             <p style="color: #000; margin-bottom: 15px;">Write a prompt for a real coding problem you're facing right now. Include all 4 parts!</p>
             <textarea id="submit-prompt-1" placeholder="Write your complete prompt here..."></textarea>
             <button class="action-button" onclick="saveSubmission(1)">Save Submission</button>
+            <button class="action-button load-example-btn" data-example="1" title="Load example prompt for this page">Load Example</button>
             <div id="status-1" class="status-box"></div>
         </div>
     </div>
@@ -657,6 +658,7 @@ date: 2025-10-21
             <p style="color: #000; margin-bottom: 15px;">Take the AI response from your Comic 1 prompt. Write a follow-up prompt that would get you closer to what you actually need. Explain what you added.</p>
             <textarea id="submit-prompt-2" placeholder="Write your follow-up prompt and explanation..."></textarea>
             <button class="action-button" onclick="saveSubmission(2)">Save Submission</button>
+            <button class="action-button load-example-btn" data-example="2" title="Load example follow-up prompt">Load Example</button>
             <div id="status-2" class="status-box"></div>
         </div>
     </div>
@@ -709,6 +711,7 @@ date: 2025-10-21
             <p style="color: #000; margin-bottom: 15px;">Describe a project/feature that feels overcomplicated. Break it into 3 phases. For each phase, write one AI prompt you'd use.</p>
             <textarea id="submit-prompt-3" placeholder="Phase 1: [Description] - Prompt: [Your prompt]&#10;Phase 2: [Description] - Prompt: [Your prompt]&#10;Phase 3: [Description] - Prompt: [Your prompt]" style="min-height: 200px;"></textarea>
             <button class="action-button" onclick="saveSubmission(3)">Save Submission</button>
+            <button class="action-button load-example-btn" data-example="3" title="Load example project plan">Load Example</button>
             <div id="status-3" class="status-box"></div>
         </div>
     </div>
@@ -842,6 +845,43 @@ date: 2025-10-21
         document.getElementById('iteration-feedback').innerHTML = '<strong>' + message + '</strong><br>' + feedback.join('<br>');
     }
 
+    function loadExample(pageNum) {
+        const examples = {
+            1: `I'm working with Flask and React. I'm getting a 404 Not Found when posting to /api/login from my React frontend, but the same route works from Postman. I've tried verifying the Flask route exists and testing the fetch call in Postman; CORS is configured, and the network tab shows a 404 response. I need a checklist of likely causes and a minimal fix to get the React app to successfully POST and receive a JSON response.`,
+
+            2: `Follow-up Prompt: I tried inspecting the network tab and saw the request going to /api/login with method POST and Content-Type: application/json, but the server responds 404 immediately. I also confirmed the Flask route decorator is @app.route('/api/login', methods=['POST']). I suspect the React app might be hitting a different base path or missing a trailing slash. Please suggest targeted debugging steps and a minimal code patch for the React fetch and Flask route to ensure they match and handle JSON.` +
+               `\n\nWhy I changed it: I added details from the network tab and a hypothesis (path mismatch) so the AI can suggest actionable debugging and a small code change.`,
+
+                // Iteration practice examples (page 2)
+                iteration1: `Please make this prompt more specific: Show a parameterized SQL query in Python (using sqlite3 or psycopg2) that selects only active users (WHERE active = 1) and limits results (e.g., LIMIT 100). Provide the exact Python code using cursor.execute with placeholders, explain why parameterization prevents SQL injection, and include expected output example.`,
+
+                iteration2: `Refine further: Adapt the previous example into a Flask route that safely fetches users with pagination (page & per_page), uses connection pooling or scoped sessions, and returns JSON. Include error handling for empty results and a small test case that asserts the JSON structure.`,
+
+            3: `Phase 1: Understand - Inventory current auth stack (Flask backend, Spring remnants, React frontend). Prompt: "List all pieces involved in this login flow and point out where duplication or legacy Spring code is likely causing state loss."\n\nPhase 2: Plan - Create a migration plan to consolidate to Flask-only. Prompt: "Given this inventory [paste findings], provide a step-by-step migration plan prioritizing minimal user downtime and preserving session semantics."\n\nPhase 3: Implement - Roll out Flask session-based auth with refresh tokens. Prompt: "Provide a small Flask implementation for session-based auth with refresh tokens and example React fetch calls, highlighting where to set credentials and handle token refreshes."`
+        };
+
+        const textarea = document.getElementById('submit-prompt-' + pageNum);
+        if (!textarea) return;
+        textarea.value = examples[pageNum] || '';
+        // If loading examples for page 2, also populate the iteration practice boxes
+        if (pageNum === 2) {
+            const it1 = document.getElementById('iteration-1');
+            const it2 = document.getElementById('iteration-2');
+            if (it1 && examples.iteration1) it1.value = examples.iteration1;
+            if (it2 && examples.iteration2) it2.value = examples.iteration2;
+        }
+        // Optionally show a tiny status message
+        const statusDiv = document.getElementById('status-' + pageNum);
+        if (statusDiv) {
+            statusDiv.textContent = 'Loaded example. Edit as needed then Save.';
+            statusDiv.style.backgroundColor = '#fff3cd';
+            statusDiv.style.color = '#856404';
+            statusDiv.style.borderColor = '#ffc107';
+            statusDiv.style.display = 'block';
+            setTimeout(() => statusDiv.style.display = 'none', 3500);
+        }
+    }
+
     function saveSubmission(pageNum) {
         const textarea = document.getElementById('submit-prompt-' + pageNum);
         const statusDiv = document.getElementById('status-' + pageNum);
@@ -900,6 +940,14 @@ date: 2025-10-21
     document.addEventListener('DOMContentLoaded', function() {
         showPage(1);
         loadSubmissions();
+
+        // Attach listeners to example buttons (use delegation-safe handlers)
+        document.querySelectorAll('.load-example-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                const pageNum = parseInt(this.dataset.example, 10);
+                if (!isNaN(pageNum)) loadExample(pageNum);
+            });
+        });
     });
 
     // Save completion status
