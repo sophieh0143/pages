@@ -63,7 +63,7 @@ body {
   background-size: cover;
 }
 
-/* Optional: overlay for better contrast */
+/* Optional: overlay for better contrast! */
 body::before {
   content: '';
   position: fixed;
