@@ -37,5 +37,14 @@ lxdData:
       Lessons: "/cs-portfolio-quest/analytics/submodule_3/"
       Image: "/images/cs-portfolio-quest/analytics/admin.svg"
       Alt: "Analytics Submodule 3"
+    - Title: "Interactive Student Dashboard"
+      Genre: "Analytics"
+      Level: 4
+      Description: "Advanced analytics dashboard with CSV upload, AI-powered insights from Gemini, and comprehensive student grading across all lessons"
+      Categories: ["Dashboard", "AI", "Data Visualization", "Grading"]
+      Video: "/cs-portfolio-quest/analytics/dashboard-video"
+      Lessons: "/cs-portfolio-quest/analytics/dashboard/"
+      Image: "/images/cs-portfolio-quest/analytics/dashboard-monitor.svg"
+      Alt: "Interactive Analytics Dashboard"
 ---
 {%- include tailwind/cs-portfolio-mini_quest_info.html -%}
