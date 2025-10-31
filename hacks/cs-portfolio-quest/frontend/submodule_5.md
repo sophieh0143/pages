@@ -181,6 +181,30 @@ These are each of the individual components of a function:
     <br>
 </ol>
 
+## DOM Basics
+JavaScript can be used to edit dynamically edit HTML content as well!
+
+Here is an example of how that can be done:
+
+```
+<p id="change-content"></p>
+
+<script>
+    const element = document.getElementById("change-content");
+    element.innerHTML = "Hello, World!"
+</script>
+```
+
+Essentially, in order to change the content of an HTML tag, you must first apply an identifier to the certain tag. This allows us to identify and access that tag in JavaScript via the ID.
+
+<br>
+
+Once an ID is in place, in JavaScript, a variable is defined that retrieves the element via its id with the code `document.getElementById("id-here");`
+
+<br>
+
+Now, at this point, the variable can be used to access the HTML by using `.innerHTML = " ";` allowing for the text of the HTML tag to be directly modified.
+
 <a href="{{site.baseurl}}/cs-portfolio-quest/frontend/submodule_4" 
    style="display:inline-block; background-color:#1e3a8a; color:white; text-decoration:none; 
           padding:10px 20px; border-radius:8px; border:none; cursor:pointer; 
